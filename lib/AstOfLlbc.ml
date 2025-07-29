@@ -2300,6 +2300,16 @@ let check_if_dst (env : env) (id : C.any_decl_id) : env =
         env
   | _ -> env
 
+(*Catch-all error handler for check_if_dst*)
+let check_if_dst (env : env) (id : C.any_decl_id) : env =
+  try check_if_dst env id with
+    e ->
+    Printf.eprintf "Error checking dst %s" (Printexc.to_string e);
+     if not !Options.keep_going then
+       exit 255
+     else
+       env
+
 let decl_of_id (env : env) (id : C.any_decl_id) : K.decl option =
   match id with
   | IdType id -> begin
