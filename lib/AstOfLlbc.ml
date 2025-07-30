@@ -2653,8 +2653,13 @@ let decl_of_id env decl =
           Charon.NameMatcher.match_name env.name_ctx RustNames.config p (name_of_id env decl)
         in
         if not (List.exists matches known_failures) then begin
+          let name =
+            try string_of_pattern (pattern_of_name env (name_of_id env decl))
+            with e ->
+              Printf.eprintf "ERROR translating the name of current decl :%s\n" (Printexc.to_string e); "unknown"
+          in
           Printf.eprintf "ERROR translating %s: %s\n%s"
-            (string_of_pattern (pattern_of_name env (name_of_id env decl)))
+            name
             (Printexc.to_string e) (Printexc.get_backtrace ());
           if not !Options.keep_going then
             exit 255
