@@ -55,6 +55,14 @@ type var_id =
   | ConstGenericVar of C.const_generic_var_id
   | Var of C.local_id * C.ety (* the ety aids code-generation, sometimes *)
 
+type decl_obligation =
+  ObliCast of K.lident * K.typ * K.typ
+
+module ObliMap = Map.Make(struct
+  type t = decl_obligation
+  let compare = compare                   
+end)
+
 type env = {
   (* Lookup functions to resolve various id's into actual declarations. *)
   get_nth_function : C.FunDeclId.id -> C.fun_decl;
@@ -115,6 +123,7 @@ type env = {
   (* A set of all the DSTs (dynamically-sized types) that we know about, and the name of their
      flexible member *)
   dsts : string LidMap.t;
+  decl_oblis : decl_obligation -> unit;
 }
 
 let debug env =
@@ -1626,6 +1635,11 @@ let is_box_place (p : C.place) =
   | C.TAdt { id = TBuiltin TBox; _ } -> true
   | _ -> false
 
+let lid_of_unknown_cast (env: env) (ty_from: C.ty) (ty_to: C.ty) : K.lident =
+  let string_from = Charon.PrintTypes.ty_to_string env.format_env ty_from in
+  let string_to = Charon.PrintTypes.ty_to_string env.format_env ty_to in
+  ([ "Eurydice" ], "unknown_cast" ^ string_from ^ "$" ^ string_to)
+
 let expression_of_rvalue (env : env) (p : C.rvalue) expected_ty : K.expr =
   match p with
   | Use op -> expression_of_operand env op
@@ -1782,13 +1796,19 @@ let expression_of_rvalue (env : env) (p : C.rvalue) expected_ty : K.expr =
               L.log "AstOfLlbc" "unknown unsize cast: `%s`\nt_to=%a\nt_from=%a"
                 (Charon.PrintExpressions.cast_kind_to_string env.format_env ck)
                 ptyp t_to ptyp t_from;
-              K.(with_type t_to (EApp (Builtin.(expr_of_builtin_t unknown_cast) [ t_from; t_to ], [ e ])))
+              let lid = lid_of_unknown_cast env ty_from ty_to in
+              let func = K.(with_type (TArrow (t_from, t_to)) (EQualified lid)) in
+              env.decl_oblis (ObliCast (lid, t_from, t_to));
+              K.(with_type t_to (EApp (func, [ e ])))
             end
         | _ ->
             L.log "AstOfLlbc" "unknown unsize cast: `%s`\nt_to=%a\nt_from=%a"
               (Charon.PrintExpressions.cast_kind_to_string env.format_env ck)
               ptyp t_to ptyp t_from;
-            K.(with_type t_to (EApp (Builtin.(expr_of_builtin_t unknown_cast) [ t_from; t_to ], [ e ])))
+            let lid = lid_of_unknown_cast env ty_from ty_to in
+            let func = K.(with_type (TArrow (t_from, t_to)) (EQualified lid)) in
+            env.decl_oblis (ObliCast (lid, t_from, t_to));
+            K.(with_type t_to (EApp (func, [ e ])))
       end
 
   | UnaryOp (Cast ck, e) ->
@@ -1812,8 +1832,11 @@ let expression_of_rvalue (env : env) (p : C.rvalue) expected_ty : K.expr =
           | _ -> failwith "impossible, should be captured above"
         in
         let t_from = typ_of_ty env ty_from and t_to = typ_of_ty env ty_to in
-        let e = expression_of_operand env e in
-        K.(with_type t_to (EApp (Builtin.(expr_of_builtin_t unknown_cast) [ t_from; t_to ], [ e ])))
+        let e = expression_of_operand env e in        
+        let lid = lid_of_unknown_cast env ty_from ty_to in
+        let func = K.(with_type (TArrow (t_from, t_to)) (EQualified lid)) in
+        env.decl_oblis (ObliCast (lid, t_from, t_to));
+        K.(with_type t_to (EApp (func, [ e ])))
       end
   | UnaryOp (op, o1) -> mk_op_app (op_of_unop op) (expression_of_operand env o1) []
   | BinaryOp (op, o1, o2) ->
@@ -2676,6 +2699,14 @@ let decls_of_declarations (env : env) (d : C.any_decl_id list) : K.decl list =
   L.log "Progress" "%s: %d/%d" env.crate_name !seen !total;
   Krml.KList.filter_some @@ List.map (decl_of_id env) d
 
+
+let impl_obligation (ob: decl_obligation) : K.decl =
+  match ob with ObliCast (lid, t_from, t_to) ->
+    K.DExternal (None, [], 0, 0, lid, (K.TArrow (t_from, t_to)), [])
+
+let impl_obligations (obpairs : (decl_obligation * unit) list) : K.decl list =
+  List.map impl_obligation (List.map fst obpairs)
+
 let file_of_crate (crate : Charon.LlbcAst.crate) : Krml.Ast.file =
   let {
     C.name;
@@ -2705,6 +2736,8 @@ let file_of_crate (crate : Charon.LlbcAst.crate) : Krml.Ast.file =
   let get_nth_trait_decl id = C.TraitDeclId.Map.find id trait_decls in
   let format_env = Charon.PrintLlbcAst.Crate.crate_to_fmt_env crate in
   let name_ctx = Charon.NameMatcher.ctx_from_crate crate in
+  let obli_map = ref ObliMap.empty in
+  let obli_update ob = obli_map := ObliMap.add ob () !obli_map in
   let env =
     {
       get_nth_function;
@@ -2721,7 +2754,10 @@ let file_of_crate (crate : Charon.LlbcAst.crate) : Krml.Ast.file =
       name_ctx;
       generic_params = Charon.TypesUtils.empty_generic_params;
       dsts = LidMap.empty;
+      decl_oblis = obli_update;
     }
   in
   let env = List.fold_left check_if_dst env declarations in
-  name, decls_of_declarations env declarations
+  let trans_decls = decls_of_declarations env declarations in
+  let extra_decls = impl_obligations (ObliMap.bindings !obli_map) in
+  name, trans_decls @ extra_decls
