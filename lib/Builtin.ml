@@ -132,6 +132,15 @@ let op_128_cfgs =
 
 let get_128_op (kind, op) : K.expr = expr_of_builtin @@ Op128Map.find (kind, op) op_128_cfgs
 
+let unknown_cast =
+  {
+    name = [ "Eurydice" ], "unknown_cast";
+    typ = Krml.Helpers.fold_arrow [ TBound 1 ] (TBound 0);
+    n_type_args = 2;
+    cg_args = [];
+    arg_names = [ "e" ];
+  }
+
 let array_to_slice =
   {
     name = [ "Eurydice" ], "array_to_slice";

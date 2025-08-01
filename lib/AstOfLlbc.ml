@@ -1765,11 +1765,9 @@ let expression_of_rvalue (env : env) (p : C.rvalue) expected_ty : K.expr =
             *)
             assert (t1 = t2);
             let t_from = maybe_cg_array env t1 cg in
-            let t, n =
-              match t_from with
-              | TArray (t, n) -> t, n
-              | _ -> failwith "impossible"
-            in
+            begin
+            match t_from with
+            | TArray (t, n) ->
             let len = Krml.Helpers.mk_sizet (int_of_string (snd n)) in
             (* slice_of_boxed_array: 0* -> size_t -> Eurydice_slice 0 *)
             let slice_of_boxed_array = Builtin.(expr_of_builtin slice_of_boxed_array) in
@@ -1780,10 +1778,17 @@ let expression_of_rvalue (env : env) (p : C.rvalue) expected_ty : K.expr =
                 (K.ETApp (slice_of_boxed_array, [], [], [ t ]))
             in
             K.(with_type (Builtin.mk_slice t) (EApp (slice_of_boxed_array, [ e; len ])))
+            | _ ->
+              L.log "AstOfLlbc" "unknown unsize cast: `%s`\nt_to=%a\nt_from=%a"
+                (Charon.PrintExpressions.cast_kind_to_string env.format_env ck)
+                ptyp t_to ptyp t_from;
+              K.(with_type t_to (EApp (Builtin.(expr_of_builtin_t unknown_cast) [ t_from; t_to ], [ e ])))
+            end
         | _ ->
-            Krml.Warn.fatal_error "unknown unsize cast: `%s`\nt_to=%a\nt_from=%a"
+            L.log "AstOfLlbc" "unknown unsize cast: `%s`\nt_to=%a\nt_from=%a"
               (Charon.PrintExpressions.cast_kind_to_string env.format_env ck)
-              ptyp t_to ptyp t_from
+              ptyp t_to ptyp t_from;
+            K.(with_type t_to (EApp (Builtin.(expr_of_builtin_t unknown_cast) [ t_from; t_to ], [ e ])))
       end
 
   | UnaryOp (Cast ck, e) ->
@@ -1798,9 +1803,18 @@ let expression_of_rvalue (env : env) (p : C.rvalue) expected_ty : K.expr =
       in
       if is_ident then
         expression_of_operand env e
-      else
-        failwith
-          ("unknown cast: `" ^ Charon.PrintExpressions.cast_kind_to_string env.format_env ck ^ "`")
+      else begin
+        L.log "AstOfLlbc" "unknown cast :%s\n"
+          (Charon.PrintExpressions.cast_kind_to_string env.format_env ck);
+        let ty_from, ty_to = match ck with
+          | CastFnPtr (t1, t2) -> t1, t2
+          | CastTransmute (t1, t2) -> t1, t2
+          | _ -> failwith "impossible, should be captured above"
+        in
+        let t_from = typ_of_ty env ty_from and t_to = typ_of_ty env ty_to in
+        let e = expression_of_operand env e in
+        K.(with_type t_to (EApp (Builtin.(expr_of_builtin_t unknown_cast) [ t_from; t_to ], [ e ])))
+      end
   | UnaryOp (op, o1) -> mk_op_app (op_of_unop op) (expression_of_operand env o1) []
   | BinaryOp (op, o1, o2) ->
       mk_op_app (op_of_binop op) (expression_of_operand env o1) [ expression_of_operand env o2 ]
