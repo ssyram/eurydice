@@ -1806,7 +1806,7 @@ let expression_of_rvalue (env : env) (p : C.rvalue) expected_ty : K.expr =
         (* Here are `literal_type`s *)
         | C.CastScalar (f, t) -> f = t
         (* The following are `type`s *)
-        | C.CastFnPtr (f, t) | C.CastRawPtr (f, t) | C.CastUnsize (f, t, _) | C.CastTransmute (f, t)
+        | C.CastFnPtr (f, t) | C.CastRawPtr (f, t) | C.CastUnsize (f, t, _) | C.CastTransmute (f, t) | C.CastConcretize (f, t)
           -> f = t
       in
       if is_ident then
