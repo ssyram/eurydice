@@ -254,8 +254,114 @@ let expand ~ctxt (payload : string) =
   let loc = Expansion_context.Extension.extension_point_loc ctxt in
   compile_parse_tree empty loc pt
 
+(* Expression compilation - generates OCaml expressions from parse tree *)
+let compile_expr_tree (env : env) loc (pt : ParseTree.expr) =
+  let open Ast_builder.Default in
+  
+  (* Compile expression constructors *)
+  let rec compile_expr_with_var env pt compile_pre =
+    match pt with
+    | Fixed e -> compile_pre env e
+    | PatternVar txt -> evar ~loc txt
+    | ListPatternVar s -> fail "[cremeexpr]: list pattern ?%s.. appears in unexpected position" s
+
+  and compile_expr_list env pts compile_pre =
+    elist ~loc (List.map (compile_pre env) pts)
+
+  and compile_expr env pt = compile_expr_with_var env pt compile_pre_expr_ast
+  
+  and compile_expr_list_ast env pt = elist ~loc (List.map (compile_expr env) pt)
+  
+  and compile_pre_expr_ast env pt =
+    match pt with
+    | ParseTree.Let (b, e1, e2) ->
+        let e1_ast = compile_expr env e1 in
+        let env = push env b in
+        let e2_ast = compile_expr env e2 in
+        (* Generate ELet (fresh_binder, e1, e2) *)
+        [%expr Krml.Ast.ELet (Krml.Helpers.fresh_binder [%e estring ~loc b] Krml.Ast.TAny, [%e e1_ast], [%e e2_ast])]
+    | Sequence es ->
+        [%expr Krml.Ast.ESequence [%e compile_expr_list_ast env es]]
+    | App { head; cgs; methods; ts; args } ->
+        let head_ast = compile_expr env head in
+        let args_ast = compile_expr_list_ast env args in
+        (* Simplified - generate EApp (head, args) *)
+        [%expr Krml.Ast.EApp ([%e head_ast], [%e args_ast])]
+    | Addr e ->
+        [%expr Krml.Ast.EAddrOf [%e compile_expr env e]]
+    | Index (e1, e2) ->
+        [%expr Krml.Ast.EBufRead ([%e compile_expr env e1], [%e compile_expr env e2])]
+    | While (e1, e2) ->
+        [%expr Krml.Ast.EWhile ([%e compile_expr env e1], [%e compile_expr env e2])]
+    | Match (e, bs) ->
+        let e_ast = compile_expr env e in
+        let bs_ast = elist ~loc (List.map (fun (p, e) ->
+          let p_ast = compile_pattern_for_expr env p in 
+          let e_ast = compile_expr env e in
+          [%expr ([], [%e p_ast], [%e e_ast])]) bs) in
+        [%expr Krml.Ast.EMatch (Krml.Ast.Unchecked, [%e e_ast], [%e bs_ast])]
+    | Record es ->
+        let es_ast = elist ~loc (List.map (fun (f, e) ->
+          [%expr (Some [%e estring ~loc f], [%e compile_expr env e])]) es) in
+        [%expr Krml.Ast.EFlat [%e es_ast]]
+    | Int i ->
+        [%expr Krml.Ast.EConstant (Krml.Ast.UInt32, [%e estring ~loc (string_of_int i)])]
+    | Qualified path ->
+        let path_ast = compile_path_expr env path in
+        [%expr Krml.Ast.EQualified [%e path_ast]]
+    | BoundVar s ->
+        let i = find env s in
+        [%expr Krml.Ast.EBound [%e eint ~loc i]]
+    | Break ->
+        [%expr Krml.Ast.EBreak]
+    | Bool b ->
+        [%expr Krml.Ast.EBool [%e ebool ~loc b]]
+        
+  and compile_path_expr env (pt : ParseTree.path) =
+    let m, n =
+      match List.rev pt with
+      | n :: m -> List.rev m, n
+      | _ -> failwith "impossible"
+    in
+    let m_ast = elist ~loc (List.map (compile_path_item_expr env) m) in
+    let n_ast = compile_path_item_expr env n in
+    [%expr ([%e m_ast], [%e n_ast])]
+    
+  and compile_path_item_expr _env (pt : ParseTree.path_item) =
+    match pt with
+    | Wild -> [%expr "_"]
+    | Name s -> estring ~loc s
+    | Var txt -> evar ~loc txt
+  
+  and compile_pattern_for_expr env pt = 
+    let rec compile_pattern_with_var env pt compile_pre =
+      match pt with
+      | Fixed e -> compile_pre env e
+      | PatternVar txt -> evar ~loc txt
+      | ListPatternVar s -> fail "[cremeexpr]: list pattern ?%s.. appears in unexpected position" s
+    
+    and compile_pre_pattern_ast env (pt : ParseTree.pre_pat) =
+      match pt with
+      | Cons (cons, ps) ->
+          let ps_ast = elist ~loc (List.map (compile_pattern_for_expr env) ps) in
+          [%expr Krml.Ast.PCons ([%e estring ~loc cons], [%e ps_ast])]
+    in
+    compile_pattern_with_var env pt compile_pre_pattern_ast
+  in
+  
+  compile_expr env pt
+
+let expand_expr ~ctxt (payload : string) =
+  let pt = parse payload in
+  let loc = Expansion_context.Extension.extension_point_loc ctxt in
+  compile_expr_tree empty loc pt
+
 let my_extension =
   Extension.V3.declare "cremepat" Pattern Ast_pattern.(single_expr_payload (estring __)) expand
 
+let my_expr_extension =
+  Extension.V3.declare "cremeexpr" Expression Ast_pattern.(single_expr_payload (estring __)) expand_expr
+
 let rule = Ppxlib.Context_free.Rule.extension my_extension
-let () = Driver.register_transformation ~rules:[ rule ] "cremepat"
+let expr_rule = Ppxlib.Context_free.Rule.extension my_expr_extension
+let () = Driver.register_transformation ~rules:[ rule; expr_rule ] "cremepat"
