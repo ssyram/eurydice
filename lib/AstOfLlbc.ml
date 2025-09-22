@@ -1387,8 +1387,23 @@ let lookup_fun (env : env) depth (f : C.fn_ptr) : K.expr' * lookup_result * C.tr
         let { C.item_meta; signature; _ } = env.get_nth_function fun_id in
         let lid = lid_of_name env item_meta.name in
         L.log "Calls" "%s--> name: %a" depth plid lid;
+        
+        (* Use re_polymorphize to handle monomorphized const generic functions *)
+        let re_poly_expr = re_polymorphize (K.with_type K.TAny (K.EQualified lid)) in
+        let final_expr_node = match re_poly_expr.node with
+          | K.EQualified final_lid -> 
+              L.log "Calls" "%s--> re_polymorphized to: %a" depth plid final_lid;
+              K.EQualified final_lid
+          | K.ETApp ({ node = EQualified final_lid; _ }, cgs, fn_ptrs, ts) -> 
+              L.log "Calls" "%s--> re_polymorphized to ETApp: %a with %d cgs, %d ts" depth plid final_lid (List.length cgs) (List.length ts);
+              K.ETApp (K.with_type K.TAny (K.EQualified final_lid), cgs, fn_ptrs, ts)
+          | _ -> 
+              L.log "Calls" "%s--> re_polymorphize returned unexpected form, using original" depth;
+              K.EQualified lid
+        in
+        
         let trait_refs = trait_refs_c_name item_meta.name in
-        K.EQualified lid, lookup_signature env depth signature, trait_refs
+        final_expr_node, lookup_signature env depth signature, trait_refs
       in
 
       match f.func with
