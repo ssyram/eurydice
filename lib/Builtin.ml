@@ -747,6 +747,114 @@ let nonzero_def = K.DType (nonzero, [], 0, 1, Abbrev (TBound 0))
 
 (* -------------------------------------------------------------------------- *)
 
+(* Example builtin function using the new cremeexpr extension for more readable code *)
+
+(* A simple swap function demonstrating cremeexpr usage *)
+let simple_swap =
+  let open Krml in
+  let open Ast in
+  let t = TBound 0 in
+  let binders =
+    [
+      Helpers.fresh_binder "ptr" (TBuf (t, false));
+      Helpers.fresh_binder "i" (TInt SizeT);
+      Helpers.fresh_binder "j" (TInt SizeT);
+    ]
+  in
+  fun lid ->
+    DFunction
+      ( None,
+        [ Private ],
+        0,
+        1,
+        TUnit,
+        lid,
+        binders,
+        (* This would use cremeexpr for more readable code:
+           with_type TUnit [%cremeexpr {|
+             let temp = ptr[i];
+             ptr[i] = ptr[j];
+             ptr[j] = temp
+           |}] 
+           
+           For now, we show the manual AST construction: *)
+        with_type TUnit
+          (ELet
+             ( Helpers.fresh_binder "temp" t,
+               with_type t (EBufRead (with_type (TBuf (t, false)) (EBound 2), with_type (TInt SizeT) (EBound 1))),
+               with_type TUnit
+                 (ESequence
+                    [
+                      with_type TUnit
+                        (EAssign
+                           ( with_type t (EBufRead (with_type (TBuf (t, false)) (EBound 3), with_type (TInt SizeT) (EBound 2))),
+                             with_type t (EBufRead (with_type (TBuf (t, false)) (EBound 3), with_type (TInt SizeT) (EBound 1))) ));
+                      with_type TUnit
+                        (EAssign (with_type t (EBufRead (with_type (TBuf (t, false)) (EBound 3), with_type (TInt SizeT) (EBound 1))), with_type t (EBound 0)));
+                    ]) )) )
+
+(* Another example showing how a simple Option unwrap_or function could be implemented *)
+let unwrap_or_example =
+  let open Krml in
+  let open Ast in
+  let t = TBound 0 in
+  let t_option = mk_option t in
+  let binders =
+    [
+      Helpers.fresh_binder "opt" t_option;
+      Helpers.fresh_binder "default" t;
+    ]
+  in
+  fun lid ->
+    DFunction
+      ( None,
+        [ Private ],
+        0,
+        1,
+        t,
+        lid,
+        binders,
+        (* This demonstrates what cremeexpr would generate:
+           with_type t [%cremeexpr {|
+             match opt {
+               Some value -> value,
+               None -> default
+             }
+           |}]
+        *)
+        with_type t
+          (EMatch
+             ( Unchecked,
+               with_type t_option (EBound 1),
+               [
+                 ( [ Helpers.fresh_binder "value" t ],
+                   with_type t_option (PCons ("Some", [ with_type t (PBound 0) ])),
+                   with_type t (EBound 0) );
+                 ( [],
+                   with_type t_option (PCons ("None", [])),
+                   with_type t (EBound 1) );
+               ] )) )
+
+(* -------------------------------------------------------------------------- *)
+
+let simple_swap_builtin =
+  {
+    name = [ "Eurydice" ], "simple_swap";
+    typ = Krml.Helpers.fold_arrow [ TBuf (TBound 0, false); TInt SizeT; TInt SizeT ] TUnit;
+    n_type_args = 1;
+    cg_args = [];
+    arg_names = [ "ptr"; "i"; "j" ];
+  }
+
+let unwrap_or_example_builtin =
+  {
+    name = [ "Eurydice" ], "unwrap_or";
+    typ = Krml.Helpers.fold_arrow [ mk_option (TBound 0); TBound 0 ] (TBound 0);
+    n_type_args = 1;
+    cg_args = [];
+    arg_names = [ "opt"; "default" ];
+  }
+
 type usage = Used | Unused
 
 let builtin_funcs =
@@ -785,6 +893,9 @@ let builtin_funcs =
     vec_overflows;
     vec_failed;
     layout;
+    (* Example functions demonstrating cremeexpr usage *)
+    simple_swap_builtin;
+    unwrap_or_example_builtin;
   ]
   (* Declares the 128-bit operations *)
   @ begin

@@ -2732,6 +2732,9 @@ let replacements =
         fun lid -> Krml.Ast.DGlobal ([], lid, 0, Krml.Helpers.uint32, Krml.Helpers.mk_uint32 32) );
       "alloc::vec::{alloc::vec::Vec<@T>}::try_with_capacity", Builtin.try_with_capacity;
       "core::ptr::null_mut", Builtin.null_mut;
+      (* Example functions demonstrating cremeexpr usage *)
+      "eurydice::simple_swap", Builtin.simple_swap;
+      "eurydice::unwrap_or", Builtin.unwrap_or_example;
     ]
 
 (* Catch-all error handler (last resort) *)
