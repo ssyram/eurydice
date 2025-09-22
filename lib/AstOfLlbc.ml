@@ -197,48 +197,6 @@ module RustNames = struct
   let range = parse_pattern "core::ops::range::Range<@>"
   let option = parse_pattern "core::option::Option<@>"
 
-  (* Convert Charon patterns to regex patterns for matching monomorphized functions *)
-  let known_builtins_regex =
-    [
-    (* slices *)
-    Str.regexp {|SliceIndexShared<.*>|}, Builtin.slice_index;
-    Str.regexp {|SliceIndexMut<.*>|}, Builtin.slice_index;
-
-    Str.regexp {|core::slice::index::\{.*\}::index<.*>|}, Builtin.slice_subslice;
-    Str.regexp {|core::slice::index::\{.*\}::index_mut<.*>|}, Builtin.slice_subslice;
-    Str.regexp {|core::slice::index::\{.*Index<.*RangeTo.*\}::index<.*>|}, Builtin.slice_subslice_to;
-    Str.regexp {|core::slice::index::\{.*IndexMut<.*RangeTo.*\}::index_mut<.*>|}, Builtin.slice_subslice_to;
-    Str.regexp {|core::slice::index::\{.*Index<.*RangeFrom.*\}::index<.*>|}, Builtin.slice_subslice_from;
-    Str.regexp {|core::slice::index::\{.*IndexMut<.*RangeFrom.*\}::index_mut<.*>|}, Builtin.slice_subslice_from;
-
-    (* arrays *)
-    Str.regexp {|core::array::\{.*Index<.*Range<usize>.*\}::index<.*>|}, Builtin.array_to_subslice;
-    Str.regexp {|core::array::\{.*IndexMut<.*Range<usize>.*\}::index_mut<.*>|}, Builtin.array_to_subslice;
-    Str.regexp {|core::array::\{.*Index<.*RangeTo.*\}::index<.*>|}, Builtin.array_to_subslice_to;
-    Str.regexp {|core::array::\{.*IndexMut<.*RangeTo.*\}::index_mut<.*>|}, Builtin.array_to_subslice_to;
-    Str.regexp {|core::array::\{.*Index<.*RangeFrom.*\}::index<.*>|}, Builtin.array_to_subslice_from;
-    Str.regexp {|core::array::\{.*IndexMut<.*RangeFrom.*\}::index_mut<.*>|}, Builtin.array_to_subslice_from;
-
-    (* slices <-> arrays *)
-    Str.regexp {|ArrayToSliceShared<.*>|}, Builtin.array_to_slice;
-    Str.regexp {|ArrayToSliceMut<.*>|}, Builtin.array_to_slice;
-    Str.regexp {|core::convert::\{.*TryInto<.*\}::try_into<.*TryFromSliceError>|}, Builtin.slice_to_array;
-
-    (* iterators *)
-    Str.regexp {|core::iter::traits::collect::IntoIterator<.*>::into_iter|}, Builtin.array_into_iter;
-
-    (* bitwise & arithmetic operations *)
-    Str.regexp {|core::ops::bit::BitAnd<.*>::bitand|}, Builtin.bitand_pv_u8;
-    Str.regexp {|core::ops::bit::Shr<.*>::shr|}, Builtin.shr_pv_u8;
-
-    (* misc *)
-    Str.regexp {|core::cmp::Ord<.*>::min|}, Builtin.min_u32;
-
-    (* boxes *)
-    Str.regexp {|alloc::boxed::\{.*Box<.*\}::new<.*>|}, Builtin.box_new;
-  ]
-
-  (* Keep original patterns for backward compatibility *)
   let known_builtins =
     [
     (* slices *)
@@ -1405,33 +1363,33 @@ let lookup_fun (env : env) depth (f : C.fn_ptr) : K.expr' * lookup_result * C.tr
     K.EQualified name, { ts; arg_types; ret_type; cg_types = cg_args; is_known_builtin = true }
   in
 
-  (* New approach: try regex-based matching for monomorphized functions first *)
-  let lookup_result_of_fun_id fun_id =
-    let { C.item_meta; signature; _ } = env.get_nth_function fun_id in
-    let lid = lid_of_name env item_meta.name in
-    L.log "Calls" "%s--> name: %a" depth plid lid;
-    let trait_refs = trait_refs_c_name item_meta.name in
-    K.EQualified lid, lookup_signature env depth signature, trait_refs
+  (* Enhanced matching for const generics: use re_polymorphize approach *)
+  let matches_with_repolymorphize pattern =
+    if matches pattern then true
+    else
+      (* Try with re_polymorphize approach for const generics *)
+      let fn_ptr_string = string_of_fn_ptr env f in
+      let pattern_string = string_of_pattern pattern in
+      L.log "Calls" "%sTrying re_polymorphize matching: %s vs %s" depth fn_ptr_string pattern_string;
+      (* Simple heuristic: if the function has const generics, try relaxed matching *)
+      String.contains pattern_string '@' && 
+      (let base_pattern = Str.global_replace (Str.regexp "@[A-Za-z0-9_]*") ".*" pattern_string in
+       let regex = Str.regexp base_pattern in
+       try Str.string_match regex fn_ptr_string 0 
+       with _ -> false)
   in
 
-  (* Try to match with regex patterns using re_polymorphize *)
-  let try_regex_match () =
-    let fn_ptr_string = string_of_fn_ptr env f in
-    L.log "Calls" "%sChecking regex patterns for: %s" depth fn_ptr_string;
-    List.find_opt (fun (regex, _) -> 
-      try Str.string_match regex fn_ptr_string 0 
-      with _ -> false
-    ) known_builtins_regex
-  in
-
-  (* First try traditional pattern matching *)
-  match List.find_opt (fun (p, _) -> matches p) known_builtins with
+  (* Try pattern matching with enhanced const generics support *)
+  match List.find_opt (fun (p, _) -> matches_with_repolymorphize p) known_builtins with
   | Some (_, b) -> let hd, res = builtin b in hd, res, []
-  (* If traditional matching fails, try regex-based matching *)
   | None -> (
-    match try_regex_match () with
-    | Some (_, b) -> let hd, res = builtin b in hd, res, []
-    | None -> (
+      let lookup_result_of_fun_id fun_id =
+        let { C.item_meta; signature; _ } = env.get_nth_function fun_id in
+        let lid = lid_of_name env item_meta.name in
+        L.log "Calls" "%s--> name: %a" depth plid lid;
+        let trait_refs = trait_refs_c_name item_meta.name in
+        K.EQualified lid, lookup_signature env depth signature, trait_refs
+      in
 
       match f.func with
       | FunId (FRegular f) -> lookup_result_of_fun_id f
