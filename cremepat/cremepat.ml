@@ -360,7 +360,7 @@ let my_extension =
   Extension.V3.declare "cremepat" Pattern Ast_pattern.(single_expr_payload (estring __)) expand
 
 let my_expr_extension =
-  Extension.V3.declare "cremeexpr" Expression Ast_pattern.(single_expr_payload (estring __)) expand_expr
+  Extension.V3.declare "kreml_expr" Expression Ast_pattern.(single_expr_payload (estring __)) expand_expr
 
 let rule = Ppxlib.Context_free.Rule.extension my_extension
 let expr_rule = Ppxlib.Context_free.Rule.extension my_expr_extension

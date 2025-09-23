@@ -747,9 +747,9 @@ let nonzero_def = K.DType (nonzero, [], 0, 1, Abbrev (TBound 0))
 
 (* -------------------------------------------------------------------------- *)
 
-(* Example builtin function using the new cremeexpr extension for more readable code *)
+(* Example builtin function using the new kreml_expr extension for more readable code *)
 
-(* A simple swap function demonstrating cremeexpr usage *)
+(* A simple swap function demonstrating kreml_expr usage *)
 let simple_swap =
   let open Krml in
   let open Ast in
@@ -770,8 +770,8 @@ let simple_swap =
         TUnit,
         lid,
         binders,
-        (* This would use cremeexpr for more readable code:
-           with_type TUnit [%cremeexpr {|
+        (* This would use kreml_expr for more readable code:
+           with_type TUnit [%kreml_expr {|
              let temp = ptr[i];
              ptr[i] = ptr[j];
              ptr[j] = temp
@@ -814,8 +814,8 @@ let unwrap_or_example =
         t,
         lid,
         binders,
-        (* This demonstrates what cremeexpr would generate:
-           with_type t [%cremeexpr {|
+        (* This demonstrates what kreml_expr would generate:
+           with_type t [%kreml_expr {|
              match opt {
                Some value -> value,
                None -> default
@@ -893,7 +893,7 @@ let builtin_funcs =
     vec_overflows;
     vec_failed;
     layout;
-    (* Example functions demonstrating cremeexpr usage *)
+    (* Example functions demonstrating kreml_expr usage *)
     simple_swap_builtin;
     unwrap_or_example_builtin;
   ]
