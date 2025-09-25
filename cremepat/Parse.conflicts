@@ -1,0 +1,94 @@
+
+** Conflict (reduce/reduce) in state 130.
+** Token involved: RANGLE
+** This state is reached from fragment after reading:
+
+FN LIDENT LANGLE
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+fragment 
+expr EOF 
+pre_expr 
+function_def 
+pre_function_def 
+(?)
+
+** In state 130, looking ahead at RANGLE, reducing production
+** loption(separated_nonempty_list(COMMA,const_param)) ->
+** is permitted because of the following sub-derivation:
+
+FN LIDENT LANGLE loption(separated_nonempty_list(COMMA,const_param)) RANGLE LPAREN loption(separated_nonempty_list(COMMA,param)) RPAREN ARROW typ LCURLY expr RCURLY // lookahead token appears
+                 . 
+
+** In state 130, looking ahead at RANGLE, reducing production
+** loption(separated_nonempty_list(COMMA,typ)) ->
+** is permitted because of the following sub-derivation:
+
+FN LIDENT LANGLE loption(separated_nonempty_list(COMMA,typ)) RANGLE LPAREN loption(separated_nonempty_list(COMMA,param)) RPAREN ARROW typ LCURLY expr RCURLY // lookahead token appears
+                 . 
+
+** Conflict (reduce/reduce) in state 9.
+** Tokens involved: RPAREN RCURLY RBRACK EOF COMMA
+** The following explanations concentrate on token EOF.
+** This state is reached from fragment after reading:
+
+UVAR
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+fragment 
+expr EOF // lookahead token appears
+(?)
+
+** In state 9, looking ahead at EOF, reducing production
+** atomic_expr -> UVAR
+** is permitted because of the following sub-derivation:
+
+seq_expr // lookahead token is inherited
+app_expr // lookahead token is inherited
+index_expr // lookahead token is inherited
+atomic_expr // lookahead token is inherited
+UVAR . 
+
+** In state 9, looking ahead at EOF, reducing production
+** function_def -> UVAR
+** is permitted because of the following sub-derivation:
+
+pre_expr // lookahead token is inherited
+function_def // lookahead token is inherited
+UVAR . 
+
+** Conflict (reduce/reduce) in state 8.
+** Tokens involved: RPAREN RCURLY RBRACK EOF COMMA
+** The following explanations concentrate on token EOF.
+** This state is reached from fragment after reading:
+
+UVARLIST
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+fragment 
+expr EOF // lookahead token appears
+(?)
+
+** In state 8, looking ahead at EOF, reducing production
+** atomic_expr -> UVARLIST
+** is permitted because of the following sub-derivation:
+
+seq_expr // lookahead token is inherited
+app_expr // lookahead token is inherited
+index_expr // lookahead token is inherited
+atomic_expr // lookahead token is inherited
+UVARLIST . 
+
+** In state 8, looking ahead at EOF, reducing production
+** function_def -> UVARLIST
+** is permitted because of the following sub-derivation:
+
+pre_expr // lookahead token is inherited
+function_def // lookahead token is inherited
+UVARLIST . 

@@ -187,14 +187,31 @@ function_def:
 
 pre_function_def:
 | FN name = lident 
-  type_params = ioption(delimited(LANGLE, separated_list(COMMA, typ), RANGLE))
-  const_params = ioption(delimited(LANGLE, separated_list(COMMA, const_param), RANGLE))
   params = delimited(LPAREN, separated_list(COMMA, param), RPAREN)
   ARROW return_type = typ
   body = delimited(LCURLY, expr, RCURLY)
   { { name; 
-      type_params = Option.value ~default:[] type_params; 
-      const_params = Option.value ~default:[] const_params;
+      type_params = []; 
+      const_params = [];
+      params; return_type; body } }
+| FN name = lident 
+  type_params = delimited(LANGLE, separated_list(COMMA, typ), RANGLE)
+  params = delimited(LPAREN, separated_list(COMMA, param), RPAREN)
+  ARROW return_type = typ
+  body = delimited(LCURLY, expr, RCURLY)
+  { { name; 
+      type_params; 
+      const_params = [];
+      params; return_type; body } }
+| FN name = lident 
+  type_params = delimited(LANGLE, separated_list(COMMA, typ), RANGLE)
+  const_params = delimited(LANGLE, separated_list(COMMA, const_param), RANGLE)
+  params = delimited(LPAREN, separated_list(COMMA, param), RPAREN)
+  ARROW return_type = typ
+  body = delimited(LCURLY, expr, RCURLY)
+  { { name; 
+      type_params; 
+      const_params;
       params; return_type; body } }
 
 const_param:
