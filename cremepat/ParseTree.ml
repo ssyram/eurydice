@@ -15,6 +15,15 @@ type pre_expr =
   | BoundVar of string
   | Break
   | Bool of bool
+  (* Function definitions - new addition for Rust-like function syntax *)
+  | FunctionDef of {
+      name: string;
+      type_params: type_param list;
+      cg_params: cg_param list;  (* const generic parameters like N : size_t *)
+      params: param list;
+      return_type: typ option;
+      body: expr;
+    }
 
 and expr = pre_expr with_vars
 and 'a with_vars = PatternVar of string | ListPatternVar of string | Fixed of 'a
@@ -25,6 +34,10 @@ and pre_pat = Cons of string * pat list
 and pat = pre_pat with_vars
 and pre_typ = TQualified of path | TApp of typ * typ list
 and typ = pre_typ with_vars
+(* New types for function definitions *)
+and type_param = string
+and cg_param = { cg_name: string; cg_type: typ }
+and param = { param_name: string; param_type: typ }
 
 let gensym =
   let r = ref 0 in

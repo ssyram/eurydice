@@ -6,12 +6,15 @@
 %token<string>  UIDENT LIDENT UVAR UVARLIST
 %token          EOF COMMA EQUALS LBRACK RBRACK LBRACKHASH LANGLE RANGLE LCURLY RCURLY
 %token          COLON COLONCOLON AMP LPAREN RPAREN LPARENHASH SEMI
-%token          MATCH TRUE FALSE LET WHILE BREAK ARROW
+%token          MATCH TRUE FALSE LET WHILE BREAK ARROW FN
 
 %type <expr> expr
 %type <path_item> path_item
 %type <pat> pat
 %type <typ> typ
+%type <ParseTree.type_param> type_param
+%type <ParseTree.cg_param> cg_param  
+%type <ParseTree.param> param
 %start <expr> fragment
 
 %%
@@ -76,6 +79,8 @@ fixed(X):
 pre_typ:
 | t = typ ts = delimited(LANGLE, separated_list(COMMA, typ), RANGLE)
   { TApp (t, ts) }
+| delimited(LBRACK, separated_pair(typ, SEMI, typ), RBRACK)
+  { let t, n = $1 in TApp (Fixed (TQualified [ Name "array" ]), [ t; n ]) }
 | p = path
   { TQualified p }
 
@@ -108,6 +113,17 @@ expr:
 pre_expr:
 | LET b = lident EQUALS e1 = app_expr SEMI e2 = expr
   { Let (b, e1, e2) }
+| FN name = lident 
+  type_params = ioption(delimited(LANGLE, separated_list(COMMA, type_param), RANGLE))
+  cg_params = ioption(delimited(LANGLE, separated_list(COMMA, cg_param), RANGLE))
+  params = delimited(LPAREN, separated_list(COMMA, param), RPAREN)
+  return_type = ioption(preceded(ARROW, typ))
+  body = delimited(LCURLY, expr, RCURLY)
+  {
+    let type_params = Option.value ~default:[] type_params in
+    let cg_params = Option.value ~default:[] cg_params in
+    FunctionDef { name; type_params; cg_params; params; return_type; body }
+  }
 
 seq_expr:
 | e = fixed(pre_seq_expr)
@@ -175,6 +191,23 @@ pre_atomic_expr:
   { Bool false }
 | TRUE
   { Bool true }
+
+(* Function definition components *)
+type_param:
+| name = uident
+  { name }
+
+cg_param:
+| name = uident COLON typ = typ
+  { { cg_name = name; cg_type = typ } }
+
+param:
+| name = lident COLON typ = typ
+  { { param_name = name; param_type = typ } }
+| name = lident COLON AMP delimited(LBRACK, separated_pair(typ, SEMI, typ), RBRACK)
+  { let t, n = $4 in { param_name = name; param_type = Fixed (TApp (Fixed (TQualified [ Name "ref" ]), [ Fixed (TApp (Fixed (TQualified [ Name "array" ]), [ t; n ])) ])) } }
+| name = lident COLON AMP typ = typ
+  { { param_name = name; param_type = Fixed (TApp (Fixed (TQualified [ Name "ref" ]), [ typ ])) } }
 
 (* Entry point *)
 fragment:

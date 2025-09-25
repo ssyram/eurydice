@@ -211,6 +211,29 @@ let compile_parse_tree (env : env) loc
         ppat_cons_one ~loc "EBound" (ppat_int ~loc i)
     | Break -> ppat_cons_zero ~loc "EBreak"
     | Bool b -> ppat_cons_one ~loc "EBool" (ppat_bool ~loc b)
+    | FunctionDef { name; type_params; cg_params; params; return_type; body } ->
+        (* Compile function definition to appropriate pattern *)
+        let compiled_type_params = ppat_list ~loc (List.map (ppat_string ~loc) type_params) in
+        let compiled_cg_params = ppat_list ~loc 
+          (List.map (fun { cg_name; cg_type } -> 
+            ppat_tuple ~loc [ ppat_string ~loc cg_name; compile_typ_with_var env cg_type ]) 
+          cg_params) in
+        let compiled_params = ppat_list ~loc 
+          (List.map (fun { param_name; param_type } -> 
+            ppat_tuple ~loc [ ppat_string ~loc param_name; compile_typ_with_var env param_type ]) 
+          params) in
+        let compiled_return_type = match return_type with
+          | Some rt -> ppat_cons_one' ~loc "Some" (compile_typ_with_var env rt)
+          | None -> ppat_cons_zero' ~loc "None" in
+        let compiled_body = compile env body in
+        ppat_cons_many ~loc "EFunctionDef" [
+          ppat_string ~loc name;
+          compiled_type_params;
+          compiled_cg_params;
+          compiled_params;
+          compiled_return_type;
+          compiled_body;
+        ]
   (* Paths *)
   and compile_path env (pt : ParseTree.path) =
     let m, n =
@@ -225,6 +248,7 @@ let compile_parse_tree (env : env) loc
     | Name s -> ppat_string ~loc s
     | Var txt -> ppat_var ~loc { txt; loc }
   (* Types *)
+  and compile_typ_with_var env pt = compile_with_var env pt compile_pre_typ
   and _compile_typ env pt = compile_with_var env pt compile_pre_typ
   and compile_typ_list_pattern env (es : ParseTree.typ list) =
     compile_list_pattern env es compile_pre_typ
