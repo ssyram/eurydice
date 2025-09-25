@@ -1,5 +1,16 @@
 (* Strictly a parse tree *)
-type pre_expr =
+type pre_function_def = {
+  name: string;
+  type_params: typ list;
+  const_params: (string * typ) list; (* For `N : size_t` syntax *)
+  params: (string * typ) list;
+  return_type: typ;
+  body: expr;
+}
+
+and function_def = pre_function_def with_vars
+
+and pre_expr =
   (* Binding most loosely *)
   | Let of string * expr * expr
   | Sequence of expr list
@@ -15,6 +26,7 @@ type pre_expr =
   | BoundVar of string
   | Break
   | Bool of bool
+  | FunctionDef of function_def
 
 and expr = pre_expr with_vars
 and 'a with_vars = PatternVar of string | ListPatternVar of string | Fixed of 'a

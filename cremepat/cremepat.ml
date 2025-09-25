@@ -211,6 +211,30 @@ let compile_parse_tree (env : env) loc
         ppat_cons_one ~loc "EBound" (ppat_int ~loc i)
     | Break -> ppat_cons_zero ~loc "EBreak"
     | Bool b -> ppat_cons_one ~loc "EBool" (ppat_bool ~loc b)
+    | FunctionDef f -> compile_function_def env f
+  (* Function definitions *)
+  and compile_function_def env f =
+    let compile_f = compile_with_var env f compile_pre_function_def in
+    compile_f
+  and compile_pre_function_def env { name; type_params; const_params; params; return_type; body } =
+    let compiled_body = compile env body in
+    let compiled_return_type = compile_with_var env return_type compile_pre_typ in
+    (* Generate pattern for DFunction constructor *)
+    ppat_cons_many ~loc "DFunction" [
+      ppat_any ~loc; (* comment *)
+      ppat_any ~loc; (* flags *)
+      ppat_int ~loc (List.length const_params); (* n_cgs *)
+      ppat_int ~loc (List.length type_params); (* n *)
+      compiled_return_type; (* return type *)
+      ppat_tuple ~loc [ (* lid *)
+        ppat_any ~loc; (* module path *)
+        ppat_string ~loc name
+      ];
+      ppat_list ~loc (List.map (fun (param_name, param_type) -> 
+        ppat_any ~loc (* binder with name and type - simplified for now *)
+      ) params);
+      compiled_body
+    ]
   (* Paths *)
   and compile_path env (pt : ParseTree.path) =
     let m, n =
@@ -254,8 +278,17 @@ let expand ~ctxt (payload : string) =
   let loc = Expansion_context.Extension.extension_point_loc ctxt in
   compile_parse_tree empty loc pt
 
+let expand_function ~ctxt (payload : string) =
+  let pt = parse payload in
+  let loc = Expansion_context.Extension.extension_point_loc ctxt in
+  compile_parse_tree empty loc pt
+
 let my_extension =
   Extension.V3.declare "cremepat" Pattern Ast_pattern.(single_expr_payload (estring __)) expand
 
+let my_function_extension =
+  Extension.V3.declare "cremepat_fun_def" Pattern Ast_pattern.(single_expr_payload (estring __)) expand_function
+
 let rule = Ppxlib.Context_free.Rule.extension my_extension
-let () = Driver.register_transformation ~rules:[ rule ] "cremepat"
+let function_rule = Ppxlib.Context_free.Rule.extension my_function_extension
+let () = Driver.register_transformation ~rules:[ rule; function_rule ] "cremepat"

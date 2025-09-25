@@ -6,12 +6,13 @@
 %token<string>  UIDENT LIDENT UVAR UVARLIST
 %token          EOF COMMA EQUALS LBRACK RBRACK LBRACKHASH LANGLE RANGLE LCURLY RCURLY
 %token          COLON COLONCOLON AMP LPAREN RPAREN LPARENHASH SEMI
-%token          MATCH TRUE FALSE LET WHILE BREAK ARROW
+%token          MATCH TRUE FALSE LET WHILE BREAK ARROW FN
 
 %type <expr> expr
 %type <path_item> path_item
 %type <pat> pat
 %type <typ> typ
+%type <function_def> function_def
 %start <expr> fragment
 
 %%
@@ -108,6 +109,8 @@ expr:
 pre_expr:
 | LET b = lident EQUALS e1 = app_expr SEMI e2 = expr
   { Let (b, e1, e2) }
+| f = function_def
+  { FunctionDef f }
 
 seq_expr:
 | e = fixed(pre_seq_expr)
@@ -175,6 +178,30 @@ pre_atomic_expr:
   { Bool false }
 | TRUE
   { Bool true }
+
+(* Function definitions *)
+
+function_def:
+| f = with_vars(pre_function_def)
+  { f }
+
+pre_function_def:
+| FN name = lident 
+  type_params = ioption(delimited(LANGLE, separated_list(COMMA, typ), RANGLE))
+  const_params = ioption(delimited(LANGLE, separated_list(COMMA, const_param), RANGLE))
+  params = delimited(LPAREN, separated_list(COMMA, param), RPAREN)
+  ARROW return_type = typ
+  body = delimited(LCURLY, expr, RCURLY)
+  { { name; 
+      type_params = Option.value ~default:[] type_params; 
+      const_params = Option.value ~default:[] const_params;
+      params; return_type; body } }
+
+const_param:
+| name = lident COLON typ = typ { (name, typ) }
+
+param:
+| name = lident COLON typ = typ { (name, typ) }
 
 (* Entry point *)
 fragment:
