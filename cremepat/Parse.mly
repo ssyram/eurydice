@@ -79,8 +79,6 @@ fixed(X):
 pre_typ:
 | t = typ ts = delimited(LANGLE, separated_list(COMMA, typ), RANGLE)
   { TApp (t, ts) }
-| delimited(LBRACK, separated_pair(typ, SEMI, typ), RBRACK)
-  { let t, n = $1 in TApp (Fixed (TQualified [ Name "array" ]), [ t; n ]) }
 | p = path
   { TQualified p }
 
@@ -204,10 +202,6 @@ cg_param:
 param:
 | name = lident COLON typ = typ
   { { param_name = name; param_type = typ } }
-| name = lident COLON AMP delimited(LBRACK, separated_pair(typ, SEMI, typ), RBRACK)
-  { let t, n = $4 in { param_name = name; param_type = Fixed (TApp (Fixed (TQualified [ Name "ref" ]), [ Fixed (TApp (Fixed (TQualified [ Name "array" ]), [ t; n ])) ])) } }
-| name = lident COLON AMP typ = typ
-  { { param_name = name; param_type = Fixed (TApp (Fixed (TQualified [ Name "ref" ]), [ typ ])) } }
 
 (* Entry point *)
 fragment:
