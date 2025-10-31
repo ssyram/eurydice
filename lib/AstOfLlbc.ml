@@ -2629,7 +2629,8 @@ let decl_of_id (env : env) (id : C.item_id) : K.decl option =
                        body ))))
   | IdGlobal id ->
       let global = env.get_nth_global id in
-      let { C.item_meta; ty; def_id; _ } = global in
+      let { C.item_meta; generics; ty; def_id; _ } = global in
+      let env = { env with generic_params = generics } in
       let name = item_meta.name in
       let def = env.get_nth_global def_id in
       L.log "AstOfLlbc" "Visiting global: %s\n%s" (string_of_name env name)
@@ -2656,18 +2657,34 @@ let decl_of_id (env : env) (id : C.item_id) : K.decl option =
             []
       in
       let body = env.get_nth_function def.init in
+      let env = push_cg_binders env generics.const_generics in
+      let env = push_type_binders env generics.types in
       L.log "AstOfLlbc" "Corresponding body:%s"
         (Charon.PrintLlbcAst.Ast.fun_decl_to_string env.format_env "  " "  " body);
       begin
         match body.body with
         | Some body ->
+            if List.length generics.const_generics <> 0 then
+              fail
+                "Global variables with const generics are not supported, please consider using \
+                 mono LLBC: %s"
+                (string_of_name env name);
             let ret_var = List.hd body.locals.locals in
             let body =
               with_locals env ty body.locals.locals (fun env ->
                   expression_of_block env ret_var.index body.body)
             in
-            Some (K.DGlobal (flags, lid_of_name env name, 0, ty, body))
-        | None -> Some (K.DExternal (None, [], 0, 0, lid_of_name env name, ty, []))
+            Some (K.DGlobal (flags, lid_of_name env name, List.length generics.types, ty, body))
+        | None ->
+            Some
+              (K.DExternal
+                 ( None,
+                   [],
+                   List.length generics.const_generics,
+                   List.length generics.types,
+                   lid_of_name env name,
+                   ty,
+                   [] ))
       end
   | IdTraitDecl _ | IdTraitImpl _ -> None
 
