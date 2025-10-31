@@ -1427,13 +1427,20 @@ let fn_ptr_is_opaque env (fn_ptr : C.fn_ptr) =
    contains type application, const generic applications, and application of trait methods to
    implement the dictionary-passing style. *)
 let rec expression_of_fn_ptr env depth (fn_ptr : C.fn_ptr) =
-  let { C.generics = { types = type_args; const_generics = const_generic_args; _ }; kind; _ } :
-      C.fn_ptr =
+  let {
+    C.generics = { types = type_args; const_generics = const_generic_args; trait_refs; _ };
+    kind;
+    _;
+  } : C.fn_ptr =
     fn_ptr
   in
 
-  let trait_refs = [] in
-
+  (* let trait_refs =
+    if true then
+      []
+    else
+      trait_refs
+  in *)
   (* We handle any kind of fn_ptr, whether it's a concrete function call, a
      concrete trait implementation method call, or an abstract trait method call
      (e.g. a call to T::f when T is a trait bound in scope). *)
@@ -1592,8 +1599,8 @@ let rec expression_of_fn_ptr env depth (fn_ptr : C.fn_ptr) =
                 if List.mem parent_name blocklisted_trait_decls then
                   []
                 else
-                  failwith "Don't know how to resolve trait_ref above (1)"
-            | _ -> failwith "Don't know how to resolve trait_ref above (2)")
+                  []
+            | _ -> [])
           trait_refs
       in
       build_trait_ref_mapping depth trait_refs
