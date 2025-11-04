@@ -226,11 +226,27 @@ let drop_unused_builtin files =
         Some d)
     files
 
+(** For those pointer to dereffed slices, we simply convert that type to slice again. I.e.,
+    `Eurydice::derefed_slice<T>*` becomes simply `Eurydice::slice<T>` *)
+let pointer_of_derefed_slice_to_slice files =
+  (object
+     inherit [_] map as super
+
+     method! visit_typ () t =
+       match t with
+       | TBuf (TApp (lid, [ t ]), _) when lid = Builtin.derefed_slice ->
+           super#visit_typ () (Builtin.mk_slice t)
+       | _ -> super#visit_typ () t
+  end)
+    #visit_files
+    () files
+
 let precleanup files =
   let files = expand_array_copies files in
   let files = remove_array_eq#visit_files (0, 0) files in
   let files = drop_unused_builtin files in
   let files = expand_slice_to_array#visit_files (0, 0) files in
+  let files = pointer_of_derefed_slice_to_slice files in
   files
 
 let merge files =
