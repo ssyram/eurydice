@@ -1684,7 +1684,18 @@ let rec expression_of_fn_ptr env depth (fn_ptr : C.fn_ptr) =
     | TPoly (ts, t) -> K.TPoly (ts, fst (Krml.Helpers.flatten_arrow t))
     | t -> fst (Krml.Helpers.flatten_arrow t) )
 
-let expression_of_fn_ptr env (fn_ptr : C.fn_ptr) = expression_of_fn_ptr env "" fn_ptr
+let expression_of_fn_ptr env (fn_ptr : C.fn_ptr) =
+  try expression_of_fn_ptr env "" fn_ptr
+  with e ->
+    Printf.eprintf "Error in expression_of_fn_ptr: %s with error: %s\n"
+      (Charon.PrintTypes.fn_ptr_to_string env.format_env fn_ptr)
+      (Printexc.to_string e);
+    if !Options.keep_going then begin
+      Printf.printf "Continuing with a placeholder expression...\n%!";
+      Krml.Helpers.any, false, TAny
+    end
+    else
+      raise e
 
 let global_is_const env id =
   match (env.get_nth_global id).global_kind with
