@@ -179,10 +179,10 @@ Supported options:|}
   in
 
   Printf.printf "1️⃣ LLBC ➡️  AST\n";
-  Eurydice.Logging.log "Phase0" "%a" pfiles files;
+  Eurydice.Logging.log "Phase0" "Phase 0:\n%a" pfiles files;
   let files = Eurydice.PreCleanup.precleanup files in
 
-  Eurydice.Logging.log "Phase1" "%a" pfiles files;
+  Eurydice.Logging.log "Phase1" "Phase 1:\n%a" pfiles files;
   let errors, files = Krml.Checker.check_everything ~warn:true files in
   if errors then
     fail __FILE__ __LINE__;
@@ -228,7 +228,7 @@ Supported options:|}
   (* Following the krml order of phases here *)
   let files = Krml.Inlining.inline_type_abbrevs files in
   let files = Krml.Monomorphization.functions files in
-  Eurydice.Logging.log "Phase2.12" "%a" pfiles files;
+  Eurydice.Logging.log "Phase2.12" "Phase 2.12:\n%a" pfiles files;
   let files = Krml.Simplify.optimize_lets files in
   let files = Krml.DataTypes.simplify files in
   (* Must happen now, before Monomorphization.datatypes, because otherwise
@@ -238,14 +238,14 @@ Supported options:|}
   let files = Krml.Monomorphization.datatypes files in
   (* Cannot use remove_unit_buffers as it is technically incorrect *)
   let files = Krml.DataTypes.remove_unit_fields#visit_files () files in
-  Eurydice.Logging.log "Phase2.13" "%a" pfiles files;
+  Eurydice.Logging.log "Phase2.13" "Phase 2.13:\n%a" pfiles files;
   let files = Krml.Inlining.inline files in
   let files =
     match config with
     | None -> files
     | Some config -> (
         let files = Eurydice.Bundles.reassign_monomorphizations files config in
-        Eurydice.Logging.log "Phase2.15" "%a" pfiles files;
+        Eurydice.Logging.log "Phase2.15" "Phase 2.15:\n%a" pfiles files;
         try
           let files = Krml.Bundles.topological_sort files in
           files
@@ -258,34 +258,34 @@ Supported options:|}
           Krml.KPrint.bprintf "Internal AST before the error:\n%a\n" pfiles files;
           fail __FILE__ __LINE__)
   in
-  Eurydice.Logging.log "Phase2.2" "%a" pfiles files;
+  Eurydice.Logging.log "Phase2.2" "Phase 2.2:\n%a" pfiles files;
   (* Sanity check for the big rewriting above. *)
   let errors, files = Krml.Checker.check_everything ~warn:true files in
   if errors then
     fail __FILE__ __LINE__;
   let files = Krml.Inlining.drop_unused files in
   let files = Eurydice.Cleanup2.remove_array_temporaries#visit_files () files in
-  Eurydice.Logging.log "Phase2.25" "%a" pfiles files;
+  Eurydice.Logging.log "Phase2.25" "Phase 2.25:\n%a" pfiles files;
   let files = Eurydice.Cleanup2.remove_array_repeats#visit_files false files in
-  Eurydice.Logging.log "Phase2.26" "%a" pfiles files;
+  Eurydice.Logging.log "Phase2.26" "Phase 2.26:\n%a" pfiles files;
   let ((map, _, _) as map3), files = Krml.DataTypes.everything files in
   Eurydice.Cleanup2.fixup_monomorphization_map map;
   let files = Eurydice.Cleanup2.remove_discriminant_reads map3 files in
-  Eurydice.Logging.log "Phase2.3" "%a" pfiles files;
+  Eurydice.Logging.log "Phase2.3" "Phase 2.3:\n%a" pfiles files;
   let files = Eurydice.Cleanup2.remove_trivial_ite#visit_files () files in
-  Eurydice.Logging.log "Phase2.4" "%a" pfiles files;
+  Eurydice.Logging.log "Phase2.4" "Phase 2.4:\n%a" pfiles files;
   let files = Eurydice.Cleanup2.remove_trivial_into#visit_files () files in
   let files = Krml.Structs.pass_by_ref files in
-  Eurydice.Logging.log "Phase2.5" "%a" pfiles files;
+  Eurydice.Logging.log "Phase2.5" "Phase 2.5:\n%a" pfiles files;
   let files = Eurydice.Cleanup2.remove_literals files in
   (* Eurydice does something more involved than krml and performs a conservative
      approximation of functions that are known to be pure readonly (i.e.,
      functions that do not write to memory). *)
   fill_readonly_table files;
   let files = Krml.Simplify.optimize_lets files in
-  Eurydice.Logging.log "Phase2.55" "%a" pfiles files;
+  Eurydice.Logging.log "Phase2.55" "Phase 2.55:\n%a" pfiles files;
   let files = Eurydice.Cleanup2.remove_array_from_fn files in
-  Eurydice.Logging.log "Phase2.6" "%a" pfiles files;
+  Eurydice.Logging.log "Phase2.6" "Phase 2.6:\n%a" pfiles files;
   (* remove_array_from_fn, above, creates further opportunities for removing unused functions. *)
   let files = Krml.Inlining.drop_unused files in
   let files = Eurydice.Cleanup2.remove_implicit_array_copies#visit_files () files in
@@ -294,26 +294,26 @@ Supported options:|}
   (* These two need to come before... *)
   let files = Krml.Inlining.cross_call_analysis files in
   let files = Krml.Simplify.remove_unused files in
-  Eurydice.Logging.log "Phase2.7" "%a" pfiles files;
+  Eurydice.Logging.log "Phase2.7" "Phase 2.7:\n%a" pfiles files;
   (* This chunk which reuses key elements of simplify2 *)
   let files = Eurydice.Cleanup2.check_addrof#visit_files () files in
   let files = Krml.Simplify.sequence_to_let#visit_files () files in
   let files = Eurydice.Cleanup2.hoist#visit_files [] files in
   let files = Eurydice.Cleanup2.fixup_hoist#visit_files () files in
-  Eurydice.Logging.log "Phase2.75" "%a" pfiles files;
+  Eurydice.Logging.log "Phase2.75" "Phase 2.75:\n%a" pfiles files;
   let files = Eurydice.Cleanup2.globalize_global_locals files in
-  Eurydice.Logging.log "Phase2.8" "%a" pfiles files;
+  Eurydice.Logging.log "Phase2.8" "Phase 2.8:\n%a" pfiles files;
   let files = Eurydice.Cleanup2.reconstruct_for_loops#visit_files () files in
   let files = Krml.Simplify.misc_cosmetic#visit_files () files in
   let files = Krml.Simplify.let_to_sequence#visit_files () files in
-  Eurydice.Logging.log "Phase2.9" "%a" pfiles files;
+  Eurydice.Logging.log "Phase2.9" "Phase 2.9:\n%a" pfiles files;
   let files = Eurydice.Cleanup2.float_comments files in
-  Eurydice.Logging.log "Phase2.95" "%a" pfiles files;
+  Eurydice.Logging.log "Phase2.95" "Phase 2.95:\n%a" pfiles files;
   let files = Eurydice.Cleanup2.bonus_cleanups#visit_files [] files in
   (* Macros stemming from globals -- FIXME why is this not Krml.AstToCStar.mk_macros_set? *)
   let files, macros = Eurydice.Cleanup2.build_macros files in
 
-  Eurydice.Logging.log "Phase3" "%a" pfiles files;
+  Eurydice.Logging.log "Phase3" "Phase 3:\n%a" pfiles files;
   let errors, files = Krml.Checker.check_everything ~warn:true files in
   if errors then
     fail __FILE__ __LINE__;
@@ -322,7 +322,7 @@ Supported options:|}
   Eurydice.Cleanup3.(also_skip_prefix_for_external_types scope_env)#visit_files () files;
   let files = Eurydice.Cleanup3.decay_cg_externals#visit_files (scope_env, false) files in
   let files = Eurydice.Cleanup3.remove_builtin_decls files in
-  Eurydice.Logging.log "Phase3.1" "%a" pfiles files;
+  Eurydice.Logging.log "Phase3.1" "Phase 3.1:\n%a" pfiles files;
   let c_name_map = Krml.GlobalNames.mapping (fst scope_env) in
 
   let open Krml in
@@ -353,7 +353,7 @@ Supported options:|}
             ds ))
       files
   in
-  Eurydice.Logging.log "Phase3.2" "%a" pfiles files;
+  Eurydice.Logging.log "Phase3.2" "Phase 3.2:\n%a" pfiles files;
 
   (* The following phase reads the "target" parameter for each file, if any, from the config
      and if set, then it adds the attribute `KRML_ATTRIBUTE_TARGET(target)` to each function
@@ -382,7 +382,7 @@ Supported options:|}
       files
   in
 
-  Eurydice.Logging.log "Phase3.3" "%a" pfiles files;
+  Eurydice.Logging.log "Phase3.3" "Phase 3.3:\n%a" pfiles files;
   let files =
     List.map
       (fun (f, ds) ->
