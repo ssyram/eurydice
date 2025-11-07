@@ -236,7 +236,7 @@ let pointer_of_derefed_slice_to_slice files =
        match t with
        | TBuf (TApp (lid, [ t ]), _) when lid = Builtin.derefed_slice ->
            super#visit_typ () (Builtin.mk_slice t)
-       | TBuf (TQualified lid, _) when Krml.Checker.essentially_slice lid ->
+       | TBuf (TQualified lid, _) when Krml.MonomorphizationState.essentially_slice lid ->
            super#visit_typ () (Builtin.mk_slice (TQualified lid))
        | _ -> super#visit_typ () t
   end)
