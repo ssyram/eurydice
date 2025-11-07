@@ -1387,3 +1387,55 @@ let remove_discriminant_reads (map : Krml.DataTypes.map) files =
   end)
     #visit_files
     () files
+
+let remove_empty_structs files =
+  let open Krml.Idents in
+  let empty_structs = (object
+
+    inherit [_] reduce
+
+    method zero = LidSet.empty
+    method plus = LidSet.union
+
+    method! visit_DType _ lid _ _ _ def =
+      if def = Flat [] then
+        LidSet.singleton lid
+      else
+        LidSet.empty
+  end)#visit_files () files in
+
+  let my_unit = TBuf (TUnit, false) in
+
+  let files = List.map (fun (f, decls) ->
+    f, List.filter (fun d -> not (LidSet.mem (lid_of_decl d) empty_structs)) decls
+  ) files in
+
+  (object
+
+    inherit [_] map as super
+
+    method! visit_TApp _ lid ts =
+      if LidSet.mem lid empty_structs then
+        my_unit
+      else
+        super#visit_TApp () lid ts
+
+    method! visit_TCgApp _ t cg =
+      let lid, _, _ = flatten_tapp (TCgApp (t, cg)) in
+      if LidSet.mem lid empty_structs then
+        my_unit
+      else
+        super#visit_TCgApp () t cg
+
+    method! visit_TQualified _ lid =
+      if LidSet.mem lid empty_structs then
+        my_unit
+      else
+        TQualified lid
+
+    method! visit_EFlat env fields =
+      if fields = [] then begin
+        EAddrOf (Krml.Helpers.eunit)
+      end else
+        super#visit_EFlat env fields
+  end)#visit_files () files
