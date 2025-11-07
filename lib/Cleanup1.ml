@@ -447,8 +447,9 @@ let remove_slice_eq =
       | [%cremepat {| core::cmp::impls::?impl::eq(#?eq..)<?t,?u>(?s1, ?s2) |}] -> begin
           match impl with
           | "{core::cmp::PartialEq<&0 mut (B)> for &1 mut (A)}"
-          | "{core::cmp::PartialEq<&0 (B)> for &1 (A)}" ->
-              assert (t = u);
+          | "{core::cmp::PartialEq<&0 (B)> for &1 (A)}"
+            when t = u ->
+              (* assert (t = u); *)
               begin
                 match flatten_tapp t with
                 | lid, [ t ], [] when lid = Builtin.derefed_slice ->
@@ -458,13 +459,15 @@ let remove_slice_eq =
                       | _ -> false
                     in
                     if not (is_flat t) then
-                      failwith "TODO: slice eq at non-flat types";
-                    with_type TBool (EApp (Builtin.(expr_of_builtin_t slice_eq [ t ]), [ s1; s2 ]))
+                      super#visit_expr ((), e.typ) e
+                    else
+                      with_type TBool
+                        (EApp (Builtin.(expr_of_builtin_t slice_eq [ t ]), [ s1; s2 ]))
                 | _ ->
                     let deref e = with_type (H.assert_tbuf e.typ) (EBufRead (e, H.zero_usize)) in
                     with_type TBool (EApp (List.hd eq, [ deref s1; deref s2 ]))
               end
-          | _ -> failwith "unknown eq impl in core::cmp::impls"
+          | _ -> super#visit_expr ((), e.typ) e
         end
       | _ -> super#visit_expr ((), e.typ) e
   end
