@@ -70,7 +70,7 @@ A monomorphic instance of array.mk_incr.call_mut_e2
 with const generics
 - K= 10
 */
-uint32_t array_mk_incr_call_mut_e2_95(void **_, size_t tupled_args)
+uint32_t array_mk_incr_call_mut_e2_95(void ***_, size_t tupled_args)
 {
   size_t i = tupled_args;
   return (uint32_t)i;
@@ -84,11 +84,9 @@ A monomorphic instance of array.mk_incr.call_once_b7
 with const generics
 - K= 10
 */
-uint32_t array_mk_incr_call_once_b7_95(size_t _)
+uint32_t array_mk_incr_call_once_b7_95(void **_, size_t _0)
 {
-  /* original Rust expression is not an lvalue in C */
-  void *lvalue = (void *)0U;
-  return array_mk_incr_call_mut_e2_95(&lvalue, _);
+  return array_mk_incr_call_mut_e2_95(&_, _0);
 }
 
 /**
@@ -105,7 +103,9 @@ Eurydice_arr_79 array_mk_incr_95(void)
     (size_t)1U,
     /* original Rust expression is not an lvalue in C */
     void *lvalue = (void *)0U;
-    arr_struct.data[i] = array_mk_incr_call_mut_e2_95(&lvalue, i););
+    /* original Rust expression is not an lvalue in C */
+    void **lvalue0 = &lvalue;
+    arr_struct.data[i] = array_mk_incr_call_mut_e2_95(&lvalue0, i););
   return arr_struct;
 }
 
@@ -163,7 +163,7 @@ A monomorphic instance of array.plus_one.call_mut_8d
 with const generics
 - K= 1
 */
-uint16_t array_plus_one_call_mut_8d_74(void **_, uint32_t tupled_args)
+uint16_t array_plus_one_call_mut_8d_74(void ***_, uint32_t tupled_args)
 {
   uint32_t x = tupled_args;
   return (uint16_t)(x + 1U);
@@ -177,11 +177,9 @@ A monomorphic instance of array.plus_one.call_once_36
 with const generics
 - K= 1
 */
-uint16_t array_plus_one_call_once_36_74(uint32_t _)
+uint16_t array_plus_one_call_once_36_74(void **_, uint32_t _0)
 {
-  /* original Rust expression is not an lvalue in C */
-  void *lvalue = (void *)0U;
-  return array_plus_one_call_mut_8d_74(&lvalue, _);
+  return array_plus_one_call_mut_8d_74(&_, _0);
 }
 
 /**
@@ -195,7 +193,9 @@ Eurydice_arr_2e array_plus_one_74(Eurydice_arr_a5 x)
   {
     /* original Rust expression is not an lvalue in C */
     void *lvalue = (void *)0U;
-    arr_mapped_str.data[0U] = array_plus_one_call_mut_8d_74(&lvalue, x.data[0U]);
+    /* original Rust expression is not an lvalue in C */
+    void **lvalue0 = &lvalue;
+    arr_mapped_str.data[0U] = array_plus_one_call_mut_8d_74(&lvalue0, x.data[0U]);
   }
   return arr_mapped_str;
 }
@@ -235,7 +235,7 @@ A monomorphic instance of array.nested_from_fn.call_mut_af
 with const generics
 - K= 4
 */
-Eurydice_arr_33 array_nested_from_fn_call_mut_af_ac(void **_, size_t tupled_args)
+Eurydice_arr_33 array_nested_from_fn_call_mut_af_ac(void ***_, size_t tupled_args)
 {
   size_t j = tupled_args;
   Eurydice_arr_33 arr_struct;
@@ -257,11 +257,9 @@ A monomorphic instance of array.nested_from_fn.call_once_f6
 with const generics
 - K= 4
 */
-Eurydice_arr_33 array_nested_from_fn_call_once_f6_ac(size_t _)
+Eurydice_arr_33 array_nested_from_fn_call_once_f6_ac(void **_, size_t _0)
 {
-  /* original Rust expression is not an lvalue in C */
-  void *lvalue = (void *)0U;
-  return array_nested_from_fn_call_mut_af_ac(&lvalue, _);
+  return array_nested_from_fn_call_mut_af_ac(&_, _0);
 }
 
 /**
@@ -278,7 +276,9 @@ Eurydice_arr_11 array_nested_from_fn_ac(void)
     (size_t)1U,
     /* original Rust expression is not an lvalue in C */
     void *lvalue = (void *)0U;
-    arr_struct.data[i] = array_nested_from_fn_call_mut_af_ac(&lvalue, i););
+    /* original Rust expression is not an lvalue in C */
+    void **lvalue0 = &lvalue;
+    arr_struct.data[i] = array_nested_from_fn_call_mut_af_ac(&lvalue0, i););
   return arr_struct;
 }
 

@@ -70,16 +70,6 @@ typedef uint8_t core_panicking_AssertKind;
 
 void closure_main(void);
 
-extern void
-closure_f_closure_closure__core__marker__Destruct_for_closure__f__closure__closure_0__1___drop_in_place(
-  closure_f_closure_closure *x0
-);
-
-extern void
-closure_f_closure__core__marker__Destruct_for_closure__f__closure_0___drop_in_place(
-  Eurydice_arr_e4 **x0
-);
-
 #if defined(__cplusplus)
 }
 #endif

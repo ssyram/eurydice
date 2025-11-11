@@ -10,7 +10,7 @@
 /**
 This function found in impl {core::ops::function::Fn<(i32), i32> for closure_fn_cast::main::closure}
 */
-int32_t closure_fn_cast_main_call_fd(void **_, int32_t tupled_args)
+int32_t closure_fn_cast_main_call_fd(void ***_, int32_t tupled_args)
 {
   int32_t x = tupled_args;
   return x + (int32_t)42;
@@ -19,7 +19,7 @@ int32_t closure_fn_cast_main_call_fd(void **_, int32_t tupled_args)
 /**
 This function found in impl {core::ops::function::FnMut<(i32), i32> for closure_fn_cast::main::closure}
 */
-int32_t closure_fn_cast_main_call_mut_68(void **state, int32_t args)
+int32_t closure_fn_cast_main_call_mut_68(void ***state, int32_t args)
 {
   return closure_fn_cast_main_call_fd(state, args);
 }
@@ -27,18 +27,18 @@ int32_t closure_fn_cast_main_call_mut_68(void **state, int32_t args)
 /**
 This function found in impl {core::ops::function::FnOnce<(i32), i32> for closure_fn_cast::main::closure}
 */
-int32_t closure_fn_cast_main_call_once_fd(int32_t _)
+int32_t closure_fn_cast_main_call_once_fd(void **_, int32_t _0)
 {
-  /* original Rust expression is not an lvalue in C */
-  void *lvalue = (void *)0U;
-  return closure_fn_cast_main_call_mut_68(&lvalue, _);
+  return closure_fn_cast_main_call_mut_68(&_, _0);
 }
 
 int32_t closure_fn_cast_main_closure_as_fn(int32_t arg1)
 {
   int32_t args = arg1;
-  void *state = (void *)0U;
-  return closure_fn_cast_main_call_once_fd(args);
+  /* original Rust expression is not an lvalue in C */
+  void *lvalue = (void *)0U;
+  void **state = &lvalue;
+  return closure_fn_cast_main_call_once_fd(state, args);
 }
 
 void closure_fn_cast_main(void)

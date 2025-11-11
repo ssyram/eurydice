@@ -30,9 +30,21 @@ Eurydice_dst_ref_65;
 #define core_result_Ok 0
 #define core_result_Err 1
 
-typedef uint8_t core_result_Result_10;
+typedef uint8_t core_result_Result_4a_tags;
 
-extern core_result_Result_10
+/**
+A monomorphic instance of core.result.Result
+with types (),  ()*
+
+*/
+typedef struct core_result_Result_4a_s
+{
+  core_result_Result_4a_tags tag;
+  void **f0;
+}
+core_result_Result_4a;
+
+extern core_result_Result_4a
 core_fmt__core__fmt__Formatter__a___write_str(core_fmt_Formatter *x0, Eurydice_dst_ref_65 x1);
 
 #define core_panicking_AssertKind_Eq 0
@@ -55,7 +67,7 @@ void partial_eq_main(void);
 /**
 This function found in impl {core::fmt::Debug for partial_eq::Enum}
 */
-core_result_Result_10 partial_eq_fmt_29(partial_eq_Enum *self, core_fmt_Formatter *f);
+core_result_Result_4a partial_eq_fmt_29(partial_eq_Enum *self, core_fmt_Formatter *f);
 
 #if defined(__cplusplus)
 }

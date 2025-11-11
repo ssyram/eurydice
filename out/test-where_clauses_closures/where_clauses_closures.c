@@ -32,7 +32,7 @@ with types size_t
 with const generics
 - K= 1
 */
-size_t where_clauses_closures_test_call_mut_1a_e3(void **_, size_t tupled_args)
+size_t where_clauses_closures_test_call_mut_1a_e3(void ***_, size_t tupled_args)
 {
   size_t i = tupled_args;
   return where_clauses_closures_of_usize_38(i);
@@ -47,11 +47,9 @@ with types size_t
 with const generics
 - K= 1
 */
-size_t where_clauses_closures_test_call_once_79_e3(size_t _)
+size_t where_clauses_closures_test_call_once_79_e3(void **_, size_t _0)
 {
-  /* original Rust expression is not an lvalue in C */
-  void *lvalue = (void *)0U;
-  return where_clauses_closures_test_call_mut_1a_e3(&lvalue, _);
+  return where_clauses_closures_test_call_mut_1a_e3(&_, _0);
 }
 
 /**
@@ -66,7 +64,9 @@ size_t_x2 where_clauses_closures_test_e3(void)
   {
     /* original Rust expression is not an lvalue in C */
     void *lvalue = (void *)0U;
-    arr_struct.data[0U] = where_clauses_closures_test_call_mut_1a_e3(&lvalue, (size_t)0U);
+    /* original Rust expression is not an lvalue in C */
+    void **lvalue0 = &lvalue;
+    arr_struct.data[0U] = where_clauses_closures_test_call_mut_1a_e3(&lvalue0, (size_t)0U);
   }
   Eurydice_arr_e4 x = arr_struct;
   size_t y = where_clauses_closures_zero_38();

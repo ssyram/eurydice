@@ -18,9 +18,21 @@ extern "C" {
 #define core_result_Ok 0
 #define core_result_Err 1
 
-typedef uint8_t core_result_Result_10;
+typedef uint8_t core_result_Result_4a_tags;
 
-extern core_result_Result_10
+/**
+A monomorphic instance of core.result.Result
+with types (),  ()*
+
+*/
+typedef struct core_result_Result_4a_s
+{
+  core_result_Result_4a_tags tag;
+  void **f0;
+}
+core_result_Result_4a;
+
+extern core_result_Result_4a
 core_array__core__fmt__Debug_for_core__array__TryFromSliceError__fmt(
   core_array_TryFromSliceError *x0,
   core_fmt_Formatter *x1
@@ -72,7 +84,7 @@ with types Eurydice_arr uint8_t[[$4size_t]], core_array_TryFromSliceError
 */
 typedef struct core_result_Result_44_s
 {
-  core_result_Result_10 tag;
+  core_result_Result_4a_tags tag;
   union {
     Eurydice_arr_e9 case_Ok;
     core_array_TryFromSliceError case_Err;
@@ -88,7 +100,7 @@ with types  Eurydice_arr uint8_t[[$4size_t]]*, core_array_TryFromSliceError
 */
 typedef struct core_result_Result_3c_s
 {
-  core_result_Result_10 tag;
+  core_result_Result_4a_tags tag;
   union {
     Eurydice_arr_e9 *case_Ok;
     core_array_TryFromSliceError case_Err;

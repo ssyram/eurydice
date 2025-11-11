@@ -90,7 +90,7 @@ A monomorphic instance of array.mk_incr.call_mut_e2
 with const generics
 - K= 10
 */
-uint32_t array_mk_incr_call_mut_e2_95(void **_, size_t tupled_args);
+uint32_t array_mk_incr_call_mut_e2_95(void ***_, size_t tupled_args);
 
 /**
 This function found in impl {core::ops::function::FnOnce<(usize), u32> for array::mk_incr::closure<K>}
@@ -100,7 +100,7 @@ A monomorphic instance of array.mk_incr.call_once_b7
 with const generics
 - K= 10
 */
-uint32_t array_mk_incr_call_once_b7_95(size_t _);
+uint32_t array_mk_incr_call_once_b7_95(void **_, size_t _0);
 
 /**
 A monomorphic instance of Eurydice.arr
@@ -159,7 +159,7 @@ A monomorphic instance of array.plus_one.call_mut_8d
 with const generics
 - K= 1
 */
-uint16_t array_plus_one_call_mut_8d_74(void **_, uint32_t tupled_args);
+uint16_t array_plus_one_call_mut_8d_74(void ***_, uint32_t tupled_args);
 
 /**
 This function found in impl {core::ops::function::FnOnce<(u32), u16> for array::plus_one::closure<K>}
@@ -169,7 +169,7 @@ A monomorphic instance of array.plus_one.call_once_36
 with const generics
 - K= 1
 */
-uint16_t array_plus_one_call_once_36_74(uint32_t _);
+uint16_t array_plus_one_call_once_36_74(void **_, uint32_t _0);
 
 /**
 A monomorphic instance of Eurydice.arr
@@ -237,7 +237,7 @@ A monomorphic instance of array.nested_from_fn.call_mut_af
 with const generics
 - K= 4
 */
-Eurydice_arr_33 array_nested_from_fn_call_mut_af_ac(void **_, size_t tupled_args);
+Eurydice_arr_33 array_nested_from_fn_call_mut_af_ac(void ***_, size_t tupled_args);
 
 /**
 This function found in impl {core::ops::function::FnOnce<(usize), @Array<usize, K>> for array::nested_from_fn::closure<K>}
@@ -247,7 +247,7 @@ A monomorphic instance of array.nested_from_fn.call_once_f6
 with const generics
 - K= 4
 */
-Eurydice_arr_33 array_nested_from_fn_call_once_f6_ac(size_t _);
+Eurydice_arr_33 array_nested_from_fn_call_once_f6_ac(void **_, size_t _0);
 
 /**
 A monomorphic instance of Eurydice.arr
@@ -274,30 +274,6 @@ bool array_const_eq_fd(Eurydice_arr_b2 x, Eurydice_arr_b2 y);
 void array_main(void);
 
 void array_references(void);
-
-#define array_mk_incr_closure__core__marker__Destruct_for_array__mk_incr__closure_K___drop_in_place(x_0, x_1, _ret_t) array_mk_incr_closure__core__marker__Destruct_for_array__mk_incr__closure_K___drop_in_place_(x_0, x_1)
-
-extern void
-array_mk_incr_closure__core__marker__Destruct_for_array__mk_incr__closure_K___drop_in_place_(
-  size_t x0,
-  void **x1
-);
-
-#define array_nested_from_fn_closure__core__marker__Destruct_for_array__nested_from_fn__closure_K___drop_in_place(x_0, x_1, _ret_t) array_nested_from_fn_closure__core__marker__Destruct_for_array__nested_from_fn__closure_K___drop_in_place_(x_0, x_1)
-
-extern void
-array_nested_from_fn_closure__core__marker__Destruct_for_array__nested_from_fn__closure_K___drop_in_place_(
-  size_t x0,
-  void **x1
-);
-
-#define array_plus_one_closure__core__marker__Destruct_for_array__plus_one__closure_K___drop_in_place(x_0, x_1, _ret_t) array_plus_one_closure__core__marker__Destruct_for_array__plus_one__closure_K___drop_in_place_(x_0, x_1)
-
-extern void
-array_plus_one_closure__core__marker__Destruct_for_array__plus_one__closure_K___drop_in_place_(
-  size_t x0,
-  void **x1
-);
 
 #if defined(__cplusplus)
 }

@@ -399,7 +399,16 @@ let remove_array_from_fn files =
             let t_src, t_dst =
               match ts with
               | [ t_src; t_state; t_dst ] ->
-                  assert (t_state = TUnit);
+                  begin
+                    match t_state with
+                    | TUnit | TBuf (TUnit, _) -> ()
+                    | _ ->
+                        let fail fmt =
+                          let b = Buffer.create 256 in
+                          Printf.kbprintf (fun b -> failwith (Buffer.contents b)) b fmt
+                        in
+                        fail "t_state is not () in array map and it is %a" ptyp t_state
+                  end;
                   L.log "Cleanup2" "found array map from %a to %a" ptyp t_src ptyp t_dst;
                   t_src, t_dst
               | _ ->
