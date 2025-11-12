@@ -23,7 +23,7 @@ with const generics
 */
 typedef struct Eurydice_arr_3f_s { uint8_t data[5U]; } Eurydice_arr_3f;
 
-typedef Eurydice_arr_3f issue_96_MyStruct;
+typedef struct issue_96_MyStruct_s { Eurydice_arr_3f fst; } issue_96_MyStruct;
 
 typedef struct issue_96_MyStruct2_s
 {
@@ -32,7 +32,7 @@ typedef struct issue_96_MyStruct2_s
 }
 issue_96_MyStruct2;
 
-void issue_96_use_it(Eurydice_arr_3f *x);
+void issue_96_use_it(issue_96_MyStruct *x);
 
 void issue_96_use_it2(issue_96_MyStruct2 *x);
 

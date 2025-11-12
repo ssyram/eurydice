@@ -7,9 +7,9 @@
 
 #include "issue_106.h"
 
-uint8_t issue_106_generate(void)
+issue_106_MyStruct issue_106_generate(void)
 {
-  return 5U;
+  return (KRML_CLITERAL(issue_106_MyStruct){ .v = 5U });
 }
 
 void issue_106_main(void)
@@ -17,15 +17,15 @@ void issue_106_main(void)
 
 }
 
-uint8_t issue_106_use_it(uint8_t *x)
+uint8_t issue_106_use_it(issue_106_MyStruct *x)
 {
-  return x[0U];
+  return x->v;
 }
 
 uint8_t issue_106_use_ref(void)
 {
   /* original Rust expression is not an lvalue in C */
-  uint8_t lvalue = issue_106_generate();
+  issue_106_MyStruct lvalue = issue_106_generate();
   return issue_106_use_it(&lvalue);
 }
 

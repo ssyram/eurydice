@@ -55,8 +55,8 @@ inline core_option_Option_18 core_option_as_ref_cd_ca(core_option_Option_62 *sel
 /**
 This function found in impl {option::S}
 */
-core_option_Option_18 option_option_ref_b6(core_option_Option_62 *self)
+core_option_Option_18 option_option_ref_b6(option_S *self)
 {
-  return core_option_as_ref_cd_ca(self);
+  return core_option_as_ref_cd_ca(&self->v);
 }
 

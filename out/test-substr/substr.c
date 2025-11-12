@@ -7,6 +7,13 @@
 
 #include "substr.h"
 
+/**
+A monomorphic instance of core.ops.range.RangeFrom
+with types size_t
+
+*/
+typedef struct RangeFrom_08_s { size_t start; } RangeFrom_08;
+
 #define None 0
 #define Some 1
 
@@ -26,37 +33,37 @@ Option_26;
 
 extern Option_26
 core_str_traits__core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize__core__marker__Sized_usize____get(
-  size_t x0,
+  RangeFrom_08 x0,
   Eurydice_dst_ref_65 x1
 );
 
 extern Option_26
 core_str_traits__core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize__core__marker__Sized_usize____get_mut(
-  size_t x0,
+  RangeFrom_08 x0,
   Eurydice_dst_ref_65 x1
 );
 
 extern Eurydice_dst_ref_65
 core_str_traits__core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize__core__marker__Sized_usize____get_unchecked(
-  size_t x0,
+  RangeFrom_08 x0,
   Eurydice_dst_ref_65 x1
 );
 
 extern Eurydice_dst_ref_65
 core_str_traits__core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize__core__marker__Sized_usize____get_unchecked_mut(
-  size_t x0,
+  RangeFrom_08 x0,
   Eurydice_dst_ref_65 x1
 );
 
 extern Eurydice_dst_ref_65
 core_str_traits__core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize__core__marker__Sized_usize____index(
-  size_t x0,
+  RangeFrom_08 x0,
   Eurydice_dst_ref_65 x1
 );
 
 extern Eurydice_dst_ref_65
 core_str_traits__core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize__core__marker__Sized_usize____index_mut(
-  size_t x0,
+  RangeFrom_08 x0,
   Eurydice_dst_ref_65 x1
 );
 
@@ -72,8 +79,8 @@ void substr_main(void)
       core_str_traits__core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize__core__marker__Sized_usize____index,
       core_str_traits__core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize__core__marker__Sized_usize____index_mut,
       str,
-      (size_t)1U,
-      size_t,
+      (KRML_CLITERAL(RangeFrom_08){ .start = (size_t)1U }),
+      RangeFrom_08,
       Eurydice_c_char_t [],
       Eurydice_dst_ref_65);
   EURYDICE_ASSERT(core_str__str__len(take) == (size_t)2U, "panic!");

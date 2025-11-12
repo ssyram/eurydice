@@ -117,10 +117,10 @@ A monomorphic instance of array.mk_incr2.call_mut_eb
 with const generics
 - K= 10
 */
-uint32_t array_mk_incr2_call_mut_eb_95(uint32_t **_, size_t tupled_args)
+uint32_t array_mk_incr2_call_mut_eb_95(array_mk_incr2_closure_40 *_, size_t tupled_args)
 {
   size_t i = tupled_args;
-  return (uint32_t)i + _[0U][0U];
+  return (uint32_t)i + _->fst[0U];
 }
 
 /**
@@ -131,7 +131,7 @@ A monomorphic instance of array.mk_incr2.call_once_ad
 with const generics
 - K= 10
 */
-uint32_t array_mk_incr2_call_once_ad_95(uint32_t *_, size_t _0)
+uint32_t array_mk_incr2_call_once_ad_95(array_mk_incr2_closure_40 _, size_t _0)
 {
   return array_mk_incr2_call_mut_eb_95(&_, _0);
 }
@@ -150,7 +150,7 @@ Eurydice_arr_79 array_mk_incr2_95(void)
     (size_t)10U,
     (size_t)1U,
     /* original Rust expression is not an lvalue in C */
-    uint32_t *lvalue = &j;
+    array_mk_incr2_closure_40 lvalue = { .fst = &j };
     arr_struct.data[i] = array_mk_incr2_call_mut_eb_95(&lvalue, i););
   return arr_struct;
 }
@@ -208,10 +208,14 @@ A monomorphic instance of array.nested_from_fn.closure.call_mut_74
 with const generics
 - K= 4
 */
-size_t array_nested_from_fn_closure_call_mut_74_ac(size_t **_, size_t tupled_args)
+size_t
+array_nested_from_fn_closure_call_mut_74_ac(
+  array_nested_from_fn_closure_closure_44 *_,
+  size_t tupled_args
+)
 {
   size_t i = tupled_args;
-  return i + _[0U][0U];
+  return i + _->fst[0U];
 }
 
 /**
@@ -222,7 +226,11 @@ A monomorphic instance of array.nested_from_fn.closure.call_once_4d
 with const generics
 - K= 4
 */
-size_t array_nested_from_fn_closure_call_once_4d_ac(size_t *_, size_t _0)
+size_t
+array_nested_from_fn_closure_call_once_4d_ac(
+  array_nested_from_fn_closure_closure_44 _,
+  size_t _0
+)
 {
   return array_nested_from_fn_closure_call_mut_74_ac(&_, _0);
 }
@@ -244,7 +252,7 @@ Eurydice_arr_33 array_nested_from_fn_call_mut_af_ac(void ***_, size_t tupled_arg
     (size_t)4U,
     (size_t)1U,
     /* original Rust expression is not an lvalue in C */
-    size_t *lvalue = &j;
+    array_nested_from_fn_closure_closure_44 lvalue = { .fst = &j };
     arr_struct.data[i] = array_nested_from_fn_closure_call_mut_74_ac(&lvalue, i););
   return arr_struct;
 }

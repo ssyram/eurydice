@@ -40,7 +40,7 @@ typedef struct core_option_Option_62_s
 }
 core_option_Option_62;
 
-typedef core_option_Option_62 option_S;
+typedef struct option_S_s { core_option_Option_62 v; } option_S;
 
 typedef Eurydice_arr_88 option_Val;
 
@@ -93,7 +93,7 @@ core_option_Option_18 core_option_as_ref_cd_ca(core_option_Option_62 *self);
 /**
 This function found in impl {option::S}
 */
-core_option_Option_18 option_option_ref_b6(core_option_Option_62 *self);
+core_option_Option_18 option_option_ref_b6(option_S *self);
 
 #if defined(__cplusplus)
 }

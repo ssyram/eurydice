@@ -15,13 +15,13 @@
 extern "C" {
 #endif
 
-typedef uint8_t issue_106_MyStruct;
+typedef struct issue_106_MyStruct_s { uint8_t v; } issue_106_MyStruct;
 
-uint8_t issue_106_generate(void);
+issue_106_MyStruct issue_106_generate(void);
 
 void issue_106_main(void);
 
-uint8_t issue_106_use_it(uint8_t *x);
+uint8_t issue_106_use_it(issue_106_MyStruct *x);
 
 uint8_t issue_106_use_ref(void);
 
