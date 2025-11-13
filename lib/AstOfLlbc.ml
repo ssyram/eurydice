@@ -1803,6 +1803,17 @@ let destruct_arr_dst_ref t =
       Some (lid, t_u)
   | _ -> None
 
+let is_non_null_ty env internal_ty candidate =
+  let is_non_null_id id =
+    let adt_decl = env.get_nth_type id in
+    adt_decl.item_meta.lang_item = Some "NonNull"
+  in
+  match candidate with
+  | C.TAdt { id = TAdtId id; generics = { types = [ ty ]; _ } } ->
+      Charon.Substitute.erase_regions ty = Charon.Substitute.erase_regions internal_ty
+      && is_non_null_id id
+  | _ -> false
+
 let expression_of_rvalue (env : env) (p : C.rvalue) expected_ty : K.expr =
   match p with
   | Use op -> expression_of_operand env op
@@ -1839,6 +1850,12 @@ let expression_of_rvalue (env : env) (p : C.rvalue) expected_ty : K.expr =
       K.(
         with_type (TInt SizeT)
           (EApp (Builtin.(expr_of_builtin_t alignof [ t ]), [ Krml.Helpers.eunit ])))
+  (* Handle transmute<NonNull<Fields>, *const Fields>(copy (( * expr).0)) ==> expr *)
+  | UnaryOp
+      ( Cast (CastTransmute (non_null_ty, TRawPtr (internal_ty, _))),
+        Copy { kind = PlaceProjection ({ kind = PlaceProjection (place, Deref); _ }, _); _ } )
+    when is_non_null_ty env internal_ty non_null_ty && is_box_place place ->
+      expression_of_place env place
   | UnaryOp (Cast (CastScalar (_, dst)), e) ->
       let dst = typ_of_literal_ty env dst in
       K.with_type dst (K.ECast (expression_of_operand env e, dst))
