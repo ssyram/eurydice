@@ -2026,8 +2026,8 @@ let expression_of_rvalue (env : env) (p : C.rvalue) expected_ty : K.expr =
             in
             let coercion =
               K.with_type
-                (K.TBuf (Builtin.c_void_t, false))
-                (K.ECast (e, K.TBuf (Builtin.c_void_t, false)))
+                (K.TBuf (Builtin.c_void_t, const))
+                (K.ECast (e, K.TBuf (Builtin.c_void_t, const)))
             in
             (* Do not use `mk_reference` here,
                as `e` itself is already the target, not its reference *)
@@ -2405,8 +2405,14 @@ and expression_of_statement_kind (env : env) (ret_var : C.local_id) (s : C.state
           when RustNames.is_vec env id generics ->
             (* Will decay. See comment above maybe_addrof *)
             rhs
-        | FunId (FBuiltin (Index { is_array = false; mutability = _; is_range = false })), _ ->
-            K.(with_type (TBuf (rhs.typ, false)) (EAddrOf rhs))
+        | FunId (FBuiltin (Index { is_array = false; mutability = ref_kind; is_range = false })), _
+          ->
+            let const =
+              match ref_kind with
+              | C.RShared -> true
+              | RMut -> false
+            in
+            K.(with_type (TBuf (rhs.typ, const)) (EAddrOf rhs))
         | _ -> rhs
       in
       Krml.Helpers.with_unit K.(EAssign (dest, rhs))
