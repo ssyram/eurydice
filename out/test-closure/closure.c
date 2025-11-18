@@ -60,12 +60,12 @@ Eurydice_arr_81 closure_f(void)
   return a;
 }
 
-typedef struct _size_t__x2_s
+typedef struct const_size_t__x2_s
 {
-  size_t *fst;
-  size_t *snd;
+  const size_t *fst;
+  const size_t *snd;
 }
-_size_t__x2;
+const_size_t__x2;
 
 void closure_main(void)
 {
@@ -73,7 +73,7 @@ void closure_main(void)
   Eurydice_arr_81 lvalue = closure_f();
   size_t actual = lvalue.data->data[0U];
   size_t expected = (size_t)0U;
-  _size_t__x2 uu____0 = { .fst = &actual, .snd = &expected };
+  const_size_t__x2 uu____0 = { .fst = &actual, .snd = &expected };
   EURYDICE_ASSERT(uu____0.fst[0U] == uu____0.snd[0U], "panic!");
 }
 

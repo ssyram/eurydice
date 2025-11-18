@@ -17,7 +17,7 @@ void issue_106_main(void)
 
 }
 
-uint8_t issue_106_use_it(issue_106_MyStruct *x)
+uint8_t issue_106_use_it(const issue_106_MyStruct *x)
 {
   return x->v;
 }

@@ -23,12 +23,12 @@ with const generics
 */
 typedef struct Eurydice_arr_e4_s { size_t data[1U]; } Eurydice_arr_e4;
 
-typedef struct closure_f_closure_s { Eurydice_arr_e4 *fst; } closure_f_closure;
+typedef struct closure_f_closure_s { const Eurydice_arr_e4 *fst; } closure_f_closure;
 
 typedef struct closure_f_closure_closure_s
 {
-  Eurydice_arr_e4 *fst;
-  size_t *snd;
+  const Eurydice_arr_e4 *fst;
+  const size_t *snd;
 }
 closure_f_closure_closure;
 

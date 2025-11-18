@@ -21,7 +21,7 @@ issue_106_MyStruct issue_106_generate(void);
 
 void issue_106_main(void);
 
-uint8_t issue_106_use_it(issue_106_MyStruct *x);
+uint8_t issue_106_use_it(const issue_106_MyStruct *x);
 
 uint8_t issue_106_use_ref(void);
 

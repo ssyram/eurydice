@@ -12,9 +12,9 @@ void dyn_trait_main(void)
 
 }
 
-void dyn_trait_use_trait(Eurydice_dst_ref_dd t)
+void dyn_trait_use_trait(Eurydice_dst_ref_shared_dd t)
 {
-  Eurydice_dst_ref_dd uu____0 = t;
+  Eurydice_dst_ref_shared_dd uu____0 = t;
   uu____0.meta->method_method(uu____0);
 }
 
