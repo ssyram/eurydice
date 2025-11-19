@@ -38,6 +38,12 @@ let dst_ref_mut_decl =
       Flat [ Some "ptr", (TBuf (TBound 1, false), false); Some "meta", (TBound 0, false) ] )
 
 let mk_dst_ref ~const (t : K.typ) (meta : K.typ) : K.typ =
+  let const =
+    if !Options.no_const then
+      false
+    else
+      const
+  in
   K.TApp
     ( (if const then
          dst_ref_shared
