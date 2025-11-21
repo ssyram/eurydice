@@ -438,27 +438,29 @@ let remove_slice_eq =
     inherit [_] map as super
 
     method private do_it ~const eq t u s1 s2 e =
-      assert (t = u);
-      let slice_eq =
-        if const then
-          Builtin.slice_eq_shared
-        else
-          Builtin.slice_eq_mut
-      in
-      match flatten_tapp t with
-      | lid, [ t ], [] when lid = Builtin.derefed_slice ->
-          let rec is_flat = function
-            | TArray (t, _) -> is_flat t
-            | TInt _ | TBool | TUnit -> true
-            | _ -> false
-          in
-          if not (is_flat t) then
-            super#visit_expr_w () e
+      if t <> u then
+        e
+      else
+        let slice_eq =
+          if const then
+            Builtin.slice_eq_shared
           else
-            with_type TBool (EApp (Builtin.expr_of_builtin_t slice_eq [ t ], [ s1; s2 ]))
-      | _ ->
-          let deref e = with_type (H.assert_tbuf e.typ) (EBufRead (e, H.zero_usize)) in
-          with_type TBool (EApp (List.hd eq, [ deref s1; deref s2 ]))
+            Builtin.slice_eq_mut
+        in
+        match flatten_tapp t with
+        | lid, [ t ], [] when lid = Builtin.derefed_slice ->
+            let rec is_flat = function
+              | TArray (t, _) -> is_flat t
+              | TInt _ | TBool | TUnit -> true
+              | _ -> false
+            in
+            if not (is_flat t) then
+              e
+            else
+              with_type TBool (EApp (Builtin.expr_of_builtin_t slice_eq [ t ], [ s1; s2 ]))
+        | _ ->
+            let deref e = with_type (H.assert_tbuf e.typ) (EBufRead (e, H.zero_usize)) in
+            with_type TBool (EApp (List.hd eq, [ deref s1; deref s2 ]))
 
     method! visit_expr _ e =
       match e with
@@ -467,7 +469,7 @@ let remove_slice_eq =
           | "{core::cmp::PartialEq<&0 mut (B)> for &1 mut (A)}" ->
               self#do_it ~const:false eq t u s1 s2 e
           | "{core::cmp::PartialEq<&0 (B)> for &1 (A)}" -> self#do_it ~const:true eq t u s1 s2 e
-          | _ -> super#visit_expr ((), e.typ) e
+          | _ -> e
         end
       | _ -> super#visit_expr ((), e.typ) e
   end

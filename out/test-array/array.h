@@ -15,6 +15,8 @@
 extern "C" {
 #endif
 
+typedef Eurydice_unknown_struct core_fmt_Arguments;
+
 /**
 A monomorphic instance of Eurydice.arr
 with types uint32_t

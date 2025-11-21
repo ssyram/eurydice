@@ -15,6 +15,8 @@
 extern "C" {
 #endif
 
+typedef Eurydice_unknown_struct core_fmt_Arguments;
+
 #define core_panicking_AssertKind_Eq 0
 #define core_panicking_AssertKind_Ne 1
 #define core_panicking_AssertKind_Match 2

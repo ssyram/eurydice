@@ -15,6 +15,12 @@
 extern "C" {
 #endif
 
+typedef Eurydice_unknown_struct core_fmt_Arguments;
+
+typedef Eurydice_unknown_struct core_array_TryFromSliceError;
+
+typedef Eurydice_unknown_struct core_fmt_Formatter;
+
 #define core_result_Ok 0
 #define core_result_Err 1
 

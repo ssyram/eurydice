@@ -15,6 +15,8 @@
 extern "C" {
 #endif
 
+typedef Eurydice_unknown_struct core_fmt_Arguments;
+
 extern bool
 core_cmp_impls__core__cmp__PartialEq_u32__for_u32__eq(const uint32_t *x0, const uint32_t *x1);
 

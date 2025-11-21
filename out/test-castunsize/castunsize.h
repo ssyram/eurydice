@@ -15,6 +15,8 @@
 extern "C" {
 #endif
 
+typedef Eurydice_unknown_struct core_fmt_Arguments;
+
 typedef struct castunsize_T_s
 {
   uint32_t foo;

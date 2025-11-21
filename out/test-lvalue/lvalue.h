@@ -15,6 +15,8 @@
 extern "C" {
 #endif
 
+typedef Eurydice_unknown_struct alloc_vec_Vec;
+
 #define lvalue_A 0
 #define lvalue_B 1
 #define lvalue_C 2

@@ -14,6 +14,10 @@
 #include "krml/internal/target.h"
 #include "krml/lowstar_endianness.h"
 
+typedef struct {
+  char *field;
+} Eurydice_unknown_struct;
+
 // C++ HELPERS
 
 #if defined(__cplusplus)
@@ -129,8 +133,8 @@ typedef struct Eurydice_mut_borrow_slice_i16_s {
 #define core_array__core__clone__Clone_for__Array_T__N___clone(                \
     len, src, elem_type, _ret_t)                                               \
   (*(src))
-#define TryFromSliceError uint8_t
-#define core_array_TryFromSliceError uint8_t
+// #define TryFromSliceError uint8_t
+// #define core_array_TryFromSliceError uint8_t
 
 // Distinguished support for some PartialEq trait implementations
 //
@@ -420,7 +424,7 @@ typedef void Eurydice_c_void_t;
 //
 // This is temporary. Ultimately we want to be able to extract all of this.
 
-typedef void *core_fmt_Formatter;
+// typedef void *core_fmt_Formatter;
 #define core_fmt_rt__core__fmt__rt__Argument__a___new_display(x1, x2, x3, x4)  \
   NULL
 
@@ -474,7 +478,7 @@ typedef struct {
   char *ptr;
   size_t len;      /* current length, in elements */
   size_t capacity; /* the size of the allocation, in number of elements */
-} Eurydice_vec, alloc_vec_Vec;
+} Eurydice_vec;
 
 // This is a helper that Eurydice has special knowledge about. Essentially,
 // allocation functions return a result type that has been monomorphized, say,

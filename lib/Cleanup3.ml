@@ -146,11 +146,12 @@ let also_skip_prefix_for_external_types (scope_env, _) =
   end
 
 let add_opaque_names files =
-  let new_file =
-    let mapper lident =
-      Ast.DType (lident, [], 0, 0, Abbrev (TQualified ([ "Eurydice" ], "unknown_struct")))
-    in
-    let decls = List.map mapper !AstOfLlbc.opaque_names in
-    "opaque_names", decls
-  in
-  new_file :: files
+  match files with
+  | [] -> files
+  | files ->
+      let former, (name, decls) = Krml.KList.split_at_last files in
+      let mapper lident =
+        Ast.DType (lident, [], 0, 0, Abbrev (TQualified ([ "Eurydice" ], "unknown_struct")))
+      in
+      let new_decls = List.map mapper !AstOfLlbc.opaque_names in
+      former @ [ name, new_decls @ decls ]

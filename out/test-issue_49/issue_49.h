@@ -15,6 +15,8 @@
 extern "C" {
 #endif
 
+typedef Eurydice_unknown_struct core_fmt_Arguments;
+
 #define core_cmp_Ordering_Less -1
 #define core_cmp_Ordering_Equal 0
 #define core_cmp_Ordering_Greater 1

@@ -15,6 +15,8 @@
 extern "C" {
 #endif
 
+typedef Eurydice_unknown_struct core_fmt_Arguments;
+
 static inline uint32_t core_num__u32__count_ones(uint32_t x0);
 
 #define CORE_NUM__U32__MAX (~0U)

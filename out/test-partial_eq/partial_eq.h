@@ -15,6 +15,10 @@
 extern "C" {
 #endif
 
+typedef Eurydice_unknown_struct core_fmt_Arguments;
+
+typedef Eurydice_unknown_struct core_fmt_Formatter;
+
 /**
 A monomorphic instance of Eurydice.dst_ref_shared
 with types Eurydice_c_char_t, size_t

@@ -15,6 +15,8 @@
 extern "C" {
 #endif
 
+typedef Eurydice_unknown_struct core_fmt_Arguments;
+
 extern int32_t core_clone_impls__core__clone__Clone_for_i32__clone(const int32_t *x0);
 
 extern size_t core_clone_impls__core__clone__Clone_for_usize__clone(const size_t *x0);

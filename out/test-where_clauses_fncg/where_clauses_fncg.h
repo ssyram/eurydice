@@ -15,6 +15,8 @@
 extern "C" {
 #endif
 
+typedef Eurydice_unknown_struct core_fmt_Arguments;
+
 static inline uint64_t core_convert_num__core__convert__From_u8__for_u64__from(uint8_t x0);
 
 #define core_panicking_AssertKind_Eq 0

@@ -15,6 +15,8 @@
 extern "C" {
 #endif
 
+typedef Eurydice_unknown_struct core_fmt_Arguments;
+
 /**
 This function found in impl {core::cmp::PartialEq<()> for ()}
 */

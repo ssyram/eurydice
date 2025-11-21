@@ -15,6 +15,8 @@
 extern "C" {
 #endif
 
+typedef Eurydice_unknown_struct core_fmt_Arguments;
+
 static inline Eurydice_array_u8x4 core_num__u32__to_be_bytes(uint32_t x0);
 
 /**
