@@ -418,7 +418,7 @@ typedef void Eurydice_c_void_t;
   (KRML_CLITERAL(Eurydice_slice){(void *)(ptr), len})
 
 // FIXME: add dedicated extraction to extract NonNull<T> as T*
-#define core_ptr_non_null_NonNull void *
+// #define core_ptr_non_null_NonNull void *
 
 // PRINTING
 //
