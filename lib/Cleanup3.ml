@@ -144,3 +144,13 @@ let also_skip_prefix_for_external_types (scope_env, _) =
         if actual <> fst target then
           KPrint.bprintf "Warning! The skip_prefix options generate name conflicts\n"
   end
+
+let add_opaque_names files =
+  let new_file =
+    let mapper lident =
+      Ast.DType (lident, [], 0, 0, Abbrev (TQualified ([ "Eurydice" ], "unknown_struct")))
+    in
+    let decls = List.map mapper !AstOfLlbc.opaque_names in
+    "opaque_names", decls
+  in
+  new_file :: files

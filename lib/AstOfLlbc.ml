@@ -2612,6 +2612,8 @@ let flags_of_meta (meta : C.item_meta) : K.flags =
             meta.attr_info.attributes));
   ]
 
+let opaque_names = ref []
+
 let decl_of_id (env : env) (id : C.item_id) : K.decl option =
   match id with
   | IdType id -> begin
@@ -2629,7 +2631,10 @@ let decl_of_id (env : env) (id : C.item_id) : K.decl option =
       let env = push_type_binders env type_params in
 
       match kind with
-      | Union _ | Opaque | TDeclError _ -> None
+      | Union _ | TDeclError _ -> None
+      | Opaque ->
+          opaque_names := name :: !opaque_names;
+          None
       | Struct fields ->
           let fields =
             List.mapi
