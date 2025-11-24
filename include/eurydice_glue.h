@@ -15,7 +15,7 @@
 #include "krml/lowstar_endianness.h"
 
 typedef struct {
-  char *field;
+  char *resource;
 } Eurydice_unknown_struct;
 
 // C++ HELPERS

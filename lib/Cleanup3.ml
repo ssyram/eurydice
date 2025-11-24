@@ -157,17 +157,40 @@ let add_opaque_names files =
       former @ [ name, new_decls @ decls ]
 
 let impl_drop_in_place files =
-  let c_free_func = with_type (TArrow (TBuf (B.c_void_t, false), TUnit)) (EQualified ([ ], "free")) in
-  let mapper = function
-  | DExternal (cc, flags, 0, 0, (_, "drop_in_place" as f_name), typ, []) as ext -> (
-    let (ret, args) = Helpers.flatten_arrow typ in
-    match args, ret with
-    | [ TBuf (TQualified t, _) as arg_typ ], TUnit when List.mem t !AstOfLlbc.opaque_names ->
-        let body =
-          with_type TUnit (EApp (c_free_func, [ with_type (TBuf (B.c_void_t, false)) (ECast (with_type arg_typ (Krml.Ast.EBound 0), TBuf (B.c_void_t, false))) ]))
-        in
-        DFunction (cc, flags, 0, 0, typ, f_name, [], body)
-    | _ -> ext)
-  | x -> x
+  let c_free_func =
+    with_type (TArrow (TBuf (B.c_void_t, false), TUnit)) (EQualified ([], "free"))
   in
-  List.map (fun (name, decls) -> (name, List.map mapper decls)) files
+  let cast_to_void_ptr obj =
+    with_type (TBuf (B.c_void_t, false)) (ECast (obj, TBuf (B.c_void_t, false)))
+  in
+  let get_resource_ptr obj = with_type (TBuf (B.c_void_t, false)) (EField (obj, "resource")) in
+  let mapper = function
+    | DExternal (cc, flags, 0, 0, ((_, "drop_in_place") as f_name), typ, []) as ext -> (
+        let ret, args = Helpers.flatten_arrow typ in
+        match args, ret with
+        | [ (TBuf (TQualified t, _) as arg_typ) ], TUnit when List.mem t !AstOfLlbc.opaque_names ->
+            let body =
+              with_type TUnit
+                (EApp
+                   ( c_free_func,
+                     [
+                       Krml.Ast.EBound 0
+                       |> Helpers.mk_deref ~const:false (TQualified t)
+                       |> get_resource_ptr |> cast_to_void_ptr;
+                     ] ))
+            in
+            let arg_binder =
+              with_type arg_typ
+                {
+                  name = "arg";
+                  mut = true;
+                  mark = ref (Mark.Present, Mark.AtMost 1);
+                  meta = [];
+                  atom = Atom.fresh ();
+                }
+            in
+            DFunction (cc, flags, 0, 0, TUnit, f_name, [ arg_binder ], body)
+        | _ -> ext)
+    | x -> x
+  in
+  List.map (fun (name, decls) -> name, List.map mapper decls) files
