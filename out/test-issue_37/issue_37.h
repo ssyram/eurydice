@@ -25,6 +25,13 @@ typedef struct Eurydice_arr_60_s { uint8_t data[32U]; } Eurydice_arr_60;
 
 Eurydice_arr_60 issue_37_b(Eurydice_borrow_slice_u8 x);
 
+/**
+A monomorphic instance of core.hint.black_box
+with types Eurydice_arr uint8_t[[$32size_t]]
+
+*/
+extern Eurydice_arr_60 core_hint_black_box_b4(Eurydice_arr_60 x0);
+
 Eurydice_arr_60 issue_37_bb(Eurydice_borrow_slice_u8 x);
 
 void issue_37_main(void);

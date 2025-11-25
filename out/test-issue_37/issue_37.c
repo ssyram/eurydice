@@ -14,7 +14,7 @@ Eurydice_arr_60 issue_37_b(Eurydice_borrow_slice_u8 x)
 
 Eurydice_arr_60 issue_37_bb(Eurydice_borrow_slice_u8 x)
 {
-  return core_hint_black_box(issue_37_b(x), Eurydice_arr_60, Eurydice_arr_60);
+  return core_hint_black_box_b4(issue_37_b(x));
 }
 
 void issue_37_main(void)

@@ -2718,7 +2718,24 @@ let decl_of_id (env : env) (id : C.item_id) : K.decl option =
           | None, _ ->
               (* Opaque function *)
               let { K.n_cgs; n }, t = typ_of_signature env signature in
-              Some (K.DExternal (None, [ Krml.Common.MonoExtFunc ], n_cgs, n, name, t, []))
+              let is_no_mono_name name =
+                match name with
+                | [ "core"; "array" ], "from_fn" -> true
+                | "core" :: "array" :: _, "map" -> true
+                | [ "core"; "slice"; "{@Slice<T>}" ], "len" -> true
+                | [ "core"; "slice"; "{@Slice<T>}" ], "copy_from_slice" -> true
+                | [ "core"; "slice"; "{@Slice<T>}" ], "split_at" -> true
+                | [ "core"; "slice"; "{@Slice<T>}" ], "split_at_mut" -> true
+                | "core" :: "array" :: _, "as_slice" -> true
+                | _ -> false
+              in
+              let flags =
+                if is_no_mono_name name then
+                  []
+                else
+                  [ Krml.Common.MonoExtFunc ]
+              in
+              Some (K.DExternal (None, flags, n_cgs, n, name, t, []))
           | Some { locals; body; _ }, _ ->
               if Option.is_some decl.is_global_initializer then
                 None
@@ -2887,7 +2904,7 @@ let decl_of_id (env : env) (id : C.item_id) : K.decl option =
             Some
               (K.DExternal
                  ( None,
-                   [ Krml.Common.MonoExtFunc ],
+                   [],
                    List.length generics.const_generics,
                    List.length generics.types,
                    lid_of_name env name,
