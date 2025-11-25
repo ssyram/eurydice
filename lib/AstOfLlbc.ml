@@ -2718,7 +2718,7 @@ let decl_of_id (env : env) (id : C.item_id) : K.decl option =
           | None, _ ->
               (* Opaque function *)
               let { K.n_cgs; n }, t = typ_of_signature env signature in
-              Some (K.DExternal (None, [], n_cgs, n, name, t, []))
+              Some (K.DExternal (None, [ Krml.Common.MonoExtFunc ], n_cgs, n, name, t, []))
           | Some { locals; body; _ }, _ ->
               if Option.is_some decl.is_global_initializer then
                 None
@@ -2887,7 +2887,7 @@ let decl_of_id (env : env) (id : C.item_id) : K.decl option =
             Some
               (K.DExternal
                  ( None,
-                   [],
+                   [ Krml.Common.MonoExtFunc ],
                    List.length generics.const_generics,
                    List.length generics.types,
                    lid_of_name env name,
