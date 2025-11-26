@@ -7,32 +7,13 @@
 
 #include "substr.h"
 
-/**
-A monomorphic instance of core.ops.range.RangeFrom
-with types size_t
-
-*/
-typedef struct RangeFrom_08_s { size_t start; } RangeFrom_08;
-
-/**
-A monomorphic instance of core.str.traits.{core::ops::index::Index<I,␣Clause1_Output>␣for␣str}.index
-with types core_ops_range_RangeFrom size_t, Eurydice_derefed_slice Eurydice_c_char_t
-
-*/
-extern const
-Eurydice_c_char_t
-(*core_str_traits__core__ops__index__Index_I__Clause1_Output__for_str__index_02(
-  Eurydice_dst_ref_shared_65 x0,
-  RangeFrom_08 x1
-))[];
-
 void substr_main(void)
 {
   Eurydice_dst_ref_shared_65 str = { .ptr = "abc", .meta = (size_t)3U };
   Eurydice_dst_ref_shared_65
   take =
     core_str_traits__core__ops__index__Index_I__Clause1_Output__for_str__index_02(str,
-      (KRML_CLITERAL(RangeFrom_08){ .start = (size_t)1U }));
+      (KRML_CLITERAL(core_ops_range_RangeFrom_08){ .start = (size_t)1U }));
   EURYDICE_ASSERT(core_str__str__len(take) == (size_t)2U, "panic!");
 }
 

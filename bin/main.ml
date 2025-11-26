@@ -226,6 +226,7 @@ Supported options:|}
   let files = Eurydice.Cleanup2.recognize_asserts#visit_files () files in
   (* Temporary workaround until Aeneas supports nested loops *)
   let files = Eurydice.Cleanup2.inline_loops#visit_files () files in
+  let files = Eurydice.Cleanup2.remove_trivial_into#visit_files () files in
   (* Following the krml order of phases here *)
   let files = Krml.Inlining.inline_type_abbrevs files in
   let files = Krml.Monomorphization.functions files in
@@ -274,8 +275,6 @@ Supported options:|}
   let files = Eurydice.Cleanup2.remove_discriminant_reads map3 files in
   Eurydice.Logging.log "Phase2.3" "Phase 2.3:\n%a" pfiles files;
   let files = Eurydice.Cleanup2.remove_trivial_ite#visit_files () files in
-  Eurydice.Logging.log "Phase2.4" "Phase 2.4:\n%a" pfiles files;
-  let files = Eurydice.Cleanup2.remove_trivial_into#visit_files () files in
   Eurydice.Logging.log "Phase2.5" "Phase 2.5:\n%a" pfiles files;
   let files = Eurydice.Cleanup2.remove_literals files in
   (* Eurydice does something more involved than krml and performs a conservative

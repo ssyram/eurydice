@@ -85,18 +85,6 @@ core_iter_range__core__iter__range__Step_for_usize__steps_between(
   const size_t *x1
 );
 
-/**
-A monomorphic instance of core.ops.range.Range
-with types size_t
-
-*/
-typedef struct core_ops_range_Range_08_s
-{
-  size_t start;
-  size_t end;
-}
-core_ops_range_Range_08;
-
 void traits2_main(void);
 
 #if defined(__cplusplus)

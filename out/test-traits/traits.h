@@ -15,18 +15,6 @@
 extern "C" {
 #endif
 
-/**
-A monomorphic instance of core.ops.range.Range
-with types size_t
-
-*/
-typedef struct core_ops_range_Range_08_s
-{
-  size_t start;
-  size_t end;
-}
-core_ops_range_Range_08;
-
 #define traits_Foo_Foo1 0
 #define traits_Foo_Foo2 1
 
@@ -61,6 +49,18 @@ with const generics
 - $2size_t
 */
 typedef struct Eurydice_arr_e2_s { traits_Foo data[2U]; } Eurydice_arr_e2;
+
+/**
+A monomorphic instance of core.ops.range.Range
+with types size_t
+
+*/
+typedef struct core_ops_range_Range_08_s
+{
+  size_t start;
+  size_t end;
+}
+core_ops_range_Range_08;
 
 void traits_main(void);
 
