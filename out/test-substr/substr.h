@@ -37,21 +37,21 @@ Eurydice_dst_ref_shared_65;
 #define core_option_None 0
 #define core_option_Some 1
 
-typedef uint8_t core_option_Option_d2_tags;
+typedef uint8_t core_option_Option_02_tags;
 
 /**
 A monomorphic instance of core.option.Option
-with types Eurydice_dst_ref_shared Eurydice_c_char_t size_t
+with types Eurydice_dst_ref_shared_65
 
 */
-typedef struct core_option_Option_d2_s
+typedef struct core_option_Option_02_s
 {
-  core_option_Option_d2_tags tag;
+  core_option_Option_02_tags tag;
   Eurydice_dst_ref_shared_65 f0;
 }
-core_option_Option_d2;
+core_option_Option_02;
 
-extern core_option_Option_d2
+extern core_option_Option_02
 core_str_traits__core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize__core__marker__Sized_usize____get(
   core_ops_range_RangeFrom_08 x0,
   Eurydice_dst_ref_shared_65 x1
@@ -71,17 +71,17 @@ Eurydice_dst_ref_mut_65;
 
 /**
 A monomorphic instance of core.option.Option
-with types Eurydice_dst_ref_mut Eurydice_c_char_t size_t
+with types Eurydice_dst_ref_mut_65
 
 */
-typedef struct core_option_Option_e6_s
+typedef struct core_option_Option_53_s
 {
-  core_option_Option_d2_tags tag;
+  core_option_Option_02_tags tag;
   Eurydice_dst_ref_mut_65 f0;
 }
-core_option_Option_e6;
+core_option_Option_53;
 
-extern core_option_Option_e6
+extern core_option_Option_53
 core_str_traits__core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize__core__marker__Sized_usize____get_mut(
   core_ops_range_RangeFrom_08 x0,
   Eurydice_dst_ref_mut_65 x1
