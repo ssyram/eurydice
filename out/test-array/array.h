@@ -57,17 +57,17 @@ core_ops_range_Range_08;
 
 /**
 A monomorphic instance of Eurydice.dst_ref_shared
-with types Eurydice_arr uint8_t[[$32size_t]], size_t
+with types Eurydice_arr_60, size_t
 
 */
-typedef struct Eurydice_dst_ref_shared_fc_s
+typedef struct Eurydice_dst_ref_shared_10_s
 {
   const Eurydice_arr_60 *ptr;
   size_t meta;
 }
-Eurydice_dst_ref_shared_fc;
+Eurydice_dst_ref_shared_10;
 
-uint8_t array_fun(Eurydice_dst_ref_shared_fc x);
+uint8_t array_fun(Eurydice_dst_ref_shared_10 x);
 
 Eurydice_arr_60 array_init(void);
 
@@ -263,18 +263,18 @@ Eurydice_arr_33 array_nested_from_fn_call_once_f6_ac(void **_, size_t _0);
 
 /**
 A monomorphic instance of Eurydice.arr
-with types Eurydice_arr size_t[[$4size_t]]
+with types Eurydice_arr_33
 with const generics
 - $4size_t
 */
-typedef struct Eurydice_arr_11_s { Eurydice_arr_33 data[4U]; } Eurydice_arr_11;
+typedef struct Eurydice_arr_c6_s { Eurydice_arr_33 data[4U]; } Eurydice_arr_c6;
 
 /**
 A monomorphic instance of array.nested_from_fn
 with const generics
 - K= 4
 */
-Eurydice_arr_11 array_nested_from_fn_ac(void);
+Eurydice_arr_c6 array_nested_from_fn_ac(void);
 
 /**
 A monomorphic instance of array.const_eq
