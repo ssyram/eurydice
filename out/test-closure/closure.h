@@ -17,6 +17,20 @@ extern "C" {
 
 typedef Eurydice_unknown_struct core_fmt_Arguments;
 
+typedef struct Eurydice_arr_e4_s Eurydice_arr_e4;
+
+typedef struct closure_f_closure_s closure_f_closure;
+
+typedef struct closure_f_closure_closure_s closure_f_closure_closure;
+
+typedef struct Eurydice_arr_6a_s Eurydice_arr_6a;
+
+#define core_panicking_AssertKind_Eq 0
+#define core_panicking_AssertKind_Ne 1
+#define core_panicking_AssertKind_Match 2
+
+typedef uint8_t core_panicking_AssertKind;
+
 /**
 A monomorphic instance of Eurydice.arr
 with types size_t
@@ -33,6 +47,14 @@ typedef struct closure_f_closure_closure_s
   const size_t *snd;
 }
 closure_f_closure_closure;
+
+/**
+A monomorphic instance of Eurydice.arr
+with types Eurydice_arr_e4
+with const generics
+- $1size_t
+*/
+typedef struct Eurydice_arr_6a_s { Eurydice_arr_e4 data[1U]; } Eurydice_arr_6a;
 
 /**
 This function found in impl {core::ops::function::FnMut<(usize), usize> for closure::f::closure::closure<0, 1>}
@@ -54,21 +76,7 @@ This function found in impl {core::ops::function::FnOnce<(usize), @Array<usize, 
 */
 Eurydice_arr_e4 closure_f_call_once_71(closure_f_closure _, size_t _0);
 
-/**
-A monomorphic instance of Eurydice.arr
-with types Eurydice_arr_e4
-with const generics
-- $1size_t
-*/
-typedef struct Eurydice_arr_6a_s { Eurydice_arr_e4 data[1U]; } Eurydice_arr_6a;
-
 Eurydice_arr_6a closure_f(void);
-
-#define core_panicking_AssertKind_Eq 0
-#define core_panicking_AssertKind_Ne 1
-#define core_panicking_AssertKind_Match 2
-
-typedef uint8_t core_panicking_AssertKind;
 
 void closure_main(void);
 

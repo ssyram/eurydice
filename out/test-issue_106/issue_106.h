@@ -15,6 +15,8 @@
 extern "C" {
 #endif
 
+typedef struct issue_106_MyStruct_s issue_106_MyStruct;
+
 typedef struct issue_106_MyStruct_s { uint8_t v; } issue_106_MyStruct;
 
 issue_106_MyStruct issue_106_generate(void);

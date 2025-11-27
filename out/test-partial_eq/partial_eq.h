@@ -19,22 +19,24 @@ typedef Eurydice_unknown_struct core_fmt_Arguments;
 
 typedef Eurydice_unknown_struct core_fmt_Formatter;
 
-/**
-A monomorphic instance of Eurydice.dst_ref_shared
-with types Eurydice_c_char_t, size_t
+typedef struct core_result_Result_4a_s core_result_Result_4a;
 
-*/
-typedef struct Eurydice_dst_ref_shared_65_s
-{
-  const Eurydice_c_char_t *ptr;
-  size_t meta;
-}
-Eurydice_dst_ref_shared_65;
+typedef struct Eurydice_dst_ref_shared_65_s Eurydice_dst_ref_shared_65;
+
+#define partial_eq_Enum_A 0
+
+typedef uint8_t partial_eq_Enum;
 
 #define core_result_Ok 0
 #define core_result_Err 1
 
 typedef uint8_t core_result_Result_4a_tags;
+
+#define core_panicking_AssertKind_Eq 0
+#define core_panicking_AssertKind_Ne 1
+#define core_panicking_AssertKind_Match 2
+
+typedef uint8_t core_panicking_AssertKind;
 
 /**
 A monomorphic instance of core.result.Result
@@ -48,21 +50,23 @@ typedef struct core_result_Result_4a_s
 }
 core_result_Result_4a;
 
+/**
+A monomorphic instance of Eurydice.dst_ref_shared
+with types Eurydice_c_char_t, size_t
+
+*/
+typedef struct Eurydice_dst_ref_shared_65_s
+{
+  const Eurydice_c_char_t *ptr;
+  size_t meta;
+}
+Eurydice_dst_ref_shared_65;
+
 extern core_result_Result_4a
 core_fmt__core__fmt__Formatter__a___write_str(
   core_fmt_Formatter *x0,
   Eurydice_dst_ref_shared_65 x1
 );
-
-#define core_panicking_AssertKind_Eq 0
-#define core_panicking_AssertKind_Ne 1
-#define core_panicking_AssertKind_Match 2
-
-typedef uint8_t core_panicking_AssertKind;
-
-#define partial_eq_Enum_A 0
-
-typedef uint8_t partial_eq_Enum;
 
 /**
 This function found in impl {core::cmp::PartialEq<partial_eq::Enum> for partial_eq::Enum}

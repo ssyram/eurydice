@@ -17,6 +17,10 @@ extern "C" {
 
 typedef Eurydice_unknown_struct core_fmt_Arguments;
 
+typedef struct Eurydice_arr_a5_s Eurydice_arr_a5;
+
+typedef struct Eurydice_arr_35_s Eurydice_arr_35;
+
 #define core_panicking_AssertKind_Eq 0
 #define core_panicking_AssertKind_Ne 1
 #define core_panicking_AssertKind_Match 2

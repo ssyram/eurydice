@@ -15,24 +15,15 @@
 extern "C" {
 #endif
 
-/**
-A monomorphic instance of core.ops.range.RangeFrom
-with types size_t
+typedef struct core_ops_range_RangeFrom_08_s core_ops_range_RangeFrom_08;
 
-*/
-typedef struct core_ops_range_RangeFrom_08_s { size_t start; } core_ops_range_RangeFrom_08;
+typedef struct core_option_Option_53_s core_option_Option_53;
 
-/**
-A monomorphic instance of Eurydice.dst_ref_shared
-with types Eurydice_c_char_t, size_t
+typedef struct Eurydice_dst_ref_mut_65_s Eurydice_dst_ref_mut_65;
 
-*/
-typedef struct Eurydice_dst_ref_shared_65_s
-{
-  const Eurydice_c_char_t *ptr;
-  size_t meta;
-}
-Eurydice_dst_ref_shared_65;
+typedef struct Eurydice_dst_ref_shared_65_s Eurydice_dst_ref_shared_65;
+
+typedef struct core_option_Option_02_s core_option_Option_02;
 
 #define core_option_None 0
 #define core_option_Some 1
@@ -40,22 +31,11 @@ Eurydice_dst_ref_shared_65;
 typedef uint8_t core_option_Option_02_tags;
 
 /**
-A monomorphic instance of core.option.Option
-with types Eurydice_dst_ref_shared_65
+A monomorphic instance of core.ops.range.RangeFrom
+with types size_t
 
 */
-typedef struct core_option_Option_02_s
-{
-  core_option_Option_02_tags tag;
-  Eurydice_dst_ref_shared_65 f0;
-}
-core_option_Option_02;
-
-extern core_option_Option_02
-core_str_traits__core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize__core__marker__Sized_usize____get(
-  core_ops_range_RangeFrom_08 x0,
-  Eurydice_dst_ref_shared_65 x1
-);
+typedef struct core_ops_range_RangeFrom_08_s { size_t start; } core_ops_range_RangeFrom_08;
 
 /**
 A monomorphic instance of Eurydice.dst_ref_mut
@@ -80,6 +60,36 @@ typedef struct core_option_Option_53_s
   Eurydice_dst_ref_mut_65 f0;
 }
 core_option_Option_53;
+
+/**
+A monomorphic instance of Eurydice.dst_ref_shared
+with types Eurydice_c_char_t, size_t
+
+*/
+typedef struct Eurydice_dst_ref_shared_65_s
+{
+  const Eurydice_c_char_t *ptr;
+  size_t meta;
+}
+Eurydice_dst_ref_shared_65;
+
+/**
+A monomorphic instance of core.option.Option
+with types Eurydice_dst_ref_shared_65
+
+*/
+typedef struct core_option_Option_02_s
+{
+  core_option_Option_02_tags tag;
+  Eurydice_dst_ref_shared_65 f0;
+}
+core_option_Option_02;
+
+extern core_option_Option_02
+core_str_traits__core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize__core__marker__Sized_usize____get(
+  core_ops_range_RangeFrom_08 x0,
+  Eurydice_dst_ref_shared_65 x1
+);
 
 extern core_option_Option_53
 core_str_traits__core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize__core__marker__Sized_usize____get_mut(

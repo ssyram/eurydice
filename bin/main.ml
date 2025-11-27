@@ -393,6 +393,8 @@ Supported options:|}
             ds ))
       files
   in
+  let files = Eurydice.Cleanup3.resolve_typ_dependencies files in
+  Eurydice.Logging.log "Phase3.3" "Phase 3.5:\n%a" pfiles files;
   let files = Eurydice.Cleanup3.add_opaque_names files in
   let files = Eurydice.Cleanup3.impl_drop_in_place files in
   let files = AstToCStar.mk_files files c_name_map Idents.LidSet.empty macros in

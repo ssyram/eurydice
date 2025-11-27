@@ -17,21 +17,35 @@ extern "C" {
 
 typedef Eurydice_unknown_struct core_fmt_Arguments;
 
-static inline Eurydice_array_u8x4 core_num__u32__to_be_bytes(uint32_t x0);
+typedef struct Eurydice_dst_ref_shared_3c_s Eurydice_dst_ref_shared_3c;
 
-/**
-A monomorphic instance of core.ops.range.RangeTo
-with types size_t
+typedef struct Eurydice_arr_e4_s Eurydice_arr_e4;
 
-*/
-typedef struct core_ops_range_RangeTo_08_s { size_t end; } core_ops_range_RangeTo_08;
+typedef struct Eurydice_arr_61_s Eurydice_arr_61;
 
-/**
-A monomorphic instance of core.ops.range.RangeFrom
-with types size_t
+typedef struct core_ops_range_RangeFrom_08_s core_ops_range_RangeFrom_08;
 
-*/
-typedef struct core_ops_range_RangeFrom_08_s { size_t start; } core_ops_range_RangeFrom_08;
+typedef struct Eurydice_arr_6f_s Eurydice_arr_6f;
+
+typedef struct const_generics_Pair_87_s const_generics_Pair_87;
+
+typedef struct Eurydice_arr_a5_s Eurydice_arr_a5;
+
+typedef struct const_generics_Pair_4e_s const_generics_Pair_4e;
+
+typedef struct Eurydice_arr_b2_s Eurydice_arr_b2;
+
+typedef struct core_ops_range_RangeTo_08_s core_ops_range_RangeTo_08;
+
+typedef struct Eurydice_arr_c8_s Eurydice_arr_c8;
+
+typedef struct const_generics_Pair_a5_s const_generics_Pair_a5;
+
+#define core_panicking_AssertKind_Eq 0
+#define core_panicking_AssertKind_Ne 1
+#define core_panicking_AssertKind_Match 2
+
+typedef uint8_t core_panicking_AssertKind;
 
 /**
 A monomorphic instance of Eurydice.dst_ref_shared
@@ -46,41 +60,12 @@ typedef struct Eurydice_dst_ref_shared_3c_s
 Eurydice_dst_ref_shared_3c;
 
 /**
-A monomorphic instance of const_generics.serialize
-with const generics
-- OUT_LEN= 8
-*/
-Eurydice_array_u8x8 const_generics_serialize_3b(Eurydice_dst_ref_shared_3c re);
-
-/**
 A monomorphic instance of Eurydice.arr
-with types uint32_t
+with types size_t
 with const generics
-- $2size_t
+- $1size_t
 */
-typedef struct Eurydice_arr_b2_s { uint32_t data[2U]; } Eurydice_arr_b2;
-
-void const_generics_main(void);
-
-#define core_panicking_AssertKind_Eq 0
-#define core_panicking_AssertKind_Ne 1
-#define core_panicking_AssertKind_Match 2
-
-typedef uint8_t core_panicking_AssertKind;
-
-/**
-A monomorphic instance of const_generics.Pair
-with types uint32_t, uint32_t
-with const generics
-- $2size_t
-- $2size_t
-*/
-typedef struct const_generics_Pair_4e_s
-{
-  Eurydice_arr_b2 left;
-  Eurydice_arr_b2 right;
-}
-const_generics_Pair_4e;
+typedef struct Eurydice_arr_e4_s { size_t data[1U]; } Eurydice_arr_e4;
 
 /**
 A monomorphic instance of Eurydice.arr
@@ -91,18 +76,35 @@ with const generics
 typedef struct Eurydice_arr_61_s { uint64_t data[4U]; } Eurydice_arr_61;
 
 /**
-A monomorphic instance of const_generics.Pair
-with types uint32_t, uint64_t
+A monomorphic instance of Eurydice.arr
+with types uint32_t
+with const generics
+- $3size_t
+*/
+typedef struct Eurydice_arr_6f_s { uint32_t data[3U]; } Eurydice_arr_6f;
+
+/**
+A monomorphic instance of core.ops.range.RangeFrom
+with types size_t
+
+*/
+typedef struct core_ops_range_RangeFrom_08_s { size_t start; } core_ops_range_RangeFrom_08;
+
+/**
+A monomorphic instance of Eurydice.arr
+with types uint32_t
+with const generics
+- $1size_t
+*/
+typedef struct Eurydice_arr_a5_s { uint32_t data[1U]; } Eurydice_arr_a5;
+
+/**
+A monomorphic instance of Eurydice.arr
+with types uint32_t
 with const generics
 - $2size_t
-- $4size_t
 */
-typedef struct const_generics_Pair_a5_s
-{
-  Eurydice_arr_b2 left;
-  Eurydice_arr_61 right;
-}
-const_generics_Pair_a5;
+typedef struct Eurydice_arr_b2_s { uint32_t data[2U]; } Eurydice_arr_b2;
 
 /**
 A monomorphic instance of const_generics.Pair
@@ -119,6 +121,60 @@ typedef struct const_generics_Pair_87_s
 const_generics_Pair_87;
 
 /**
+A monomorphic instance of const_generics.Pair
+with types uint32_t, uint32_t
+with const generics
+- $2size_t
+- $2size_t
+*/
+typedef struct const_generics_Pair_4e_s
+{
+  Eurydice_arr_b2 left;
+  Eurydice_arr_b2 right;
+}
+const_generics_Pair_4e;
+
+/**
+A monomorphic instance of core.ops.range.RangeTo
+with types size_t
+
+*/
+typedef struct core_ops_range_RangeTo_08_s { size_t end; } core_ops_range_RangeTo_08;
+
+/**
+A monomorphic instance of Eurydice.arr
+with types size_t
+with const generics
+- $3size_t
+*/
+typedef struct Eurydice_arr_c8_s { size_t data[3U]; } Eurydice_arr_c8;
+
+/**
+A monomorphic instance of const_generics.Pair
+with types uint32_t, uint64_t
+with const generics
+- $2size_t
+- $4size_t
+*/
+typedef struct const_generics_Pair_a5_s
+{
+  Eurydice_arr_b2 left;
+  Eurydice_arr_61 right;
+}
+const_generics_Pair_a5;
+
+static inline Eurydice_array_u8x4 core_num__u32__to_be_bytes(uint32_t x0);
+
+/**
+A monomorphic instance of const_generics.serialize
+with const generics
+- OUT_LEN= 8
+*/
+Eurydice_array_u8x8 const_generics_serialize_3b(Eurydice_dst_ref_shared_3c re);
+
+void const_generics_main(void);
+
+/**
 A monomorphic instance of const_generics.mk_pairs
 with types uint32_t, uint64_t
 with const generics
@@ -130,44 +186,12 @@ const_generics_Pair_4e const_generics_mk_pairs_e0(uint32_t x, uint64_t y);
 void const_generics_main1(void);
 
 /**
-A monomorphic instance of Eurydice.arr
-with types uint32_t
-with const generics
-- $1size_t
-*/
-typedef struct Eurydice_arr_a5_s { uint32_t data[1U]; } Eurydice_arr_a5;
-
-/**
-A monomorphic instance of Eurydice.arr
-with types size_t
-with const generics
-- $1size_t
-*/
-typedef struct Eurydice_arr_e4_s { size_t data[1U]; } Eurydice_arr_e4;
-
-/**
 A monomorphic instance of const_generics.f
 with const generics
 - FOO= 1
 - BAR= 2
 */
 bool const_generics_f_e5(uint32_t x, size_t y);
-
-/**
-A monomorphic instance of Eurydice.arr
-with types uint32_t
-with const generics
-- $3size_t
-*/
-typedef struct Eurydice_arr_6f_s { uint32_t data[3U]; } Eurydice_arr_6f;
-
-/**
-A monomorphic instance of Eurydice.arr
-with types size_t
-with const generics
-- $3size_t
-*/
-typedef struct Eurydice_arr_c8_s { size_t data[3U]; } Eurydice_arr_c8;
 
 /**
 A monomorphic instance of const_generics.f
