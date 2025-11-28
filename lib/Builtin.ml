@@ -52,6 +52,7 @@ let mk_dst_ref ~const (t : K.typ) (meta : K.typ) : K.typ =
       [ t; meta ] )
 
 let mk_slice ~const (t : K.typ) : K.typ = mk_dst_ref ~const t (TInt SizeT)
+let unknown_struct = Krml.Ast.TQualified ([ "Eurydice" ], "unknown_struct")
 
 (* Take the type of the ptr field *)
 let dst_new ~const ~ptr ~len t =

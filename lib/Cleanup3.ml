@@ -150,9 +150,7 @@ let add_opaque_names files =
   | [] -> files
   | files ->
       let former, (name, decls) = Krml.KList.split_at_last files in
-      let mapper lident =
-        Ast.DType (lident, [], 0, 0, Abbrev (TQualified ([ "Eurydice" ], "unknown_struct")))
-      in
+      let mapper lident = Ast.DType (lident, [], 0, 0, Abbrev B.unknown_struct) in
       let new_decls = List.map mapper !AstOfLlbc.opaque_names in
       former @ [ name, new_decls @ decls ]
 
@@ -362,11 +360,22 @@ let stub_pure_extern_funcs files =
     | TUnit -> true
     | t -> is_extern_typ t
   in
+  (* We assume `&str` is never changed. *)
+  let is_str_t typ =
+    List.mem typ
+      [
+        MonomorphizationState.resolve_deep (B.str_t ~const:true);
+        MonomorphizationState.resolve_deep (B.str_t ~const:false);
+      ]
+  in
+  let safe_const_typ typ = is_str_t typ in
   let safe_to_stub_arg typ =
     match typ with
     | TUnit | TInt _ | TBool -> true
+    (* Other const stuff that is guaranteed not to be changed is also allowed *)
+    | t when safe_const_typ t -> true
     (* Additionally, as an arg, it can be a pointer *)
-    | TBuf (t, _)| t -> is_extern_typ t
+    | TBuf (t, _) | t -> is_extern_typ t
   in
   let should_stub typ =
     let ret, args = Helpers.flatten_arrow typ in
@@ -378,7 +387,8 @@ let stub_pure_extern_funcs files =
         let drop_owned_args =
           let mapper db_idx arg_typ =
             match arg_typ with
-            | TQualified _ -> Some (free_unknown (with_type arg_typ (EBound db_idx)))
+            | TQualified lid when List.mem lid !AstOfLlbc.opaque_names ->
+                Some (free_unknown (with_type arg_typ (EBound db_idx)))
             | _ -> None
           in
           List.mapi mapper (List.rev args) |> List.filter_map (fun x -> x) |> List.rev
@@ -403,7 +413,8 @@ let stub_pure_extern_funcs files =
                 let char_ptr = TBuf (B.c_char_t, false) in
                 with_type char_ptr (ECast (expr, char_ptr))
               in
-              with_type ret (EFlat [ Some "resource", one_size |> call_malloc |> cast_to_char_ptr ])
+              with_type B.unknown_struct
+                (EFlat [ Some "resource", one_size |> call_malloc |> cast_to_char_ptr ])
           (* Otherwise, it is a non-pointer primitive C type *)
           | _ -> with_type ret (ECast (Helpers.zero_usize, ret))
         in
