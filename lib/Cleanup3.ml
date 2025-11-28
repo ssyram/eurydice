@@ -156,7 +156,20 @@ let add_opaque_names files =
       let new_decls = List.map mapper !AstOfLlbc.opaque_names in
       former @ [ name, new_decls @ decls ]
 
-let impl_drop_in_place files =
+let new_arg_binder arg_typ =
+  let atom = Atom.fresh () in
+  with_type arg_typ
+    {
+      name = "arg" ^ Atom.show atom;
+      mut = true;
+      mark = ref (Mark.Present, Mark.AtMost 1);
+      meta = [];
+      atom;
+    }
+
+(** For the [Eurydice::unknown_struct] opaque type object [obj], returns [free(&obj.resource)] The
+    param [obj] should be the param itself (instead of its pointer). *)
+let free_unknown obj =
   let c_free_func =
     with_type (TArrow (TBuf (B.c_void_t, false), TUnit)) (EQualified ([], "free"))
   in
@@ -164,31 +177,18 @@ let impl_drop_in_place files =
     with_type (TBuf (B.c_void_t, false)) (ECast (obj, TBuf (B.c_void_t, false)))
   in
   let get_resource_ptr obj = with_type (TBuf (B.c_void_t, false)) (EField (obj, "resource")) in
+  with_type TUnit (EApp (c_free_func, [ obj |> get_resource_ptr |> cast_to_void_ptr ]))
+
+let stub_opaque_drop_in_place files =
   let mapper = function
     | DExternal (cc, flags, 0, 0, ((_, "drop_in_place") as f_name), typ, []) as ext -> (
         let ret, args = Helpers.flatten_arrow typ in
         match args, ret with
         | [ (TBuf (TQualified t, _) as arg_typ) ], TUnit when List.mem t !AstOfLlbc.opaque_names ->
             let body =
-              with_type TUnit
-                (EApp
-                   ( c_free_func,
-                     [
-                       Krml.Ast.EBound 0
-                       |> Helpers.mk_deref ~const:false (TQualified t)
-                       |> get_resource_ptr |> cast_to_void_ptr;
-                     ] ))
+              Krml.Ast.EBound 0 |> Helpers.mk_deref ~const:false (TQualified t) |> free_unknown
             in
-            let arg_binder =
-              with_type arg_typ
-                {
-                  name = "arg";
-                  mut = true;
-                  mark = ref (Mark.Present, Mark.AtMost 1);
-                  meta = [];
-                  atom = Atom.fresh ();
-                }
-            in
+            let arg_binder = new_arg_binder arg_typ in
             DFunction (cc, flags, 0, 0, TUnit, f_name, [ arg_binder ], body)
         | _ -> ext)
     | x -> x
@@ -349,3 +349,67 @@ let resolve_typ_dependencies files =
     forward_decls @ additional_forward_decls @ enums @ abbrev_decls @ non_enums @ other_decls
   in
   List.map (fun (name, decls) -> name, resolve_typ_dependencies decls) files
+
+let stub_pure_extern_funcs files =
+  let rec is_extern_typ typ =
+    match typ with
+    | TQualified lid | TApp (lid, _) -> List.mem lid !AstOfLlbc.opaque_names
+    | TCgApp (t, _) -> is_extern_typ t
+    | _ -> false
+  in
+  let safe_to_stub_ret typ =
+    match typ with
+    | TUnit -> true
+    | t -> is_extern_typ t
+  in
+  let safe_to_stub_arg typ =
+    match typ with
+    | TUnit | TInt _ | TBool -> true
+    (* Additionally, as an arg, it can be a pointer *)
+    | TBuf (t, _)| t -> is_extern_typ t
+  in
+  let should_stub typ =
+    let ret, args = Helpers.flatten_arrow typ in
+    safe_to_stub_ret ret && List.for_all safe_to_stub_arg args
+  in
+  let stub_pure_extern_func = function
+    | DExternal (cc, flags, 0, 0, name, typ, _) when should_stub typ ->
+        let ret, args = Helpers.flatten_arrow typ in
+        let drop_owned_args =
+          let mapper db_idx arg_typ =
+            match arg_typ with
+            | TQualified _ -> Some (free_unknown (with_type arg_typ (EBound db_idx)))
+            | _ -> None
+          in
+          List.mapi mapper (List.rev args) |> List.filter_map (fun x -> x) |> List.rev
+        in
+        let final_expr =
+          match ret with
+          (* Do nothing *)
+          | TUnit -> Helpers.eunit
+          (* If return is a qualified type, which must be opaque, then we should malloc the type *)
+          | TQualified _ | TApp _ ->
+              let one_size = Helpers.one SizeT in
+              let call_malloc arg =
+                with_type
+                  (TBuf (B.c_void_t, false))
+                  (EApp
+                     ( with_type
+                         (TArrow (TInt SizeT, TBuf (B.c_void_t, false)))
+                         (EQualified ([], "malloc")),
+                       [ arg ] ))
+              in
+              let cast_to_char_ptr expr =
+                let char_ptr = TBuf (B.c_char_t, false) in
+                with_type char_ptr (ECast (expr, char_ptr))
+              in
+              with_type ret (EFlat [ Some "resource", one_size |> call_malloc |> cast_to_char_ptr ])
+          (* Otherwise, it is a non-pointer primitive C type *)
+          | _ -> with_type ret (ECast (Helpers.zero_usize, ret))
+        in
+        let body = with_type ret (ESequence (drop_owned_args @ [ final_expr ])) in
+        let arg_binders = List.map new_arg_binder args in
+        DFunction (cc, flags, 0, 0, ret, name, arg_binders, body)
+    | x -> x
+  in
+  List.map (fun (name, decls) -> name, List.map stub_pure_extern_func decls) files
