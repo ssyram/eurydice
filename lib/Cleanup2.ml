@@ -844,6 +844,161 @@ let resugar_loops =
         self#visit_expr env e_body)
       ) :: List.map (fun e -> self#visit_expr env (Krml.DeBruijn.subst eunit 0 e)) rest)
 
+    (* Vec iteration patterns - Terminal position with let binding for next *)
+    | [%cremepat {|
+      let iter =
+        core::iter::traits::collect::?::into_iter
+          <alloc::vec::into_iter::IntoIter<?t1, ?..>, ?..>
+          (?e_vec);
+      while true {
+        let x = alloc::vec::into_iter::?::next<?t2>(&iter);
+        match x {
+          None -> break,
+          Some ? -> ?e_body
+        }
+      }
+    |}] ->
+      let open Krml.Helpers in
+      (* e_vec is the original Vec, its length gives the loop bound *)
+      let e_vec = self#visit_expr env e_vec in
+      (* Create: for (size_t i = 0; i < v.len; i++) { t1 x = ((t1*)v.ptr)[i]; body } *)
+      let e_len = with_type usize (EField (e_vec, "len")) in
+      let e_some_x = with_type (Builtin.mk_option t1) (ECons ("Some", [with_type t1 (EBound 0)])) in
+      (* The loop variable is i of type size_t *)
+      let i_binder = fresh_binder ~mut:true "i" usize in
+      (* Access v[i] - the vec data pointer is v.ptr (char*), cast to t1* *)
+      let e_i = with_type usize (EBound 0) in
+      let e_vec_lifted = Krml.DeBruijn.lift 1 e_vec in
+      (* Get the char* ptr field and cast to t1* *)
+      let e_ptr_char = with_type (TBuf (TInt UInt8, false)) (EField (e_vec_lifted, "ptr")) in
+      let e_ptr = with_type (TBuf (t1, false)) (ECast (e_ptr_char, TBuf (t1, false))) in
+      let e_elem = with_type t1 (EBufRead (e_ptr, e_i)) in
+      (* Substitute the element access into the body *)
+      let e_body_subst = Krml.DeBruijn.subst e_some_x 0 e_body in
+      (* Create the element binding: let x = v[i] in body *)
+      let x_binder = fresh_binder "x" t1 in
+      let e_for_body = with_type e_body.typ (ELet (x_binder, e_elem, 
+        Krml.DeBruijn.lift 1 (self#visit_expr env e_body_subst))) in
+      with_type e.typ @@ EFor (i_binder,
+        zero_usize,
+        mk_lt SizeT (Krml.DeBruijn.lift 1 e_len),
+        mk_incr SizeT,
+        e_for_body)
+
+    (* Vec iteration - Terminal position with match directly on next call *)
+    | [%cremepat {|
+      let iter =
+        core::iter::traits::collect::?::into_iter
+          <alloc::vec::into_iter::IntoIter<?t1, ?..>, ?..>
+          (?e_vec);
+      while true {
+        match (alloc::vec::into_iter::?::next<?t2>(&iter)) {
+          None -> break,
+          Some ? -> ?e_body
+        }
+      }
+    |}] ->
+      let open Krml.Helpers in
+      let e_vec = self#visit_expr env e_vec in
+      let e_len = with_type usize (EField (e_vec, "len")) in
+      let i_binder = fresh_binder ~mut:true "i" usize in
+      let e_i = with_type usize (EBound 0) in
+      let e_vec_lifted = Krml.DeBruijn.lift 1 e_vec in
+      (* Get the char* ptr field and cast to t1* *)
+      let e_ptr_char = with_type (TBuf (TInt UInt8, false)) (EField (e_vec_lifted, "ptr")) in
+      let e_ptr = with_type (TBuf (t1, false)) (ECast (e_ptr_char, TBuf (t1, false))) in
+      let e_elem = with_type t1 (EBufRead (e_ptr, e_i)) in
+      let x_binder = fresh_binder "x" t1 in
+      let e_for_body = with_type e_body.typ (ELet (x_binder, e_elem, 
+        Krml.DeBruijn.lift 1 (self#visit_expr env e_body))) in
+      with_type e.typ @@ EFor (i_binder,
+        zero_usize,
+        mk_lt SizeT (Krml.DeBruijn.lift 1 e_len),
+        mk_incr SizeT,
+        e_for_body)
+
+    (* Vec iteration - Non-terminal position with let binding, followed by rest 
+       This also handles the case where there's a drop call after the loop *)
+    | [%cremepat {|
+      let iter =
+        core::iter::traits::collect::?::into_iter
+          <alloc::vec::into_iter::IntoIter<?t1, ?..>, ?..>
+          (?e_vec);
+      while true {
+        let x = alloc::vec::into_iter::?::next<?t2>(&iter);
+        match x {
+          None -> break,
+          Some ? -> ?e_body
+        }
+      };
+      ?rest..
+    |}] ->
+      let open Krml.Helpers in
+      let e_vec = self#visit_expr env e_vec in
+      let e_len = with_type usize (EField (e_vec, "len")) in
+      let e_some_x = with_type (Builtin.mk_option t1) (ECons ("Some", [with_type t1 (EBound 0)])) in
+      let i_binder = fresh_binder ~mut:true "i" usize in
+      let e_i = with_type usize (EBound 0) in
+      let e_vec_lifted = Krml.DeBruijn.lift 1 e_vec in
+      (* Get the char* ptr field and cast to t1* *)
+      let e_ptr_char = with_type (TBuf (TInt UInt8, false)) (EField (e_vec_lifted, "ptr")) in
+      let e_ptr = with_type (TBuf (t1, false)) (ECast (e_ptr_char, TBuf (t1, false))) in
+      let e_elem = with_type t1 (EBufRead (e_ptr, e_i)) in
+      let e_body_subst = Krml.DeBruijn.subst e_some_x 0 e_body in
+      let x_binder = fresh_binder "x" t1 in
+      let e_for_body = with_type e_body.typ (ELet (x_binder, e_elem, 
+        Krml.DeBruijn.lift 1 (self#visit_expr env e_body_subst))) in
+      (* Filter out drop calls on iter (index 0 in the outer scope) from rest *)
+      let rest_filtered = List.filter (fun r ->
+        match r.node with
+        | EApp ({ node = EQualified (_, "drop"); _ }, [{ node = EBound 0; _ }]) -> false
+        | _ -> true) rest in
+      with_type e.typ @@ ESequence (with_type TUnit (EFor (i_binder,
+        zero_usize,
+        mk_lt SizeT (Krml.DeBruijn.lift 1 e_len),
+        mk_incr SizeT,
+        e_for_body))
+      :: List.map (fun e -> self#visit_expr env (Krml.DeBruijn.subst eunit 0 e)) rest_filtered)
+
+    (* Vec iteration - Non-terminal position with match directly on next *)
+    | [%cremepat {|
+      let iter =
+        core::iter::traits::collect::?::into_iter
+          <alloc::vec::into_iter::IntoIter<?t1, ?..>, ?..>
+          (?e_vec);
+      while true {
+        match (alloc::vec::into_iter::?::next<?t2>(&iter)) {
+          None -> break,
+          Some ? -> ?e_body
+        }
+      };
+      ?rest..
+    |}] ->
+      let open Krml.Helpers in
+      let e_vec = self#visit_expr env e_vec in
+      let e_len = with_type usize (EField (e_vec, "len")) in
+      let i_binder = fresh_binder ~mut:true "i" usize in
+      let e_i = with_type usize (EBound 0) in
+      let e_vec_lifted = Krml.DeBruijn.lift 1 e_vec in
+      (* Get the char* ptr field and cast to t1* *)
+      let e_ptr_char = with_type (TBuf (TInt UInt8, false)) (EField (e_vec_lifted, "ptr")) in
+      let e_ptr = with_type (TBuf (t1, false)) (ECast (e_ptr_char, TBuf (t1, false))) in
+      let e_elem = with_type t1 (EBufRead (e_ptr, e_i)) in
+      let x_binder = fresh_binder "x" t1 in
+      let e_for_body = with_type e_body.typ (ELet (x_binder, e_elem, 
+        Krml.DeBruijn.lift 1 (self#visit_expr env e_body))) in
+      (* Filter out drop calls on iter from rest *)
+      let rest_filtered = List.filter (fun r ->
+        match r.node with
+        | EApp ({ node = EQualified (_, "drop"); _ }, [{ node = EBound 0; _ }]) -> false
+        | _ -> true) rest in
+      with_type e.typ @@ ESequence (with_type TUnit (EFor (i_binder,
+        zero_usize,
+        mk_lt SizeT (Krml.DeBruijn.lift 1 e_len),
+        mk_incr SizeT,
+        e_for_body))
+      :: List.map (fun e -> self#visit_expr env (Krml.DeBruijn.subst eunit 0 e)) rest_filtered)
+
     | _ ->
       super#visit_expr env e
 
