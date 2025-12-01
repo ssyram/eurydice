@@ -608,6 +608,16 @@ let ends_with_return =
       | EReturn _ -> true
       | _ -> false)
 
+(* Helper to identify drop calls on the iterator variable (De Bruijn index 0).
+   Drop calls may appear as drop(iter) or drop_in_place(&iter) *)
+let is_drop_on_iter r =
+  match r.node with
+  | EApp ({ node = EQualified (_, name); _ }, [{ node = EBound 0; _ }])
+    when name = "drop" || name = "drop_in_place" -> true
+  | EApp ({ node = EQualified (_, name); _ }, [{ node = EAddrOf { node = EBound 0; _ }; _ }])
+    when name = "drop" || name = "drop_in_place" -> true
+  | _ -> false
+
 let resugar_loops =
   object(self)
   inherit [_] map as super
@@ -948,15 +958,7 @@ let resugar_loops =
       let x_binder = fresh_binder "x" t1 in
       let e_for_body = with_type e_body.typ (ELet (x_binder, e_elem, 
         Krml.DeBruijn.lift 1 (self#visit_expr env e_body_subst))) in
-      (* Filter out drop calls on iter (index 0 in the outer scope) from rest.
-         Drop calls may appear as drop(iter) or drop_in_place(&iter) *)
-      let is_drop_on_iter r =
-        match r.node with
-        | EApp ({ node = EQualified (_, name); _ }, [{ node = EBound 0; _ }])
-          when name = "drop" || name = "drop_in_place" -> true
-        | EApp ({ node = EQualified (_, name); _ }, [{ node = EAddrOf { node = EBound 0; _ }; _ }])
-          when name = "drop" || name = "drop_in_place" -> true
-        | _ -> false in
+      (* Filter out drop calls on iter (index 0 in the outer scope) from rest *)
       let rest_filtered = List.filter (fun r -> not (is_drop_on_iter r)) rest in
       with_type e.typ @@ ESequence (with_type TUnit (EFor (i_binder,
         zero_usize,
@@ -992,15 +994,7 @@ let resugar_loops =
       let x_binder = fresh_binder "x" t1 in
       let e_for_body = with_type e_body.typ (ELet (x_binder, e_elem, 
         Krml.DeBruijn.lift 1 (self#visit_expr env e_body))) in
-      (* Filter out drop calls on iter from rest.
-         Drop calls may appear as drop(iter) or drop_in_place(&iter) *)
-      let is_drop_on_iter r =
-        match r.node with
-        | EApp ({ node = EQualified (_, name); _ }, [{ node = EBound 0; _ }])
-          when name = "drop" || name = "drop_in_place" -> true
-        | EApp ({ node = EQualified (_, name); _ }, [{ node = EAddrOf { node = EBound 0; _ }; _ }])
-          when name = "drop" || name = "drop_in_place" -> true
-        | _ -> false in
+      (* Filter out drop calls on iter from rest *)
       let rest_filtered = List.filter (fun r -> not (is_drop_on_iter r)) rest in
       with_type e.typ @@ ESequence (with_type TUnit (EFor (i_binder,
         zero_usize,
