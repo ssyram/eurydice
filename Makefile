@@ -89,6 +89,9 @@ test/option.llbc: CHARON_EXTRA = \
 test/lvalue.llbc: CHARON_EXTRA = \
   --mir elaborated
 
+test/use_vec.llbc: CHARON_EXTRA = \
+  --mir elaborated --desugar-loops
+
 test-substr: EXTRA_C = -I../../test ../../test/substr_impl.c
 test-partial_eq: EXTRA_C = ../../test/partial_eq_stubs.c
 test-nested_arrays: EXTRA = -funroll-loops 0
