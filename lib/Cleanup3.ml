@@ -266,6 +266,7 @@ let resolve_typ_dependencies files =
     | TArray (t, _) | TCgArray (t, _) -> typ_deps_in_typ t
     | TTuple types -> List.flatten (List.map typ_deps_in_typ types)
     | TAnonymous typ_def -> typ_def_kind_deps typ_def
+    | TApp (([ "Eurydice" ], "derefed_slice"), [ t ]) -> typ_deps_in_typ t
     (* A pointer is not a complete dependency, i.e., it does not need to know the type size *)
     | TBuf _
     (* Likewise, a TArrow means a function pointer type *)
@@ -438,7 +439,7 @@ let simp_prefix files =
            let hash =
              try Hashtbl.find tbl prefix
              with Not_found ->
-               let next_id = KPrint.bsprintf "P%d" (Hashtbl.length tbl) in
+               let next_id = KPrint.bsprintf "p%d" (Hashtbl.length tbl) in
                Hashtbl.add tbl prefix next_id;
                next_id
            in

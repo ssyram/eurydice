@@ -21,10 +21,10 @@ typedef struct Eurydice_arr_e2_s Eurydice_arr_e2;
 
 typedef struct core_ops_range_Range_08_s core_ops_range_Range_08;
 
-#define traits_Foo_Foo1 0
-#define traits_Foo_Foo2 1
+#define p1_Foo1 0
+#define p1_Foo2 1
 
-typedef uint8_t traits_Foo;
+typedef uint8_t p0_Foo;
 
 /**
 A monomorphic instance of Eurydice.dst_ref_shared
@@ -33,7 +33,7 @@ with types traits_Foo, size_t
 */
 typedef struct Eurydice_dst_ref_shared_e2_s
 {
-  const traits_Foo *ptr;
+  const p0_Foo *ptr;
   size_t meta;
 }
 Eurydice_dst_ref_shared_e2;
@@ -56,17 +56,17 @@ with types traits_Foo
 with const generics
 - $2size_t
 */
-typedef struct Eurydice_arr_e2_s { traits_Foo data[2U]; } Eurydice_arr_e2;
+typedef struct Eurydice_arr_e2_s { p0_Foo data[2U]; } Eurydice_arr_e2;
 
 /**
 This function found in impl {traits::ToInt for traits::Foo}
 */
-uint32_t traits_to_int_ac(const traits_Foo *self);
+uint32_t p0_to_int_ac(const p0_Foo *self);
 
 /**
 This function found in impl {traits::ToInt for &0 (@Slice<traits::Foo>)}
 */
-uint32_t traits_to_int_88(const Eurydice_dst_ref_shared_e2 *self);
+uint32_t p0_to_int_88(const Eurydice_dst_ref_shared_e2 *self);
 
 void traits_main(void);
 

@@ -25,7 +25,7 @@ typedef struct core_option_Option_9e_s core_option_Option_9e;
 
 typedef struct core_option_Option_77_s core_option_Option_77;
 
-typedef struct tuple_d1_s tuple_d1;
+typedef struct p1_tuple_d1_s p1_tuple_d1;
 
 #define core_option_None 0
 #define core_option_Some 1
@@ -69,18 +69,6 @@ typedef struct core_option_Option_9e_s
 core_option_Option_9e;
 
 /**
-A monomorphic instance of K.
-with types size_t, core_option_Option_08
-
-*/
-typedef struct tuple_d1_s
-{
-  size_t fst;
-  core_option_Option_08 snd;
-}
-tuple_d1;
-
-/**
 A monomorphic instance of core.option.Option
 with types core_cmp_Ordering
 
@@ -91,6 +79,18 @@ typedef struct core_option_Option_77_s
   core_cmp_Ordering f0;
 }
 core_option_Option_77;
+
+/**
+A monomorphic instance of K.
+with types size_t, core_option_Option_08
+
+*/
+typedef struct p1_tuple_d1_s
+{
+  size_t fst;
+  core_option_Option_08 snd;
+}
+p1_tuple_d1;
 
 extern int32_t core_clone_impls__core__clone__Clone_for_i32__clone(const int32_t *x0);
 
@@ -109,17 +109,17 @@ core_iter_range__core__iter__range__Step_for_i32__backward_checked(int32_t x0, s
 extern core_option_Option_9e
 core_iter_range__core__iter__range__Step_for_i32__forward_checked(int32_t x0, size_t x1);
 
-extern tuple_d1
+extern p1_tuple_d1
 core_iter_range__core__iter__range__Step_for_i32__steps_between(
   const int32_t *x0,
   const int32_t *x1
 );
 
-void step_by_bar(void);
+void p2_bar(void);
 
-void step_by_main1(void);
+void p2_main1(void);
 
-void step_by_main2(void);
+void p2_main2(void);
 
 void step_by_main(void);
 

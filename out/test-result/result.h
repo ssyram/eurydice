@@ -15,16 +15,16 @@
 extern "C" {
 #endif
 
-typedef struct result_S_s result_S;
+typedef struct p0_S_s p0_S;
 
-#define result_S1 0
-#define result_S2 1
+#define p0_S1 0
+#define p0_S2 1
 
-typedef uint8_t result_S_tags;
+typedef uint8_t p0_S_tags;
 
-typedef struct result_S_s
+typedef struct p0_S_s
 {
-  result_S_tags tag;
+  p0_S_tags tag;
   union {
     struct
     {
@@ -41,11 +41,11 @@ typedef struct result_S_s
   }
   val;
 }
-result_S;
+p0_S;
 
-result_S result_ident(result_S x);
+p0_S p0_ident(p0_S x);
 
-result_S result_mk1(uint32_t x, uint32_t y);
+p0_S p0_mk1(uint32_t x, uint32_t y);
 
 void result_main(void);
 

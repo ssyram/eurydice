@@ -7,12 +7,1654 @@
 
 #include "repeat.h"
 
+const Eurydice_arr_a5 P0_C1 = { .data = { 0U } };
+
+const
+Eurydice_arr_27
+P0_C2 = { .data = { (KRML_CLITERAL(Eurydice_arr_a5){ .data = { 0U } }) } };
+
+const
+Eurydice_arr_e6
+P0_REJECTION_SAMPLE_SHUFFLE_TABLE =
+  {
+    .data = {
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U,
+            255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U,
+            255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U,
+            255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 2U, 3U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            4U, 5U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U,
+            255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 4U, 5U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 4U, 5U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 2U, 3U, 4U, 5U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            6U, 7U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U,
+            255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 6U, 7U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 6U, 7U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 2U, 3U, 6U, 7U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            4U, 5U, 6U, 7U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 4U, 5U, 6U, 7U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 4U, 5U, 6U, 7U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 4U, 5U, 6U, 7U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            8U, 9U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U,
+            255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 8U, 9U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 8U, 9U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 2U, 3U, 8U, 9U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            4U, 5U, 8U, 9U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 4U, 5U, 8U, 9U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 4U, 5U, 8U, 9U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 4U, 5U, 8U, 9U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            6U, 7U, 8U, 9U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 6U, 7U, 8U, 9U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 6U, 7U, 8U, 9U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 6U, 7U, 8U, 9U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            4U, 5U, 6U, 7U, 8U, 9U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 4U, 5U, 6U, 7U, 8U, 9U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 2U, 3U, 4U, 5U, 6U, 7U, 8U, 9U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 4U, 5U, 6U, 7U, 8U, 9U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            10U, 11U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U,
+            255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 10U, 11U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 10U, 11U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 2U, 3U, 10U, 11U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            4U, 5U, 10U, 11U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 4U, 5U, 10U, 11U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 4U, 5U, 10U, 11U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 2U, 3U, 4U, 5U, 10U, 11U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            6U, 7U, 10U, 11U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 6U, 7U, 10U, 11U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 6U, 7U, 10U, 11U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 2U, 3U, 6U, 7U, 10U, 11U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            4U, 5U, 6U, 7U, 10U, 11U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 4U, 5U, 6U, 7U, 10U, 11U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 4U, 5U, 6U, 7U, 10U, 11U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 4U, 5U, 6U, 7U, 10U, 11U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            8U, 9U, 10U, 11U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 8U, 9U, 10U, 11U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 8U, 9U, 10U, 11U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 2U, 3U, 8U, 9U, 10U, 11U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            4U, 5U, 8U, 9U, 10U, 11U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 4U, 5U, 8U, 9U, 10U, 11U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 4U, 5U, 8U, 9U, 10U, 11U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 4U, 5U, 8U, 9U, 10U, 11U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            6U, 7U, 8U, 9U, 10U, 11U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 6U, 7U, 8U, 9U, 10U, 11U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 6U, 7U, 8U, 9U, 10U, 11U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 6U, 7U, 8U, 9U, 10U, 11U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            4U, 5U, 6U, 7U, 8U, 9U, 10U, 11U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 4U, 5U, 6U, 7U, 8U, 9U, 10U, 11U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 2U, 3U, 4U, 5U, 6U, 7U, 8U, 9U, 10U, 11U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 4U, 5U, 6U, 7U, 8U, 9U, 10U, 11U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U,
+            255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 2U, 3U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            4U, 5U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 4U, 5U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 4U, 5U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 2U, 3U, 4U, 5U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            6U, 7U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 6U, 7U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 6U, 7U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 2U, 3U, 6U, 7U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            4U, 5U, 6U, 7U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 4U, 5U, 6U, 7U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 4U, 5U, 6U, 7U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 4U, 5U, 6U, 7U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            8U, 9U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 8U, 9U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 8U, 9U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 2U, 3U, 8U, 9U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            4U, 5U, 8U, 9U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 4U, 5U, 8U, 9U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 4U, 5U, 8U, 9U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 4U, 5U, 8U, 9U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            6U, 7U, 8U, 9U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 6U, 7U, 8U, 9U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 6U, 7U, 8U, 9U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 6U, 7U, 8U, 9U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            4U, 5U, 6U, 7U, 8U, 9U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 4U, 5U, 6U, 7U, 8U, 9U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 2U, 3U, 4U, 5U, 6U, 7U, 8U, 9U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 4U, 5U, 6U, 7U, 8U, 9U, 12U, 13U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            10U, 11U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U,
+            255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 10U, 11U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 10U, 11U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 2U, 3U, 10U, 11U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            4U, 5U, 10U, 11U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 4U, 5U, 10U, 11U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 4U, 5U, 10U, 11U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 4U, 5U, 10U, 11U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            6U, 7U, 10U, 11U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 6U, 7U, 10U, 11U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 6U, 7U, 10U, 11U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 6U, 7U, 10U, 11U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            4U, 5U, 6U, 7U, 10U, 11U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 4U, 5U, 6U, 7U, 10U, 11U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 2U, 3U, 4U, 5U, 6U, 7U, 10U, 11U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 4U, 5U, 6U, 7U, 10U, 11U, 12U, 13U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            8U, 9U, 10U, 11U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 8U, 9U, 10U, 11U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 8U, 9U, 10U, 11U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 8U, 9U, 10U, 11U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            4U, 5U, 8U, 9U, 10U, 11U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 4U, 5U, 8U, 9U, 10U, 11U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 2U, 3U, 4U, 5U, 8U, 9U, 10U, 11U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 4U, 5U, 8U, 9U, 10U, 11U, 12U, 13U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            6U, 7U, 8U, 9U, 10U, 11U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 6U, 7U, 8U, 9U, 10U, 11U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 2U, 3U, 6U, 7U, 8U, 9U, 10U, 11U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 6U, 7U, 8U, 9U, 10U, 11U, 12U, 13U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 4U, 5U, 6U, 7U, 8U, 9U, 10U, 11U, 12U, 13U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 4U, 5U, 6U, 7U, 8U, 9U, 10U, 11U, 12U, 13U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 2U, 3U, 4U, 5U, 6U, 7U, 8U, 9U, 10U, 11U, 12U, 13U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 4U, 5U, 6U, 7U, 8U, 9U, 10U, 11U, 12U, 13U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U,
+            255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 2U, 3U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            4U, 5U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 4U, 5U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 4U, 5U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 2U, 3U, 4U, 5U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            6U, 7U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 6U, 7U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 6U, 7U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 2U, 3U, 6U, 7U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            4U, 5U, 6U, 7U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 4U, 5U, 6U, 7U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 4U, 5U, 6U, 7U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 4U, 5U, 6U, 7U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            8U, 9U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 8U, 9U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 8U, 9U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 2U, 3U, 8U, 9U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            4U, 5U, 8U, 9U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 4U, 5U, 8U, 9U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 4U, 5U, 8U, 9U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 4U, 5U, 8U, 9U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            6U, 7U, 8U, 9U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 6U, 7U, 8U, 9U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 6U, 7U, 8U, 9U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 6U, 7U, 8U, 9U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            4U, 5U, 6U, 7U, 8U, 9U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 4U, 5U, 6U, 7U, 8U, 9U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 2U, 3U, 4U, 5U, 6U, 7U, 8U, 9U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 4U, 5U, 6U, 7U, 8U, 9U, 14U, 15U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            10U, 11U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U,
+            255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 10U, 11U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 10U, 11U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 2U, 3U, 10U, 11U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            4U, 5U, 10U, 11U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 4U, 5U, 10U, 11U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 4U, 5U, 10U, 11U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 4U, 5U, 10U, 11U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            6U, 7U, 10U, 11U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 6U, 7U, 10U, 11U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 6U, 7U, 10U, 11U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 6U, 7U, 10U, 11U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            4U, 5U, 6U, 7U, 10U, 11U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 4U, 5U, 6U, 7U, 10U, 11U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 2U, 3U, 4U, 5U, 6U, 7U, 10U, 11U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 4U, 5U, 6U, 7U, 10U, 11U, 14U, 15U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            8U, 9U, 10U, 11U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 8U, 9U, 10U, 11U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 8U, 9U, 10U, 11U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 8U, 9U, 10U, 11U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            4U, 5U, 8U, 9U, 10U, 11U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 4U, 5U, 8U, 9U, 10U, 11U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 2U, 3U, 4U, 5U, 8U, 9U, 10U, 11U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 4U, 5U, 8U, 9U, 10U, 11U, 14U, 15U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            6U, 7U, 8U, 9U, 10U, 11U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 6U, 7U, 8U, 9U, 10U, 11U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 2U, 3U, 6U, 7U, 8U, 9U, 10U, 11U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 6U, 7U, 8U, 9U, 10U, 11U, 14U, 15U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 4U, 5U, 6U, 7U, 8U, 9U, 10U, 11U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 4U, 5U, 6U, 7U, 8U, 9U, 10U, 11U, 14U, 15U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 2U, 3U, 4U, 5U, 6U, 7U, 8U, 9U, 10U, 11U, 14U, 15U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 4U, 5U, 6U, 7U, 8U, 9U, 10U, 11U, 14U, 15U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U,
+            255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 2U, 3U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            4U, 5U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 4U, 5U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 4U, 5U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 4U, 5U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            6U, 7U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 6U, 7U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 6U, 7U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 6U, 7U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            4U, 5U, 6U, 7U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 4U, 5U, 6U, 7U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 2U, 3U, 4U, 5U, 6U, 7U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 4U, 5U, 6U, 7U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            8U, 9U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 8U, 9U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 8U, 9U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 8U, 9U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            4U, 5U, 8U, 9U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 4U, 5U, 8U, 9U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 2U, 3U, 4U, 5U, 8U, 9U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 4U, 5U, 8U, 9U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            6U, 7U, 8U, 9U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 6U, 7U, 8U, 9U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 2U, 3U, 6U, 7U, 8U, 9U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 6U, 7U, 8U, 9U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 4U, 5U, 6U, 7U, 8U, 9U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 4U, 5U, 6U, 7U, 8U, 9U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 2U, 3U, 4U, 5U, 6U, 7U, 8U, 9U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 4U, 5U, 6U, 7U, 8U, 9U, 12U, 13U, 14U, 15U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            10U, 11U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 10U, 11U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 10U, 11U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 2U, 3U, 10U, 11U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            4U, 5U, 10U, 11U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 4U, 5U, 10U, 11U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 4U, 5U, 10U, 11U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 4U, 5U, 10U, 11U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            6U, 7U, 10U, 11U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 6U, 7U, 10U, 11U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 6U, 7U, 10U, 11U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 6U, 7U, 10U, 11U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            4U, 5U, 6U, 7U, 10U, 11U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 4U, 5U, 6U, 7U, 10U, 11U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 2U, 3U, 4U, 5U, 6U, 7U, 10U, 11U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 4U, 5U, 6U, 7U, 10U, 11U, 12U, 13U, 14U, 15U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            8U, 9U, 10U, 11U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            0U, 1U, 8U, 9U, 10U, 11U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            2U, 3U, 8U, 9U, 10U, 11U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 8U, 9U, 10U, 11U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            4U, 5U, 8U, 9U, 10U, 11U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 4U, 5U, 8U, 9U, 10U, 11U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 2U, 3U, 4U, 5U, 8U, 9U, 10U, 11U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 4U, 5U, 8U, 9U, 10U, 11U, 12U, 13U, 14U, 15U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = {
+            6U, 7U, 8U, 9U, 10U, 11U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U, 255U, 255U
+          }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 6U, 7U, 8U, 9U, 10U, 11U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 2U, 3U, 6U, 7U, 8U, 9U, 10U, 11U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 6U, 7U, 8U, 9U, 10U, 11U, 12U, 13U, 14U, 15U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 4U, 5U, 6U, 7U, 8U, 9U, 10U, 11U, 12U, 13U, 14U, 15U, 255U, 255U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 4U, 5U, 6U, 7U, 8U, 9U, 10U, 11U, 12U, 13U, 14U, 15U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 2U, 3U, 4U, 5U, 6U, 7U, 8U, 9U, 10U, 11U, 12U, 13U, 14U, 15U, 255U, 255U }
+        }
+      ),
+      (
+        KRML_CLITERAL(Eurydice_arr_88){
+          .data = { 0U, 1U, 2U, 3U, 4U, 5U, 6U, 7U, 8U, 9U, 10U, 11U, 12U, 13U, 14U, 15U }
+        }
+      )
+    }
+  };
+
 void repeat_main(void)
 {
   if
   (
-    !(REPEAT_C1.data[0U] + REPEAT_C2.data->data[0U] +
-      (uint32_t)REPEAT_REJECTION_SAMPLE_SHUFFLE_TABLE.data[255U].data[0U]
+    !(P0_C1.data[0U] + P0_C2.data->data[0U] +
+      (uint32_t)P0_REJECTION_SAMPLE_SHUFFLE_TABLE.data[255U].data[0U]
     != 0U)
   )
   {

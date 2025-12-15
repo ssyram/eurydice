@@ -62,7 +62,7 @@ core_cmp_impls__core__cmp__PartialOrd_usize__for_usize__partial_cmp(
   const size_t *x1
 );
 
-size_t issue_49_f(size_t a, size_t b);
+size_t p1_f(size_t a, size_t b);
 
 void issue_49_main(void);
 

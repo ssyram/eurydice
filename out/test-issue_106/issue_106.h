@@ -15,17 +15,17 @@
 extern "C" {
 #endif
 
-typedef struct issue_106_MyStruct_s issue_106_MyStruct;
+typedef struct p0_MyStruct_s p0_MyStruct;
 
-typedef struct issue_106_MyStruct_s { uint8_t v; } issue_106_MyStruct;
+typedef struct p0_MyStruct_s { uint8_t v; } p0_MyStruct;
 
-issue_106_MyStruct issue_106_generate(void);
+p0_MyStruct p0_generate(void);
 
 void issue_106_main(void);
 
-uint8_t issue_106_use_it(const issue_106_MyStruct *x);
+uint8_t p0_use_it(const p0_MyStruct *x);
 
-uint8_t issue_106_use_ref(void);
+uint8_t p0_use_ref(void);
 
 #if defined(__cplusplus)
 }

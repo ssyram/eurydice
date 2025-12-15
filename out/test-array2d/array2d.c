@@ -7,6 +7,8 @@
 
 #include "array2d.h"
 
+#include "internal/Eurydice.h"
+
 typedef struct const_bool__x2_s const_bool__x2;
 
 typedef struct const_bool__x2_s
@@ -16,7 +18,7 @@ typedef struct const_bool__x2_s
 }
 const_bool__x2;
 
-bool array2d_f(Eurydice_arr_1e x)
+bool p1_f(Eurydice_arr_1e x)
 {
   x.data[0U] = (KRML_CLITERAL(Eurydice_arr_b2){ .data = { 1U, 2U } });
   Eurydice_arr_1e
@@ -44,7 +46,7 @@ void array2d_main(void)
   memcpy(y.data, repeat_expression, (size_t)4U * sizeof (Eurydice_arr_b2));
   y.data[1U] = (KRML_CLITERAL(Eurydice_arr_b2){ .data = { 3U, 4U } });
   y.data[3U] = (KRML_CLITERAL(Eurydice_arr_b2){ .data = { 3U, 4U } });
-  bool actual = array2d_f(y);
+  bool actual = p1_f(y);
   bool expected = true;
   const_bool__x2 uu____0 = { .fst = &actual, .snd = &expected };
   EURYDICE_ASSERT(uu____0.fst[0U] == uu____0.snd[0U], "panic!");

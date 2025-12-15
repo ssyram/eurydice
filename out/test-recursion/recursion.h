@@ -15,7 +15,7 @@
 extern "C" {
 #endif
 
-bool recursion_is_odd(int32_t y);
+bool p1_is_odd(int32_t y);
 
 void recursion_main(void);
 

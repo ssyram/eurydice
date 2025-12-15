@@ -7,21 +7,20 @@
 
 #include "result.h"
 
-result_S result_ident(result_S x)
+p0_S p0_ident(p0_S x)
 {
   return x;
 }
 
-result_S result_mk1(uint32_t x, uint32_t y)
+p0_S p0_mk1(uint32_t x, uint32_t y)
 {
-  return
-    (KRML_CLITERAL(result_S){ .tag = result_S1, .val = { .case_S1 = { .x1 = x, .y1 = y } } });
+  return (KRML_CLITERAL(p0_S){ .tag = p0_S1, .val = { .case_S1 = { .x1 = x, .y1 = y } } });
 }
 
 void result_main(void)
 {
-  result_S uu____0 = result_mk1(0U, 0U);
-  if (uu____0.tag == result_S1)
+  p0_S uu____0 = p0_mk1(0U, 0U);
+  if (uu____0.tag == p0_S1)
   {
     switch (uu____0.val.case_S1.x1)
     {
@@ -31,15 +30,15 @@ void result_main(void)
           {
             case 0U:
               {
-                result_S
+                p0_S
                 uu____1 =
-                  result_ident((
-                      KRML_CLITERAL(result_S){
-                        .tag = result_S2,
+                  p0_ident((
+                      KRML_CLITERAL(p0_S){
+                        .tag = p0_S2,
                         .val = { .case_S2 = { .x2 = 0U, .y2 = 0U } }
                       }
                     ));
-                if (uu____1.tag == result_S2)
+                if (uu____1.tag == p0_S2)
                 {
                   switch (uu____1.val.case_S2.x2)
                   {

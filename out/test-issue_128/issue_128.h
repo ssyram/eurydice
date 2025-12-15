@@ -17,10 +17,10 @@ extern "C" {
 
 typedef struct Eurydice_arr_51_s Eurydice_arr_51;
 
-#define issue_128_E_A 1
-#define issue_128_E_B 2
+#define p1_A 1
+#define p1_B 2
 
-typedef uint8_t issue_128_E;
+typedef uint8_t p0_E;
 
 /**
 A monomorphic instance of Eurydice.arr
@@ -30,11 +30,11 @@ with const generics
 */
 typedef struct Eurydice_arr_51_s { uint8_t data[0U]; } Eurydice_arr_51;
 
-void issue_128_fun_a(Eurydice_borrow_slice_u8 _x);
+void p0_fun_a(Eurydice_borrow_slice_u8 _x);
 
-void issue_128_fun_b(Eurydice_borrow_slice_u8 _x);
+void p0_fun_b(Eurydice_borrow_slice_u8 _x);
 
-void issue_128_use_enum(issue_128_E e, Eurydice_borrow_slice_u8 x);
+void p0_use_enum(p0_E e, Eurydice_borrow_slice_u8 x);
 
 void issue_128_main(void);
 

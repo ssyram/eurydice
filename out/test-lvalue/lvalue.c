@@ -12,32 +12,32 @@ void lvalue_main(void)
 
 }
 
-lvalue_Struct lvalue_use_struct(lvalue_ThreeWays s)
+p0_Struct p0_use_struct(p0_ThreeWays s)
 {
   bool uu____0 = false;
   uu____0 = true;
-  lvalue_Struct uu____1;
-  if (s.tag == lvalue_Middle)
+  p0_Struct uu____1;
+  if (s.tag == p0_Middle)
   {
     int32_t i = s.val.case_Middle;
     uu____1 =
       (
-        KRML_CLITERAL(lvalue_Struct){
-          .tag = lvalue_B,
+        KRML_CLITERAL(p0_Struct){
+          .tag = p0_B,
           .val = { .case_B = Eurydice_box_new(i, int32_t, int32_t *) }
         }
       );
   }
-  else if (s.tag == lvalue_Left)
+  else if (s.tag == p0_Left)
   {
     Eurydice_vec st = s.val.case_Left;
-    uu____1 = (KRML_CLITERAL(lvalue_Struct){ .tag = lvalue_A, .val = { .case_A = st } });
+    uu____1 = (KRML_CLITERAL(p0_Struct){ .tag = p0_A, .val = { .case_A = st } });
   }
   else
   {
-    uu____1 = (KRML_CLITERAL(lvalue_Struct){ .tag = lvalue_C });
+    uu____1 = (KRML_CLITERAL(p0_Struct){ .tag = p0_C });
   }
-  if (!(s.tag == lvalue_Left))
+  if (!(s.tag == p0_Left))
   {
     return uu____1;
   }
@@ -47,12 +47,12 @@ lvalue_Struct lvalue_use_struct(lvalue_ThreeWays s)
 /**
 This function found in impl {core::marker::Destruct for lvalue::ThreeWays}
 */
-void lvalue_ThreeWays_drop_in_place_d9(lvalue_ThreeWays *_)
+void p1_drop_in_place_d9(p0_ThreeWays *_)
 {
-  lvalue_ThreeWays scrut = _[0U];
-  if (!(scrut.tag == lvalue_Middle))
+  p0_ThreeWays scrut = _[0U];
+  if (!(scrut.tag == p0_Middle))
   {
-    if (scrut.tag == lvalue_Left)
+    if (scrut.tag == p0_Left)
     {
 
     }

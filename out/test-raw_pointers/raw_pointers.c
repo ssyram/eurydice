@@ -7,6 +7,8 @@
 
 #include "raw_pointers.h"
 
+#include "internal/Eurydice.h"
+
 typedef struct const_uint8_t__x2_s const_uint8_t__x2;
 
 typedef struct const_uint8_t__x2_s

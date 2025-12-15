@@ -15,44 +15,44 @@
 extern "C" {
 #endif
 
-typedef struct collision_Direction_s collision_Direction;
+typedef struct p1_Direction_s p1_Direction;
 
-typedef struct collision_Either_s collision_Either;
+typedef struct p1_Either_s p1_Either;
 
-#define collision_Left 0
-#define collision_Middle 1
-#define collision_Right 2
+#define p1_Left0 0
+#define p1_Right0 1
 
-typedef uint8_t collision_Direction_tags;
+typedef uint8_t p1_Either_tags;
 
-#define collision_Left0 0
-#define collision_Right0 1
+#define p1_Left 0
+#define p1_Middle 1
+#define p1_Right 2
 
-typedef uint8_t collision_Either_tags;
+typedef uint8_t p1_Direction_tags;
 
-typedef struct collision_Direction_s
+typedef struct p1_Direction_s
 {
-  collision_Direction_tags tag;
+  p1_Direction_tags tag;
   union {
     uint64_t case_Left;
     uint64_t case_Right;
   }
   val;
 }
-collision_Direction;
+p1_Direction;
 
-typedef struct collision_Either_s
+typedef struct p1_Either_s
 {
-  collision_Either_tags tag;
+  p1_Either_tags tag;
   union {
     int32_t case_Left;
     bool case_Right;
   }
   val;
 }
-collision_Either;
+p1_Either;
 
-int32_t collision_collision(collision_Either a, collision_Direction b);
+int32_t p1_collision(p1_Either a, p1_Direction b);
 
 void collision_main(void);
 

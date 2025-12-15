@@ -7,16 +7,11 @@
 
 #include "fn_higher_order.h"
 
-typedef struct const_int32_t__x2_s const_int32_t__x2;
+#include "internal/Eurydice.h"
 
 typedef struct const_size_t__x2_s const_size_t__x2;
 
-typedef struct const_int32_t__x2_s
-{
-  const int32_t *fst;
-  const int32_t *snd;
-}
-const_int32_t__x2;
+typedef struct const_int32_t__x2_s const_int32_t__x2;
 
 typedef struct const_size_t__x2_s
 {
@@ -25,12 +20,19 @@ typedef struct const_size_t__x2_s
 }
 const_size_t__x2;
 
-int32_t fn_higher_order_empty_ptr(int32_t (*f)(void))
+typedef struct const_int32_t__x2_s
+{
+  const int32_t *fst;
+  const int32_t *snd;
+}
+const_int32_t__x2;
+
+int32_t p2_empty_ptr(int32_t (*f)(void))
 {
   return f();
 }
 
-int32_t fn_higher_order_more_sum_lst(const Eurydice_arr_8d *l)
+int32_t p2_more_sum_lst(const Eurydice_arr_8d *l)
 {
   int32_t sum = (int32_t)0;
   KRML_MAYBE_FOR3(i,
@@ -49,7 +51,7 @@ with const generics
 - N= 5
 */
 size_t
-fn_higher_order_compose_cg_apply_fd(
+p2_compose_cg_apply_fd(
   size_t (*f)(const Eurydice_arr_99 *x0),
   size_t (*g)(size_t x0),
   const Eurydice_arr_99 *arg
@@ -64,7 +66,7 @@ A monomorphic instance of fn_higher_order.sum_lst
 with const generics
 - N= 5
 */
-size_t fn_higher_order_sum_lst_c9(const Eurydice_arr_99 *lst)
+size_t p2_sum_lst_c9(const Eurydice_arr_99 *lst)
 {
   size_t sum = (size_t)0U;
   KRML_MAYBE_FOR5(i,
@@ -81,7 +83,7 @@ A monomorphic instance of fn_higher_order.id
 with types size_t
 
 */
-size_t fn_higher_order_id_37(size_t r)
+size_t p2_id_37(size_t r)
 {
   return r;
 }
@@ -93,7 +95,7 @@ with const generics
 - N= 3
 */
 int32_t
-fn_higher_order_compose_cg_apply_82(
+p2_compose_cg_apply_82(
   int32_t (*f)(const Eurydice_arr_8d *x0),
   int32_t (*g)(int32_t x0),
   const Eurydice_arr_8d *arg
@@ -108,28 +110,20 @@ A monomorphic instance of fn_higher_order.id
 with types int32_t
 
 */
-int32_t fn_higher_order_id_a8(int32_t r)
+int32_t p2_id_a8(int32_t r)
 {
   return r;
 }
 
-void fn_higher_order_use_compose_cg(void)
+void p2_use_compose_cg(void)
 {
   /* original Rust expression is not an lvalue in C */
   Eurydice_arr_99
   lvalue0 = { .data = { (size_t)1U, (size_t)2U, (size_t)3U, (size_t)4U, (size_t)5U } };
-  size_t
-  x =
-    fn_higher_order_compose_cg_apply_fd(fn_higher_order_sum_lst_c9,
-      fn_higher_order_id_37,
-      &lvalue0);
+  size_t x = p2_compose_cg_apply_fd(p2_sum_lst_c9, p2_id_37, &lvalue0);
   /* original Rust expression is not an lvalue in C */
   Eurydice_arr_8d lvalue1 = { .data = { (int32_t)10, (int32_t)11, (int32_t)12 } };
-  int32_t
-  y =
-    fn_higher_order_compose_cg_apply_82(fn_higher_order_more_sum_lst,
-      fn_higher_order_id_a8,
-      &lvalue1);
+  int32_t y = p2_compose_cg_apply_82(p2_more_sum_lst, p2_id_a8, &lvalue1);
   /* original Rust expression is not an lvalue in C */
   size_t lvalue = (size_t)20U;
   const_size_t__x2 uu____0 = { .fst = &x, .snd = &lvalue };
@@ -142,10 +136,10 @@ void fn_higher_order_use_compose_cg(void)
 
 void fn_higher_order_main(void)
 {
-  fn_higher_order_use_compose_cg();
+  p2_use_compose_cg();
 }
 
-void fn_higher_order_unit_empty_ptr(void (*f)(void))
+void p2_unit_empty_ptr(void (*f)(void))
 {
   f();
 }

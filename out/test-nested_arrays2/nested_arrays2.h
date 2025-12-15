@@ -35,7 +35,7 @@ with const generics
 */
 typedef struct Eurydice_arr_a0_s { Eurydice_arr_f1 data[1U]; } Eurydice_arr_a0;
 
-#define NESTED_ARRAYS2_TABLE ((KRML_CLITERAL(Eurydice_arr_a0){ .data = { { .data = { 1U } } } }))
+extern const Eurydice_arr_a0 P0_TABLE;
 
 void nested_arrays2_main(void);
 

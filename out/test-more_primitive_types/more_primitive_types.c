@@ -9,6 +9,8 @@
 
 typedef struct arr_fd_s arr_fd;
 
+typedef Eurydice_c_char_t *string;
+
 /**
 A monomorphic instance of Eurydice.arr
 with types uint8_t
@@ -17,7 +19,7 @@ with const generics
 */
 typedef struct arr_fd_s { uint8_t data[6U]; } arr_fd;
 
-int32_t more_primitive_types_int128_operations(more_primitive_types_MorePrimitiveTypes *p)
+int32_t p1_int128_operations(p1_MorePrimitiveTypes *p)
 {
   Eurydice_Int128_int128_t uu____0 = p->int128;
   Eurydice_Int128_int128_t
@@ -46,7 +48,7 @@ int32_t more_primitive_types_int128_operations(more_primitive_types_MorePrimitiv
   return (int32_t)x;
 }
 
-int32_t more_primitive_types_match_u128(const more_primitive_types_MorePrimitiveTypes *p)
+int32_t p1_match_u128(const p1_MorePrimitiveTypes *p)
 {
   if
   (
@@ -79,7 +81,7 @@ int32_t more_primitive_types_match_u128(const more_primitive_types_MorePrimitive
   return (int32_t)3;
 }
 
-int32_t more_primitive_types_match_i128(const more_primitive_types_MorePrimitiveTypes *p)
+int32_t p1_match_i128(const p1_MorePrimitiveTypes *p)
 {
   if
   (
@@ -114,29 +116,29 @@ int32_t more_primitive_types_match_i128(const more_primitive_types_MorePrimitive
   return (int32_t)3;
 }
 
-void more_primitive_types_use_more_primitive_types(void)
+void p1_use_more_primitive_types(void)
 {
   /* original Rust expression is not an lvalue in C */
   arr_fd lvalue = { .data = { 97U, 104U, 101U, 108U, 108U, 111U } };
   const arr_fd *s = &lvalue;
-  more_primitive_types_MorePrimitiveTypes
+  p1_MorePrimitiveTypes
   p =
     {
       .int128 = Eurydice_Int128_i128_from_bits(0xfffff00000000000ULL, 0x1ULL),
       .uint128 = Eurydice_Int128_u128_from_bits(0xffffffffffffULL, 0xffffffffffffffffULL),
       .c = 97U
     };
-  more_primitive_types_match_u128(&p);
-  more_primitive_types_match_i128(&p);
+  p1_match_u128(&p);
+  p1_match_i128(&p);
   EURYDICE_ASSERT(p.c == (uint32_t)s->data[0U], "panic!");
 }
 
 void more_primitive_types_main(void)
 {
-  more_primitive_types_use_more_primitive_types();
+  p1_use_more_primitive_types();
 }
 
-int32_t more_primitive_types_more_operations(more_primitive_types_MorePrimitiveTypes *p)
+int32_t p1_more_operations(p1_MorePrimitiveTypes *p)
 {
   int32_t result = (int32_t)0;
   Eurydice_Int128_int128_t uu____0 = p->int128;

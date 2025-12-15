@@ -31,7 +31,7 @@ Eurydice_dst_ref_shared_65;
 
 extern size_t core_str__str__len(Eurydice_dst_ref_shared_65 x0);
 
-void more_str_use_str(Eurydice_dst_ref_shared_65 s);
+void p1_use_str(Eurydice_dst_ref_shared_65 s);
 
 void more_str_main(void);
 

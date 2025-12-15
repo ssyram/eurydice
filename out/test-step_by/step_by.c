@@ -7,6 +7,8 @@
 
 #include "step_by.h"
 
+#include "internal/Eurydice.h"
+
 typedef struct const_int32_t__x2_s const_int32_t__x2;
 
 typedef struct const_int32_t__x2_s
@@ -16,7 +18,7 @@ typedef struct const_int32_t__x2_s
 }
 const_int32_t__x2;
 
-void step_by_bar(void)
+void p2_bar(void)
 {
   int32_t i0 = (int32_t)0;
   for (int32_t i = (int32_t)0; i < (int32_t)24; i = i + (int32_t)(size_t)6U)
@@ -30,9 +32,9 @@ void step_by_bar(void)
   EURYDICE_ASSERT(uu____0.fst[0U] == uu____0.snd[0U], "panic!");
 }
 
-void step_by_main1(void)
+void p2_main1(void)
 {
-  step_by_bar();
+  p2_bar();
   int32_t i0 = (int32_t)0;
   for (int32_t i = (int32_t)0; i < (int32_t)24; i = i + (int32_t)(size_t)6U)
   {
@@ -46,9 +48,9 @@ void step_by_main1(void)
   }
 }
 
-void step_by_main2(void)
+void p2_main2(void)
 {
-  step_by_main1();
+  p2_main1();
   for (int32_t i = (int32_t)0; i < (int32_t)24; i = i + (int32_t)(size_t)6U)
   {
 
@@ -61,7 +63,7 @@ void step_by_main2(void)
 
 void step_by_main(void)
 {
-  step_by_main2();
+  p2_main2();
   for (int32_t i = (int32_t)0; i < (int32_t)24; i++)
   {
 

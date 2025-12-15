@@ -49,7 +49,7 @@ core_cmp_impls__core__cmp__PartialEq_u32__for_u32__eq(const uint32_t *x0, const 
 extern bool
 core_cmp_impls__core__cmp__PartialEq_u32__for_u32__ne(const uint32_t *x0, const uint32_t *x1);
 
-bool array2d_f(Eurydice_arr_1e x);
+bool p1_f(Eurydice_arr_1e x);
 
 void array2d_main(void);
 

@@ -7,14 +7,14 @@
 
 #include "int_switch.h"
 
-uint32_t int_switch_f(void)
+uint32_t p0_f(void)
 {
   return 0U;
 }
 
 void int_switch_main(void)
 {
-  switch (int_switch_f())
+  switch (p0_f())
   {
     case 0U:
       {

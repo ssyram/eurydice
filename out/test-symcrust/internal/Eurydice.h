@@ -15,6 +15,8 @@
 extern "C" {
 #endif
 
+typedef Eurydice_c_char_t *p0_string;
+
 extern uint32_t Eurydice_min_u32(uint32_t x, uint32_t y);
 
 #if defined(__cplusplus)

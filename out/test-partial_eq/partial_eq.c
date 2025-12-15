@@ -7,50 +7,51 @@
 
 #include "partial_eq.h"
 
+#include "internal/Eurydice.h"
+
 typedef struct const_const_partial_eq_Enum___x2_s const_const_partial_eq_Enum___x2;
 
 typedef struct const_partial_eq_Enum__x2_s const_partial_eq_Enum__x2;
 
 typedef struct const_const_partial_eq_Enum___x2_s
 {
-  const partial_eq_Enum *const *fst;
-  const partial_eq_Enum *const *snd;
+  const p1_Enum *const *fst;
+  const p1_Enum *const *snd;
 }
 const_const_partial_eq_Enum___x2;
 
 typedef struct const_partial_eq_Enum__x2_s
 {
-  const partial_eq_Enum *fst;
-  const partial_eq_Enum *snd;
+  const p1_Enum *fst;
+  const p1_Enum *snd;
 }
 const_partial_eq_Enum__x2;
 
 /**
 This function found in impl {core::cmp::PartialEq<partial_eq::Enum> for partial_eq::Enum}
 */
-inline bool partial_eq_eq_31(const partial_eq_Enum *self, const partial_eq_Enum *other)
+inline bool p1_eq_31(const p1_Enum *self, const p1_Enum *other)
 {
   return true;
 }
 
 void partial_eq_main(void)
 {
-  partial_eq_Enum expected = partial_eq_Enum_A;
+  p1_Enum expected = p2_A;
   const_partial_eq_Enum__x2 uu____0 = { .fst = &expected, .snd = &expected };
-  EURYDICE_ASSERT(partial_eq_eq_31(uu____0.fst, uu____0.snd), "panic!");
+  EURYDICE_ASSERT(p1_eq_31(uu____0.fst, uu____0.snd), "panic!");
   /* original Rust expression is not an lvalue in C */
-  const partial_eq_Enum *lvalue0 = &expected;
+  const p1_Enum *lvalue0 = &expected;
   /* original Rust expression is not an lvalue in C */
-  const partial_eq_Enum *lvalue = &expected;
+  const p1_Enum *lvalue = &expected;
   const_const_partial_eq_Enum___x2 uu____1 = { .fst = &lvalue0, .snd = &lvalue };
-  EURYDICE_ASSERT(partial_eq_eq_31(uu____1.fst[0U], uu____1.snd[0U]), "panic!");
+  EURYDICE_ASSERT(p1_eq_31(uu____1.fst[0U], uu____1.snd[0U]), "panic!");
 }
 
 /**
 This function found in impl {core::fmt::Debug for partial_eq::Enum}
 */
-inline core_result_Result_4a
-partial_eq_fmt_29(const partial_eq_Enum *self, core_fmt_Formatter *f)
+inline core_result_Result_4a p1_fmt_29(const p1_Enum *self, core_fmt_Formatter *f)
 {
   return
     core_fmt__core__fmt__Formatter__a___write_str(f,

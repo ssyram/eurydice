@@ -7,6 +7,8 @@
 
 #include "substr.h"
 
+#include "internal/Eurydice.h"
+
 void substr_main(void)
 {
   Eurydice_dst_ref_shared_65 str = { .ptr = "abc", .meta = (size_t)3U };

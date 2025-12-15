@@ -26,11 +26,11 @@ typedef uint8_t core_panicking_AssertKind;
 extern bool
 core_cmp_impls__core__cmp__PartialEq_____for_____eq(void *const *x0, void *const *x1);
 
-extern void *const *const *global_ref_C_VAL_local_2;
+extern void *const *const *p1_C_VAL_local_2;
 
-#define GLOBAL_REF_C_VAL (&global_ref_C_VAL_local_2)
+extern void *const *const *const *const P1_C_VAL;
 
-extern const int32_t *const *const *const global_ref_S_VAL;
+extern const int32_t *const *const *const p1_S_VAL;
 
 void global_ref_main(void);
 

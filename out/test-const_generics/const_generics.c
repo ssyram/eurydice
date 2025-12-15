@@ -7,16 +7,11 @@
 
 #include "const_generics.h"
 
+#include "internal/Eurydice.h"
+
 typedef struct const_uint32_t__x2_s const_uint32_t__x2;
 
 typedef struct const_bool__x2_s const_bool__x2;
-
-typedef struct const_uint32_t__x2_s
-{
-  const uint32_t *fst;
-  const uint32_t *snd;
-}
-const_uint32_t__x2;
 
 typedef struct const_bool__x2_s
 {
@@ -24,6 +19,13 @@ typedef struct const_bool__x2_s
   const bool *snd;
 }
 const_bool__x2;
+
+typedef struct const_uint32_t__x2_s
+{
+  const uint32_t *fst;
+  const uint32_t *snd;
+}
+const_uint32_t__x2;
 
 /**
 A monomorphic instance of Eurydice.array_to_subslice_to_mut
@@ -77,7 +79,7 @@ A monomorphic instance of const_generics.serialize
 with const generics
 - OUT_LEN= 8
 */
-Eurydice_array_u8x8 const_generics_serialize_3b(Eurydice_dst_ref_shared_3c re)
+Eurydice_array_u8x8 p1_serialize_3b(Eurydice_dst_ref_shared_3c re)
 {
   Eurydice_array_u8x8 out = { .data = { 0U } };
   Eurydice_mut_borrow_slice_u8
@@ -115,7 +117,7 @@ void const_generics_main(void)
 {
   /* original Rust expression is not an lvalue in C */
   Eurydice_arr_b2 lvalue = { .data = { 1U, 2U } };
-  Eurydice_array_u8x8 s = const_generics_serialize_3b(array_to_slice_shared_a1(&lvalue));
+  Eurydice_array_u8x8 s = p1_serialize_3b(array_to_slice_shared_a1(&lvalue));
   EURYDICE_ASSERT(s.data[3U] == 1U, "panic!");
   EURYDICE_ASSERT(s.data[7U] == 2U, "panic!");
 }
@@ -127,7 +129,7 @@ with const generics
 - N= 2
 - M= 4
 */
-const_generics_Pair_4e const_generics_mk_pairs_e0(uint32_t x, uint64_t y)
+p1_Pair_4e p1_mk_pairs_e0(uint32_t x, uint64_t y)
 {
   Eurydice_arr_b2 a1;
   uint32_t repeat_expression0[2U];
@@ -137,14 +139,14 @@ const_generics_Pair_4e const_generics_mk_pairs_e0(uint32_t x, uint64_t y)
   uint64_t repeat_expression[4U];
   KRML_MAYBE_FOR4(i, (size_t)0U, (size_t)4U, (size_t)1U, repeat_expression[i] = y;);
   memcpy(a2.data, repeat_expression, (size_t)4U * sizeof (uint64_t));
-  const_generics_Pair_a5 p1 = { .left = a1, .right = a2 };
-  const_generics_Pair_87 p2 = { .left = a2, .right = a1 };
-  return (KRML_CLITERAL(const_generics_Pair_4e){ .left = p1.left, .right = p2.right });
+  p1_Pair_a5 p1 = { .left = a1, .right = a2 };
+  p1_Pair_87 p2 = { .left = a2, .right = a1 };
+  return (KRML_CLITERAL(p1_Pair_4e){ .left = p1.left, .right = p2.right });
 }
 
-void const_generics_main1(void)
+void p1_main1(void)
 {
-  const_generics_Pair_4e uu____0 = const_generics_mk_pairs_e0(0U, 0ULL);
+  p1_Pair_4e uu____0 = p1_mk_pairs_e0(0U, 0ULL);
   Eurydice_arr_b2 left = uu____0.left;
   Eurydice_arr_b2 right = uu____0.right;
   uint32_t expected = 0U;
@@ -164,7 +166,7 @@ with const generics
 - FOO= 1
 - BAR= 2
 */
-bool const_generics_f_e5(uint32_t x, size_t y)
+bool p1_f_e5(uint32_t x, size_t y)
 {
   Eurydice_arr_a5 arr1;
   uint32_t repeat_expression0[1U];
@@ -196,7 +198,7 @@ with const generics
 - FOO= 3
 - BAR= 4
 */
-bool const_generics_f_70(uint32_t x, size_t y)
+bool p1_f_70(uint32_t x, size_t y)
 {
   Eurydice_arr_6f arr1;
   uint32_t repeat_expression0[3U];
@@ -224,10 +226,10 @@ with const generics
 - BAR= 3
 - FOO= 4
 */
-bool const_generics_g_70(uint32_t x, size_t y)
+bool p1_g_70(uint32_t x, size_t y)
 {
   bool uu____0;
-  if (const_generics_f_70(x, y))
+  if (p1_f_70(x, y))
   {
     if (x == 4U)
     {
@@ -245,12 +247,12 @@ bool const_generics_g_70(uint32_t x, size_t y)
   return uu____0;
 }
 
-void const_generics_main3(void)
+void p1_main3(void)
 {
   bool x;
-  if (const_generics_f_e5(0U, (size_t)0U))
+  if (p1_f_e5(0U, (size_t)0U))
   {
-    x = const_generics_g_70(0U, (size_t)0U);
+    x = p1_g_70(0U, (size_t)0U);
   }
   else
   {

@@ -30,7 +30,7 @@ A monomorphic instance of issue_212.id_mut
 with types Eurydice_arr int32_t[[$3size_t]]
 
 */
-const Eurydice_arr_8d *issue_212_id_mut_16(const Eurydice_arr_8d *x);
+const Eurydice_arr_8d *p1_id_mut_16(const Eurydice_arr_8d *x);
 
 void issue_212_main(void);
 

@@ -7,6 +7,8 @@
 
 #include "castunsize.h"
 
+#include "internal/Eurydice.h"
+
 typedef struct const_uint32_t__x2_s const_uint32_t__x2;
 
 typedef struct const_uint32_t__x2_s
@@ -16,10 +18,10 @@ typedef struct const_uint32_t__x2_s
 }
 const_uint32_t__x2;
 
-void castunsize_main1(void)
+void p1_main1(void)
 {
-  castunsize_S_f9 x = { .foo = 0U, .my_data = { .data = { 0U } } };
-  Eurydice_dst_ref_shared_88 x0 = { .ptr = (const castunsize_T *)&x, .meta = (size_t)4U };
+  p1_S_f9 x = { .foo = 0U, .my_data = { .data = { 0U } } };
+  Eurydice_dst_ref_shared_88 x0 = { .ptr = (const p1_T *)&x, .meta = (size_t)4U };
   /* original Rust expression is not an lvalue in C */
   uint32_t lvalue = 0U;
   const_uint32_t__x2
@@ -41,7 +43,7 @@ static Eurydice_dst_ref_mut_3c array_to_slice_mut_ad(Eurydice_arr_0d *a)
   return lit;
 }
 
-void castunsize_main3(void)
+void p1_main3(void)
 {
   Eurydice_dst_ref_mut_3c
   x =
@@ -59,10 +61,10 @@ A monomorphic instance of castunsize.main2
 with const generics
 - K= 5
 */
-void castunsize_main2_c9(void)
+void p1_main2_c9(void)
 {
-  castunsize_S_bc x = { .foo = 0U, .my_data = { .data = { 0U } } };
-  Eurydice_dst_ref_shared_88 x0 = { .ptr = (const castunsize_T *)&x, .meta = (size_t)5U };
+  p1_S_bc x = { .foo = 0U, .my_data = { .data = { 0U } } };
+  Eurydice_dst_ref_shared_88 x0 = { .ptr = (const p1_T *)&x, .meta = (size_t)5U };
   /* original Rust expression is not an lvalue in C */
   uint32_t lvalue = 0U;
   const_uint32_t__x2
@@ -89,7 +91,7 @@ A monomorphic instance of castunsize.main4
 with const generics
 - K= 5
 */
-void castunsize_main4_c9(void)
+void p1_main4_c9(void)
 {
   Eurydice_dst_ref_mut_3c
   x =
@@ -104,9 +106,9 @@ void castunsize_main4_c9(void)
 
 void castunsize_main(void)
 {
-  castunsize_main1();
-  castunsize_main2_c9();
-  castunsize_main3();
-  castunsize_main4_c9();
+  p1_main1();
+  p1_main2_c9();
+  p1_main3();
+  p1_main4_c9();
 }
 
