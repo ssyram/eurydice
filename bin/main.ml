@@ -319,6 +319,8 @@ Supported options:|}
   if errors then
     fail __FILE__ __LINE__;
 
+  let files = Eurydice.Cleanup3.simp_prefix files in
+
   let scope_env = Krml.Simplify.allocate_c_env files in
   Eurydice.Cleanup3.(also_skip_prefix_for_external_types scope_env)#visit_files () files;
   let files = Eurydice.Cleanup3.decay_cg_externals#visit_files (scope_env, false) files in

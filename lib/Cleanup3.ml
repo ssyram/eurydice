@@ -424,3 +424,25 @@ let stub_pure_extern_funcs files =
     | x -> x
   in
   List.map (fun (name, decls) -> name, List.map stub_pure_extern_func decls) files
+
+let simp_prefix files =
+  let tbl = Hashtbl.create 42 in
+  (object
+     inherit [_] Krml.Ast.map
+
+     method! visit_lident _ ((prefix, name) as lid) =
+       match prefix with
+       | "Eurydice" :: _ | "core" :: _ | "std" :: _ | "alloc" :: _ | "LowStar" :: _ -> lid
+       | _ when name = "main" -> lid
+       | _ ->
+           let hash =
+             try Hashtbl.find tbl prefix
+             with Not_found ->
+               let next_id = KPrint.bsprintf "P%d" (Hashtbl.length tbl) in
+               Hashtbl.add tbl prefix next_id;
+               next_id
+           in
+           [ hash ], name
+  end)
+    #visit_files
+    () files
