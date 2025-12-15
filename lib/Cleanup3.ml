@@ -153,7 +153,14 @@ let lid_prefix_abbrev ((prefix, name) as lid) =
     lid
   else
     match prefix with
-    | "Eurydice" :: _ | "core" :: _ | "std" :: _ | "alloc" :: _ | "LowStar" :: _ -> lid
+    (* To bypass the built-in stuff *)
+    | "Eurydice" :: _
+    | "core"
+      :: ("array" | "cmp" | "result" | "hint" | "num" | "convert" | "str" | "fmt" | "ops")
+      :: _
+    | "alloc" :: ("boxed" | "vec") :: _
+    | "LowStar" :: _ -> lid
+    | [ "Prims" ] when name = "string" -> lid
     | _ when name = "main" -> lid
     | _ ->
         let hash =
