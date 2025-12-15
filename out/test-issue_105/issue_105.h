@@ -103,7 +103,7 @@ This function found in impl {core::cmp::PartialEq<u8> for u8}
 */
 bool core_cmp_impls_ne_c3(const uint8_t *self, const uint8_t *other);
 
-core_result_Result_1d p1_inner(void);
+core_result_Result_1d issue_105_inner(void);
 
 /**
 This function found in impl {core::ops::try_trait::Try<T, core::result::Result<core::convert::Infallible, E>[core::marker::Sized<core::convert::Infallible>, TraitClause@1]> for core::result::Result<T, E>[TraitClause@0, TraitClause@1]}
@@ -142,7 +142,7 @@ with const generics
 */
 core_result_Result_1d core_result_from_residual_1f_48(core_result_Result_8f residual);
 
-core_result_Result_1d p1_call_it(void);
+core_result_Result_1d issue_105_call_it(void);
 
 /**
 This function found in impl {core::cmp::PartialEq<core::result::Result<T, E>[TraitClause@0, TraitClause@1]> for core::result::Result<T, E>[TraitClause@0, TraitClause@1]}

@@ -9,6 +9,7 @@
 *)
 
 module B = Builtin
+module O = Options
 open Krml
 open Ast
 
@@ -145,12 +146,31 @@ let also_skip_prefix_for_external_types (scope_env, _) =
           KPrint.bprintf "Warning! The skip_prefix options generate name conflicts\n"
   end
 
+let prefix_abbrev = Hashtbl.create 42
+
+let lid_prefix_abbrev ((prefix, name) as lid) =
+  if not !O.abbrev_prefices then
+    lid
+  else
+    match prefix with
+    | "Eurydice" :: _ | "core" :: _ | "std" :: _ | "alloc" :: _ | "LowStar" :: _ -> lid
+    | _ when name = "main" -> lid
+    | _ ->
+        let hash =
+          try Hashtbl.find prefix_abbrev prefix
+          with Not_found ->
+            let next_id = KPrint.bsprintf "p%d" (Hashtbl.length prefix_abbrev) in
+            Hashtbl.add prefix_abbrev prefix next_id;
+            next_id
+        in
+        [ hash ], name
+
 let add_opaque_names files =
   match files with
   | [] -> files
   | files ->
       let former, (name, decls) = Krml.KList.split_at_last files in
-      let mapper lident = Ast.DType (lident, [], 0, 0, Abbrev B.unknown_struct) in
+      let mapper lident = Ast.DType (lid_prefix_abbrev lident, [], 0, 0, Abbrev B.unknown_struct) in
       let new_decls = List.map mapper !AstOfLlbc.opaque_names in
       former @ [ name, new_decls @ decls ]
 
@@ -427,23 +447,9 @@ let stub_pure_extern_funcs files =
   List.map (fun (name, decls) -> name, List.map stub_pure_extern_func decls) files
 
 let simp_prefix files =
-  let tbl = Hashtbl.create 42 in
   (object
      inherit [_] Krml.Ast.map
-
-     method! visit_lident _ ((prefix, name) as lid) =
-       match prefix with
-       | "Eurydice" :: _ | "core" :: _ | "std" :: _ | "alloc" :: _ | "LowStar" :: _ -> lid
-       | _ when name = "main" -> lid
-       | _ ->
-           let hash =
-             try Hashtbl.find tbl prefix
-             with Not_found ->
-               let next_id = KPrint.bsprintf "p%d" (Hashtbl.length tbl) in
-               Hashtbl.add tbl prefix next_id;
-               next_id
-           in
-           [ hash ], name
+     method! visit_lident _ lid = lid_prefix_abbrev lid
   end)
     #visit_files
     () files

@@ -15,7 +15,7 @@
 extern "C" {
 #endif
 
-uint32_t p0_f(void);
+uint32_t int_switch_f(void);
 
 void int_switch_main(void);
 

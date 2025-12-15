@@ -19,9 +19,9 @@ typedef Eurydice_unknown_struct core_fmt_Arguments;
 
 typedef struct Eurydice_arr_e4_s Eurydice_arr_e4;
 
-typedef struct p1_closure_s p1_closure;
+typedef struct closure_f_closure_s closure_f_closure;
 
-typedef struct p2_closure_s p2_closure;
+typedef struct closure_f_closure_closure_s closure_f_closure_closure;
 
 typedef struct Eurydice_arr_6a_s Eurydice_arr_6a;
 
@@ -39,14 +39,14 @@ with const generics
 */
 typedef struct Eurydice_arr_e4_s { size_t data[1U]; } Eurydice_arr_e4;
 
-typedef struct p1_closure_s { const Eurydice_arr_e4 *fst; } p1_closure;
+typedef struct closure_f_closure_s { const Eurydice_arr_e4 *fst; } closure_f_closure;
 
-typedef struct p2_closure_s
+typedef struct closure_f_closure_closure_s
 {
   const Eurydice_arr_e4 *fst;
   const size_t *snd;
 }
-p2_closure;
+closure_f_closure_closure;
 
 /**
 A monomorphic instance of Eurydice.arr
@@ -59,30 +59,36 @@ typedef struct Eurydice_arr_6a_s { Eurydice_arr_e4 data[1U]; } Eurydice_arr_6a;
 /**
 This function found in impl {core::ops::function::FnMut<(usize), usize> for closure::f::closure::closure<0, 1>}
 */
-size_t p2_call_mut_8a(p2_closure *_, size_t tupled_args);
+size_t closure_f_closure_call_mut_8a(closure_f_closure_closure *_, size_t tupled_args);
 
 /**
 This function found in impl {core::ops::function::FnOnce<(usize), usize> for closure::f::closure::closure<0, 1>}
 */
-size_t p2_call_once_b7(p2_closure _, size_t _0);
+size_t closure_f_closure_call_once_b7(closure_f_closure_closure _, size_t _0);
 
 /**
 This function found in impl {core::ops::function::FnMut<(usize), @Array<usize, 1usize>> for closure::f::closure<0>}
 */
-Eurydice_arr_e4 p1_call_mut_59(p1_closure *_, size_t tupled_args);
+Eurydice_arr_e4 closure_f_call_mut_59(closure_f_closure *_, size_t tupled_args);
 
 /**
 This function found in impl {core::ops::function::FnOnce<(usize), @Array<usize, 1usize>> for closure::f::closure<0>}
 */
-Eurydice_arr_e4 p1_call_once_71(p1_closure _, size_t _0);
+Eurydice_arr_e4 closure_f_call_once_71(closure_f_closure _, size_t _0);
 
-Eurydice_arr_6a p3_f(void);
+Eurydice_arr_6a closure_f(void);
 
 void closure_main(void);
 
-extern void p5_drop_in_place(p2_closure *x0);
+extern void
+closure_f_closure_closure__core__marker__Destruct_for_closure__f__closure__closure_0__1___drop_in_place(
+  closure_f_closure_closure *x0
+);
 
-extern void p6_drop_in_place(p1_closure *x0);
+extern void
+closure_f_closure__core__marker__Destruct_for_closure__f__closure_0___drop_in_place(
+  closure_f_closure *x0
+);
 
 #if defined(__cplusplus)
 }

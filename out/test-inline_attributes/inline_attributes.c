@@ -7,25 +7,25 @@
 
 #include "inline_attributes.h"
 
-inline uint32_t p0_f(void)
+inline uint32_t inline_attributes_f(void)
 {
   return 1U;
 }
 
-KRML_NOINLINE uint32_t p0_g(void)
+KRML_NOINLINE uint32_t inline_attributes_g(void)
 {
   return 2U;
 }
 
-KRML_MUSTINLINE uint32_t p0_h(void)
+KRML_MUSTINLINE uint32_t inline_attributes_h(void)
 {
   return 3U;
 }
 
 void inline_attributes_main(void)
 {
-  p0_f();
-  p0_g();
-  p0_h();
+  inline_attributes_f();
+  inline_attributes_g();
+  inline_attributes_h();
 }
 

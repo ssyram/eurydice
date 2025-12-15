@@ -23,7 +23,7 @@ typedef struct Eurydice_dst_ref_mut_05_s Eurydice_dst_ref_mut_05;
 
 typedef struct Eurydice_dst_ref_shared_dd_s Eurydice_dst_ref_shared_dd;
 
-typedef struct p0__vtable__s p0__vtable_;
+typedef struct dyn_trait_Trait__vtable__s dyn_trait_Trait__vtable_;
 
 typedef struct core_marker_MetaSized__vtable__s
 {
@@ -41,7 +41,7 @@ with types Eurydice_c_void_t,  dyn_trait_Trait_{vtable}*
 typedef struct Eurydice_dst_ref_mut_dd_s
 {
   Eurydice_c_void_t *ptr;
-  p0__vtable_ *meta;
+  dyn_trait_Trait__vtable_ *meta;
 }
 Eurydice_dst_ref_mut_dd;
 
@@ -65,11 +65,11 @@ with types Eurydice_c_void_t,  dyn_trait_Trait_{vtable}*
 typedef struct Eurydice_dst_ref_shared_dd_s
 {
   const Eurydice_c_void_t *ptr;
-  p0__vtable_ *meta;
+  dyn_trait_Trait__vtable_ *meta;
 }
 Eurydice_dst_ref_shared_dd;
 
-typedef struct p0__vtable__s
+typedef struct dyn_trait_Trait__vtable__s
 {
   size_t size;
   size_t align;
@@ -77,11 +77,11 @@ typedef struct p0__vtable__s
   void (*method_method)(Eurydice_dst_ref_shared_dd x0);
   const core_marker_MetaSized__vtable_ *super_trait_0;
 }
-p0__vtable_;
+dyn_trait_Trait__vtable_;
 
 void dyn_trait_main(void);
 
-void p1_use_trait(Eurydice_dst_ref_shared_dd t);
+void dyn_trait_use_trait(Eurydice_dst_ref_shared_dd t);
 
 #if defined(__cplusplus)
 }

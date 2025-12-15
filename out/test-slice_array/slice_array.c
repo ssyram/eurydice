@@ -7,8 +7,6 @@
 
 #include "slice_array.h"
 
-#include "internal/Eurydice.h"
-
 typedef struct const_uint8_t__x2_s const_uint8_t__x2;
 
 typedef struct const_uint8_t__x2_s
@@ -32,7 +30,7 @@ static Eurydice_dst_ref_mut_75 array_to_slice_mut_4f(Eurydice_arr_44 *a)
   return lit;
 }
 
-void p2_f1(void)
+void slice_array_f1(void)
 {
   Eurydice_arr_44
   x =
@@ -42,7 +40,7 @@ void p2_f1(void)
     Eurydice_slice_split_at_mut(array_to_slice_mut_4f(&x),
       (size_t)2U,
       Eurydice_array_u8x4,
-      p1_Eurydice_dst_ref_mut_75_x2).fst;
+      Eurydice_dst_ref_mut_75_x2).fst;
   y0.ptr->data[0U] = 1U;
   uint8_t actual = x.data->data[0U];
   uint8_t expected = 1U;
@@ -50,7 +48,7 @@ void p2_f1(void)
   EURYDICE_ASSERT(uu____0.fst[0U] == uu____0.snd[0U], "panic!");
 }
 
-void p2_f2(void)
+void slice_array_f2(void)
 {
   Eurydice_arr_44
   x =
@@ -60,7 +58,7 @@ void p2_f2(void)
     Eurydice_slice_split_at_mut(array_to_slice_mut_4f(&x),
       (size_t)2U,
       Eurydice_array_u8x4,
-      p1_Eurydice_dst_ref_mut_75_x2).fst;
+      Eurydice_dst_ref_mut_75_x2).fst;
   Eurydice_array_u8x4 z = y0.ptr[0U];
   z.data[0U] = 1U;
   uint8_t actual = x.data->data[0U];
@@ -143,7 +141,7 @@ static Eurydice_mut_borrow_slice_u8 array_to_slice_mut_60(Eurydice_array_u8x4 *a
   return lit;
 }
 
-void p2_f3(void)
+void slice_array_f3(void)
 {
   /* original Rust expression is not an lvalue in C */
   Eurydice_array_u8x4 lvalue0 = { .data = { 0U } };
@@ -192,7 +190,7 @@ A monomorphic instance of slice_array.f4
 with const generics
 - K= 4
 */
-void p2_f4_ac(void)
+void slice_array_f4_ac(void)
 {
   Eurydice_arr_44
   x =
@@ -202,7 +200,7 @@ void p2_f4_ac(void)
     Eurydice_slice_split_at_mut(array_to_slice_mut_4f(&x),
       (size_t)2U,
       Eurydice_array_u8x4,
-      p1_Eurydice_dst_ref_mut_75_x2).fst;
+      Eurydice_dst_ref_mut_75_x2).fst;
   y0.ptr->data[0U] = 1U;
   uint8_t actual = x.data->data[0U];
   uint8_t expected = 1U;
@@ -215,7 +213,7 @@ A monomorphic instance of slice_array.f5
 with const generics
 - K= 4
 */
-void p2_f5_ac(void)
+void slice_array_f5_ac(void)
 {
   /* original Rust expression is not an lvalue in C */
   Eurydice_array_u8x4 lvalue0 = { .data = { 0U } };
@@ -250,10 +248,10 @@ void p2_f5_ac(void)
 
 void slice_array_main(void)
 {
-  p2_f1();
-  p2_f2();
-  p2_f3();
-  p2_f4_ac();
-  p2_f5_ac();
+  slice_array_f1();
+  slice_array_f2();
+  slice_array_f3();
+  slice_array_f4_ac();
+  slice_array_f5_ac();
 }
 

@@ -10,15 +10,15 @@
 /**
 This function found in impl {traits::ToInt for traits::Foo}
 */
-uint32_t p0_to_int_ac(const p0_Foo *self)
+uint32_t traits_to_int_ac(const traits_Foo *self)
 {
   switch (self[0U])
   {
-    case p1_Foo1:
+    case traits_Foo_Foo1:
       {
         break;
       }
-    case p1_Foo2:
+    case traits_Foo_Foo2:
       {
         return 2U;
       }
@@ -34,10 +34,10 @@ uint32_t p0_to_int_ac(const p0_Foo *self)
 /**
 This function found in impl {traits::ToInt for &0 (@Slice<traits::Foo>)}
 */
-uint32_t p0_to_int_88(const Eurydice_dst_ref_shared_e2 *self)
+uint32_t traits_to_int_88(const Eurydice_dst_ref_shared_e2 *self)
 {
-  uint32_t uu____0 = p0_to_int_ac(self->ptr);
-  return uu____0 * p0_to_int_ac(&self->ptr[1U]);
+  uint32_t uu____0 = traits_to_int_ac(self->ptr);
+  return uu____0 * traits_to_int_ac(&self->ptr[1U]);
 }
 
 /**
@@ -57,13 +57,13 @@ array_to_subslice_shared_91(const Eurydice_arr_e2 *a, core_ops_range_Range_08 r)
 
 void traits_main(void)
 {
-  Eurydice_arr_e2 foos = { .data = { p1_Foo1, p1_Foo2 } };
+  Eurydice_arr_e2 foos = { .data = { traits_Foo_Foo1, traits_Foo_Foo2 } };
   /* original Rust expression is not an lvalue in C */
   Eurydice_dst_ref_shared_e2
   lvalue =
     array_to_subslice_shared_91(&foos,
       (KRML_CLITERAL(core_ops_range_Range_08){ .start = (size_t)0U, .end = (size_t)2U }));
-  if (!(p0_to_int_88(&lvalue) != 2U))
+  if (!(traits_to_int_88(&lvalue) != 2U))
   {
     return;
   }

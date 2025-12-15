@@ -15,34 +15,27 @@
 extern "C" {
 #endif
 
-typedef struct p0_Foo0_s p0_Foo0;
+typedef struct names_Type_s names_Type;
 
-typedef struct p0_Baz_s p0_Baz;
+typedef struct names_Baz_s names_Baz;
 
-typedef struct p0_Type_s p0_Type;
+typedef struct names_Foo0_s names_Foo0;
 
-#define p0_Foo 0
-#define p0_Bar 1
+#define names_Foo 0
+#define names_Bar 1
 
-typedef uint8_t p0_Baz_tags;
+typedef uint8_t names_Baz_tags;
 
-typedef struct p0_Foo0_s
-{
-  uint32_t x;
-  uint32_t y;
-}
-p0_Foo0;
-
-typedef struct p0_Type_s
+typedef struct names_Type_s
 {
   int32_t switch0;
   int32_t class0;
 }
-p0_Type;
+names_Type;
 
-typedef struct p0_Baz_s
+typedef struct names_Baz_s
 {
-  p0_Baz_tags tag;
+  names_Baz_tags tag;
   union {
     struct
     {
@@ -54,9 +47,16 @@ typedef struct p0_Baz_s
   }
   val;
 }
-p0_Baz;
+names_Baz;
 
-void p0_f(uint32_t r_struct);
+typedef struct names_Foo0_s
+{
+  uint32_t x;
+  uint32_t y;
+}
+names_Foo0;
+
+void names_f(uint32_t r_struct);
 
 void names_main(void);
 

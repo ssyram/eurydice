@@ -7,8 +7,6 @@
 
 #include "issue_49.h"
 
-#include "internal/Eurydice.h"
-
 typedef struct const_size_t__x2_s const_size_t__x2;
 
 typedef struct const_size_t__x2_s
@@ -18,7 +16,7 @@ typedef struct const_size_t__x2_s
 }
 const_size_t__x2;
 
-size_t p1_f(size_t a, size_t b)
+size_t issue_49_f(size_t a, size_t b)
 {
   return core_cmp_impls__core__cmp__Ord_for_usize__min(a, b);
 }
@@ -26,7 +24,7 @@ size_t p1_f(size_t a, size_t b)
 void issue_49_main(void)
 {
   size_t expected = (size_t)0U;
-  size_t actual = p1_f((size_t)0U, (size_t)0U);
+  size_t actual = issue_49_f((size_t)0U, (size_t)0U);
   const_size_t__x2 uu____0 = { .fst = &expected, .snd = &actual };
   EURYDICE_ASSERT(uu____0.fst[0U] == uu____0.snd[0U], "panic!");
 }

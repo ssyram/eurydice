@@ -21,6 +21,8 @@ typedef Eurydice_unknown_struct core_array_TryFromSliceError;
 
 typedef Eurydice_unknown_struct core_fmt_Formatter;
 
+typedef struct Eurydice_dst_ref_mut_75_x2_s Eurydice_dst_ref_mut_75_x2;
+
 typedef struct core_result_Result_4a_s core_result_Result_4a;
 
 typedef struct Eurydice_dst_ref_shared_75_s Eurydice_dst_ref_shared_75;
@@ -30,8 +32,6 @@ typedef struct Eurydice_dst_ref_mut_75_s Eurydice_dst_ref_mut_75;
 typedef struct Eurydice_arr_44_s Eurydice_arr_44;
 
 typedef struct core_result_Result_c7_s core_result_Result_c7;
-
-typedef struct p1_Eurydice_dst_ref_mut_75_x2_s p1_Eurydice_dst_ref_mut_75_x2;
 
 typedef struct core_result_Result_90_s core_result_Result_90;
 
@@ -45,6 +45,25 @@ typedef uint8_t core_result_Result_4a_tags;
 #define core_panicking_AssertKind_Match 2
 
 typedef uint8_t core_panicking_AssertKind;
+
+/**
+A monomorphic instance of Eurydice.dst_ref_mut
+with types Eurydice_array_u8x4, size_t
+
+*/
+typedef struct Eurydice_dst_ref_mut_75_s
+{
+  Eurydice_array_u8x4 *ptr;
+  size_t meta;
+}
+Eurydice_dst_ref_mut_75;
+
+typedef struct Eurydice_dst_ref_mut_75_x2_s
+{
+  Eurydice_dst_ref_mut_75 fst;
+  Eurydice_dst_ref_mut_75 snd;
+}
+Eurydice_dst_ref_mut_75_x2;
 
 /**
 A monomorphic instance of Eurydice.dst_ref_shared
@@ -71,18 +90,6 @@ typedef struct core_result_Result_4a_s
 core_result_Result_4a;
 
 /**
-A monomorphic instance of Eurydice.dst_ref_mut
-with types Eurydice_array_u8x4, size_t
-
-*/
-typedef struct Eurydice_dst_ref_mut_75_s
-{
-  Eurydice_array_u8x4 *ptr;
-  size_t meta;
-}
-Eurydice_dst_ref_mut_75;
-
-/**
 A monomorphic instance of core.result.Result
 with types Eurydice_array_u8x4, core_array_TryFromSliceError
 
@@ -105,13 +112,6 @@ with const generics
 - $4size_t
 */
 typedef struct Eurydice_arr_44_s { Eurydice_array_u8x4 data[4U]; } Eurydice_arr_44;
-
-typedef struct p1_Eurydice_dst_ref_mut_75_x2_s
-{
-  Eurydice_dst_ref_mut_75 fst;
-  Eurydice_dst_ref_mut_75 snd;
-}
-p1_Eurydice_dst_ref_mut_75_x2;
 
 /**
 A monomorphic instance of core.result.Result
@@ -137,25 +137,25 @@ core_array__core__fmt__Debug_for_core__array__TryFromSliceError__fmt(
 
 extern uint8_t core_clone_impls__core__clone__Clone_for_u8__clone(const uint8_t *x0);
 
-void p2_f1(void);
+void slice_array_f1(void);
 
-void p2_f2(void);
+void slice_array_f2(void);
 
-void p2_f3(void);
+void slice_array_f3(void);
 
 /**
 A monomorphic instance of slice_array.f4
 with const generics
 - K= 4
 */
-void p2_f4_ac(void);
+void slice_array_f4_ac(void);
 
 /**
 A monomorphic instance of slice_array.f5
 with const generics
 - K= 4
 */
-void p2_f5_ac(void);
+void slice_array_f5_ac(void);
 
 void slice_array_main(void);
 

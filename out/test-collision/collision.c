@@ -7,12 +7,10 @@
 
 #include "collision.h"
 
-#include "internal/Eurydice.h"
-
-int32_t p1_collision(p1_Either a, p1_Direction b)
+int32_t collision_collision(collision_Either a, collision_Direction b)
 {
   int32_t x;
-  if (a.tag == p1_Left0)
+  if (a.tag == collision_Left0)
   {
     x = (int32_t)1;
   }
@@ -21,11 +19,11 @@ int32_t p1_collision(p1_Either a, p1_Direction b)
     x = (int32_t)2;
   }
   int32_t y;
-  if (b.tag == p1_Left)
+  if (b.tag == collision_Left)
   {
     y = (int32_t)3;
   }
-  else if (b.tag == p1_Middle)
+  else if (b.tag == collision_Middle)
   {
     y = (int32_t)0;
   }
@@ -38,10 +36,13 @@ int32_t p1_collision(p1_Either a, p1_Direction b)
 
 void collision_main(void)
 {
-  EURYDICE_ASSERT(p1_collision((
-        KRML_CLITERAL(p1_Either){ .tag = p1_Left0, .val = { .case_Left = (int32_t)10 } }
+  EURYDICE_ASSERT(collision_collision((
+        KRML_CLITERAL(collision_Either){
+          .tag = collision_Left0,
+          .val = { .case_Left = (int32_t)10 }
+        }
       ),
-      (KRML_CLITERAL(p1_Direction){ .tag = p1_Right, .val = { .case_Right = 20ULL } }))
+      (KRML_CLITERAL(collision_Direction){ .tag = collision_Right, .val = { .case_Right = 20ULL } }))
     > (int32_t)0,
     "panic!");
 }

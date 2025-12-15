@@ -15,11 +15,11 @@
 extern "C" {
 #endif
 
-uint32_t p0_f(void);
+uint32_t inline_attributes_f(void);
 
-uint32_t p0_g(void);
+uint32_t inline_attributes_g(void);
 
-uint32_t p0_h(void);
+uint32_t inline_attributes_h(void);
 
 void inline_attributes_main(void);
 

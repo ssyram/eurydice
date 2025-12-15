@@ -19,16 +19,16 @@ typedef struct core_option_Option_bc_s core_option_Option_bc;
 
 typedef struct Eurydice_arr_88_s Eurydice_arr_88;
 
-typedef struct p0_S_s p0_S;
-
 typedef struct core_option_Option_e3_s core_option_Option_e3;
+
+typedef struct option_S_s option_S;
 
 #define core_option_None 0
 #define core_option_Some 1
 
 typedef uint8_t core_option_Option_bc_tags;
 
-typedef Eurydice_arr_88 p0_Val;
+typedef Eurydice_arr_88 option_Val;
 
 /**
 A monomorphic instance of Eurydice.arr
@@ -50,8 +50,6 @@ typedef struct core_option_Option_bc_s
 }
 core_option_Option_bc;
 
-typedef struct p0_S_s { core_option_Option_bc v; } p0_S;
-
 /**
 A monomorphic instance of core.option.Option
 with types const Eurydice_arr_88*
@@ -63,6 +61,8 @@ typedef struct core_option_Option_e3_s
   const Eurydice_arr_88 *f0;
 }
 core_option_Option_e3;
+
+typedef struct option_S_s { core_option_Option_bc v; } option_S;
 
 void option_main(void);
 
@@ -101,7 +101,7 @@ core_option_Option_e3 core_option_as_ref_cd_ca(const core_option_Option_bc *self
 /**
 This function found in impl {option::S}
 */
-core_option_Option_e3 p0_option_ref_b6(const p0_S *self);
+core_option_Option_e3 option_option_ref_b6(const option_S *self);
 
 #if defined(__cplusplus)
 }

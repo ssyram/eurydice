@@ -23,9 +23,9 @@ typedef struct core_result_Result_4a_s core_result_Result_4a;
 
 typedef struct Eurydice_dst_ref_shared_65_s Eurydice_dst_ref_shared_65;
 
-#define p2_A 0
+#define partial_eq_Enum_A 0
 
-typedef uint8_t p1_Enum;
+typedef uint8_t partial_eq_Enum;
 
 #define core_result_Ok 0
 #define core_result_Err 1
@@ -71,14 +71,14 @@ core_fmt__core__fmt__Formatter__a___write_str(
 /**
 This function found in impl {core::cmp::PartialEq<partial_eq::Enum> for partial_eq::Enum}
 */
-bool p1_eq_31(const p1_Enum *self, const p1_Enum *other);
+bool partial_eq_eq_31(const partial_eq_Enum *self, const partial_eq_Enum *other);
 
 void partial_eq_main(void);
 
 /**
 This function found in impl {core::fmt::Debug for partial_eq::Enum}
 */
-core_result_Result_4a p1_fmt_29(const p1_Enum *self, core_fmt_Formatter *f);
+core_result_Result_4a partial_eq_fmt_29(const partial_eq_Enum *self, core_fmt_Formatter *f);
 
 #if defined(__cplusplus)
 }

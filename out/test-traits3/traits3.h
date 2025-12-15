@@ -15,21 +15,21 @@
 extern "C" {
 #endif
 
-typedef struct p0_uint64_t_x2_s p0_uint64_t_x2;
+typedef struct uint64_t_x2_s uint64_t_x2;
 
-typedef p0_uint64_t_x2 p1_uint64x2_t;
+typedef uint64_t_x2 traits3_uint64x2_t;
 
-typedef struct p0_uint64_t_x2_s
+typedef struct uint64_t_x2_s
 {
   uint64_t fst;
   uint64_t snd;
 }
-p0_uint64_t_x2;
+uint64_t_x2;
 
 /**
 This function found in impl {traits3::internal::KeccakItem<2usize> for (u64, u64)}
 */
-p0_uint64_t_x2 p1_zero_c8(void);
+uint64_t_x2 traits3_zero_c8(void);
 
 /**
 A monomorphic instance of traits3.keccak
@@ -37,9 +37,9 @@ with types (uint64_t * uint64_t)
 with const generics
 - N= 2
 */
-void p1_keccak_cc(void);
+void traits3_keccak_cc(void);
 
-void p1_keccakx2(void);
+void traits3_keccakx2(void);
 
 void traits3_main(void);
 

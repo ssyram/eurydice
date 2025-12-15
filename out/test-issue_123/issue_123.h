@@ -19,25 +19,24 @@ typedef Eurydice_unknown_struct core_fmt_Arguments;
 
 typedef Eurydice_unknown_struct core_fmt_Formatter;
 
-#define p7_V95_232 95232
-#define p7_V261_888 261888
+#define issue_123_E3_C1 255
 
-typedef uint32_t p1_Gamma2;
+typedef uint8_t issue_123_E3;
 
-#define p4_C1 255
-#define p4_C2 -1
+#define issue_123_E_One 1
+#define issue_123_E_Five 5
 
-typedef int16_t p1_E2;
+typedef uint8_t issue_123_E;
 
-#define p5_C1 255
+#define issue_123_Gamma2_V95_232 95232
+#define issue_123_Gamma2_V261_888 261888
 
-typedef uint8_t p1_E3;
+typedef uint32_t issue_123_Gamma2;
 
-#define p3_C1 4294967295
-#define p3_C2 -4294967295
-#define p3_C3 268435455
+#define issue_123_E2_C1 255
+#define issue_123_E2_C2 -1
 
-typedef int64_t p1_E1;
+typedef int16_t issue_123_E2;
 
 #define core_panicking_AssertKind_Eq 0
 #define core_panicking_AssertKind_Ne 1
@@ -45,24 +44,25 @@ typedef int64_t p1_E1;
 
 typedef uint8_t core_panicking_AssertKind;
 
-#define p6_C1 127
-#define p6_C2 -126
+#define issue_123_E4_C1 127
+#define issue_123_E4_C2 -126
 
-typedef int8_t p1_E4;
+typedef int8_t issue_123_E4;
 
-#define p2_One 1
-#define p2_Five 5
+#define issue_123_E1_C1 4294967295
+#define issue_123_E1_C2 -4294967295
+#define issue_123_E1_C3 268435455
 
-typedef uint8_t p1_E;
+typedef int64_t issue_123_E1;
 
-int32_t p1_fun(p1_E e);
+int32_t issue_123_fun(issue_123_E e);
 
 void issue_123_main(void);
 
 /**
 This function found in impl {core::cmp::PartialEq<issue_123::E2> for issue_123::E2}
 */
-bool p1_eq_e3(const p1_E2 *self, const p1_E2 *other);
+bool issue_123_eq_e3(const issue_123_E2 *self, const issue_123_E2 *other);
 
 #if defined(__cplusplus)
 }

@@ -7,8 +7,6 @@
 
 #include "issue_104.h"
 
-#include "internal/Eurydice.h"
-
 typedef struct const_uint8_t__x2_s const_uint8_t__x2;
 
 typedef struct const_uint8_t__x2_s
@@ -18,28 +16,26 @@ typedef struct const_uint8_t__x2_s
 }
 const_uint8_t__x2;
 
-const uint8_t P1_VAL = 5U;
-
 /**
 A monomorphic instance of issue_104.sth
 with types issue_104_S
 with const generics
 
 */
-uint8_t p2_sth_50(void)
+uint8_t issue_104_sth_50(void)
 {
-  return P1_VAL;
+  return ISSUE_104__ISSUE_104__FUN_FOR_ISSUE_104__S__VAL;
 }
 
-uint8_t p2_call(void)
+uint8_t issue_104_call(void)
 {
-  return p2_sth_50();
+  return issue_104_sth_50();
 }
 
 void issue_104_main(void)
 {
   /* original Rust expression is not an lvalue in C */
-  uint8_t lvalue0 = p2_call();
+  uint8_t lvalue0 = issue_104_call();
   /* original Rust expression is not an lvalue in C */
   uint8_t lvalue = 5U;
   const_uint8_t__x2 uu____0 = { .fst = &lvalue0, .snd = &lvalue };

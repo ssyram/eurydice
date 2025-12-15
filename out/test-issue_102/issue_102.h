@@ -15,15 +15,15 @@
 extern "C" {
 #endif
 
-#define p2_Reason1 3
-#define p2_Reason2 4
+#define issue_102_Error2_Reason1 3
+#define issue_102_Error2_Reason2 4
 
-typedef uint8_t p0_Error2;
+typedef uint8_t issue_102_Error2;
 
-#define p1_Reason1 1
-#define p1_Reason2 2
+#define issue_102_Error1_Reason1 1
+#define issue_102_Error1_Reason2 2
 
-typedef uint8_t p0_Error1;
+typedef uint8_t issue_102_Error1;
 
 void issue_102_main(void);
 

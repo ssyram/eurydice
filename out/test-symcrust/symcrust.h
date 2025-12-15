@@ -19,9 +19,9 @@ typedef struct core_option_Option_08_s core_option_Option_08;
 
 typedef struct core_option_Option_77_s core_option_Option_77;
 
-typedef struct core_ops_range_Range_08_s core_ops_range_Range_08;
+typedef struct tuple_d1_s tuple_d1;
 
-typedef struct p1_tuple_d1_s p1_tuple_d1;
+typedef struct core_ops_range_Range_08_s core_ops_range_Range_08;
 
 typedef struct Eurydice_arr_bc_s Eurydice_arr_bc;
 
@@ -49,6 +49,18 @@ typedef struct core_option_Option_08_s
 core_option_Option_08;
 
 /**
+A monomorphic instance of K.
+with types size_t, core_option_Option_08
+
+*/
+typedef struct tuple_d1_s
+{
+  size_t fst;
+  core_option_Option_08 snd;
+}
+tuple_d1;
+
+/**
 A monomorphic instance of core.option.Option
 with types core_cmp_Ordering
 
@@ -71,18 +83,6 @@ typedef struct core_ops_range_Range_08_s
   size_t end;
 }
 core_ops_range_Range_08;
-
-/**
-A monomorphic instance of K.
-with types size_t, core_option_Option_08
-
-*/
-typedef struct p1_tuple_d1_s
-{
-  size_t fst;
-  core_option_Option_08 snd;
-}
-p1_tuple_d1;
 
 /**
 A monomorphic instance of Eurydice.arr
@@ -129,7 +129,7 @@ core_iter_range__core__iter__range__Step_for_usize__backward_checked(size_t x0, 
 extern core_option_Option_08
 core_iter_range__core__iter__range__Step_for_usize__forward_checked(size_t x0, size_t x1);
 
-extern p1_tuple_d1
+extern tuple_d1
 core_iter_range__core__iter__range__Step_for_usize__steps_between(
   const size_t *x0,
   const size_t *x1
@@ -138,7 +138,7 @@ core_iter_range__core__iter__range__Step_for_usize__steps_between(
 static inline Eurydice_array_u8x4 core_num__u32__to_le_bytes(uint32_t x0);
 
 void
-p2_SymCrustMlKemPolyElementCompressAndEncode(
+symcrust_SymCrustMlKemPolyElementCompressAndEncode(
   const Eurydice_arr_bc *coeffs,
   uint32_t nBitsPerCoefficient,
   Eurydice_mut_borrow_slice_u8 dst

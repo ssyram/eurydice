@@ -7,8 +7,6 @@
 
 #include "issue_105.h"
 
-#include "internal/Eurydice.h"
-
 typedef struct const_core_result_Result_1d__x2_s const_core_result_Result_1d__x2;
 
 typedef struct const_core_result_Result_1d__x2_s
@@ -50,7 +48,7 @@ inline bool core_cmp_impls_ne_c3(const uint8_t *self, const uint8_t *other)
   return self[0U] != other[0U];
 }
 
-core_result_Result_1d p1_inner(void)
+core_result_Result_1d issue_105_inner(void)
 {
   return (KRML_CLITERAL(core_result_Result_1d){ .tag = core_result_Err, .f0 = 1U });
 }
@@ -102,9 +100,9 @@ inline core_result_Result_1d core_result_from_residual_1f_48(core_result_Result_
     );
 }
 
-core_result_Result_1d p1_call_it(void)
+core_result_Result_1d issue_105_call_it(void)
 {
-  core_ops_control_flow_ControlFlow_19 uu____0 = core_result_branch_71_e9(p1_inner());
+  core_ops_control_flow_ControlFlow_19 uu____0 = core_result_branch_71_e9(issue_105_inner());
   if (!(uu____0.tag == core_ops_control_flow_Continue))
   {
     core_result_Result_8f residual = uu____0.f0;
@@ -159,7 +157,7 @@ core_result_eq_0b_74(const core_result_Result_1d *self, const core_result_Result
 void issue_105_main(void)
 {
   /* original Rust expression is not an lvalue in C */
-  core_result_Result_1d lvalue0 = p1_call_it();
+  core_result_Result_1d lvalue0 = issue_105_call_it();
   /* original Rust expression is not an lvalue in C */
   core_result_Result_1d lvalue = { .tag = core_result_Err, .f0 = 1U };
   const_core_result_Result_1d__x2 uu____0 = { .fst = &lvalue0, .snd = &lvalue };

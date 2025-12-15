@@ -44,9 +44,9 @@ A monomorphic instance of we_need_charon_monomorphization.use_ref
 with types Eurydice_derefed_slice int32_t
 
 */
-void p0_use_ref_ee(const int32_t (*_t)[]);
+void we_need_charon_monomorphization_use_ref_ee(const int32_t (*_t)[]);
 
-void p0_supply_ref(Eurydice_dst_ref_shared_fc s);
+void we_need_charon_monomorphization_supply_ref(Eurydice_dst_ref_shared_fc s);
 
 void we_need_charon_monomorphization_main(void);
 

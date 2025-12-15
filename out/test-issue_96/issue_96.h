@@ -15,11 +15,11 @@
 extern "C" {
 #endif
 
+typedef struct issue_96_MyStruct2_s issue_96_MyStruct2;
+
 typedef struct Eurydice_arr_3f_s Eurydice_arr_3f;
 
-typedef struct p1_MyStruct_s p1_MyStruct;
-
-typedef struct p1_MyStruct2_s p1_MyStruct2;
+typedef struct issue_96_MyStruct_s issue_96_MyStruct;
 
 /**
 A monomorphic instance of Eurydice.arr
@@ -29,18 +29,18 @@ with const generics
 */
 typedef struct Eurydice_arr_3f_s { uint8_t data[5U]; } Eurydice_arr_3f;
 
-typedef struct p1_MyStruct_s { Eurydice_arr_3f fst; } p1_MyStruct;
-
-typedef struct p1_MyStruct2_s
+typedef struct issue_96_MyStruct2_s
 {
   Eurydice_arr_3f fst;
   uint32_t snd;
 }
-p1_MyStruct2;
+issue_96_MyStruct2;
 
-void p1_use_it(const p1_MyStruct *x);
+typedef struct issue_96_MyStruct_s { Eurydice_arr_3f fst; } issue_96_MyStruct;
 
-void p1_use_it2(const p1_MyStruct2 *x);
+void issue_96_use_it(const issue_96_MyStruct *x);
+
+void issue_96_use_it2(const issue_96_MyStruct2 *x);
 
 void issue_96_main(void);
 

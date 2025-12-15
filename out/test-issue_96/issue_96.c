@@ -7,23 +7,21 @@
 
 #include "issue_96.h"
 
-#include "internal/Eurydice.h"
-
-void p1_use_it(const p1_MyStruct *x)
+void issue_96_use_it(const issue_96_MyStruct *x)
 {
   EURYDICE_ASSERT(!!((size_t)0U < (size_t)5U), "assert failure");
 }
 
-void p1_use_it2(const p1_MyStruct2 *x)
+void issue_96_use_it2(const issue_96_MyStruct2 *x)
 {
   EURYDICE_ASSERT(!!((size_t)0U < (size_t)5U), "assert failure");
 }
 
 void issue_96_main(void)
 {
-  p1_MyStruct x = { .fst = { .data = { 0U } } };
-  p1_use_it(&x);
-  p1_MyStruct2 x0 = { .fst = { .data = { 0U } }, .snd = 2U };
-  p1_use_it2(&x0);
+  issue_96_MyStruct x = { .fst = { .data = { 0U } } };
+  issue_96_use_it(&x);
+  issue_96_MyStruct2 x0 = { .fst = { .data = { 0U } }, .snd = 2U };
+  issue_96_use_it2(&x0);
 }
 

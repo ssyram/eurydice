@@ -7,8 +7,6 @@
 
 #include "nested_arrays.h"
 
-#include "internal/Eurydice.h"
-
 typedef struct const_uint32_t__x2_s const_uint32_t__x2;
 
 typedef struct const_uint32_t__x2_s
@@ -18,8 +16,6 @@ typedef struct const_uint32_t__x2_s
 }
 const_uint32_t__x2;
 
-const p2_Key P2_ZERO = { .data = { 0U, 1U, 2U, 3U, 4U, 5U, 6U, 7U } };
-
 void nested_arrays_main(void)
 {
   Eurydice_arr_06 keys;
@@ -27,12 +23,12 @@ void nested_arrays_main(void)
   for (size_t i0 = (size_t)0U; i0 < (size_t)3U; i0++)
   {
     Eurydice_arr_3d lit;
-    p2_Key repeat_expression[3U];
+    nested_arrays_Key repeat_expression[3U];
     for (size_t i = (size_t)0U; i < (size_t)3U; i++)
     {
-      repeat_expression[i] = P2_ZERO;
+      repeat_expression[i] = NESTED_ARRAYS_ZERO;
     }
-    memcpy(lit.data, repeat_expression, (size_t)3U * sizeof (p2_Key));
+    memcpy(lit.data, repeat_expression, (size_t)3U * sizeof (nested_arrays_Key));
     repeat_expression0[i0] = lit;
   }
   memcpy(keys.data, repeat_expression0, (size_t)3U * sizeof (Eurydice_arr_3d));
@@ -54,7 +50,7 @@ void nested_arrays_main(void)
   }
 }
 
-Eurydice_arr_dd p2_test(void)
+Eurydice_arr_dd nested_arrays_test(void)
 {
   Eurydice_arr_88 out0 = { .data = { 0U } };
   Eurydice_arr_88 out1 = { .data = { 0U } };

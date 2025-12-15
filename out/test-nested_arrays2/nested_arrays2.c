@@ -7,10 +7,6 @@
 
 #include "nested_arrays2.h"
 
-const
-Eurydice_arr_a0
-P0_TABLE = { .data = { (KRML_CLITERAL(Eurydice_arr_f1){ .data = { 1U } }) } };
-
 void nested_arrays2_main(void)
 {
 

@@ -7,27 +7,26 @@
 
 #include "issue_128.h"
 
-void p0_fun_a(Eurydice_borrow_slice_u8 _x)
+void issue_128_fun_a(Eurydice_borrow_slice_u8 _x)
 {
 
 }
 
-void p0_fun_b(Eurydice_borrow_slice_u8 _x)
+void issue_128_fun_b(Eurydice_borrow_slice_u8 _x)
 {
 
 }
 
-void p0_use_enum(p0_E e, Eurydice_borrow_slice_u8 x)
+void issue_128_use_enum(issue_128_E e, Eurydice_borrow_slice_u8 x)
 {
   switch (e)
   {
-    case p1_A:
+    case issue_128_E_A:
       {
         break;
       }
-    case p1_B:
+    case issue_128_E_B:
       {
-        p0_fun_b(x);
         return;
       }
     default:
@@ -36,7 +35,6 @@ void p0_use_enum(p0_E e, Eurydice_borrow_slice_u8 x)
         KRML_HOST_EXIT(253U);
       }
   }
-  p0_fun_a(x);
 }
 
 /**
@@ -57,6 +55,6 @@ void issue_128_main(void)
 {
   /* original Rust expression is not an lvalue in C */
   Eurydice_arr_51 lvalue = Eurydice_empty_array((void *)0U, uint8_t, Eurydice_arr_51);
-  p0_use_enum(p1_A, array_to_slice_shared_5d(&lvalue));
+  issue_128_use_enum(issue_128_E_A, array_to_slice_shared_5d(&lvalue));
 }
 

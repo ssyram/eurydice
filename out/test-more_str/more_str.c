@@ -7,9 +7,7 @@
 
 #include "more_str.h"
 
-#include "internal/Eurydice.h"
-
-void p1_use_str(Eurydice_dst_ref_shared_65 s)
+void more_str_use_str(Eurydice_dst_ref_shared_65 s)
 {
   EURYDICE_ASSERT(core_str__str__len(s) > (size_t)2U, "panic!");
 }
@@ -31,9 +29,9 @@ void more_str_main(void)
       .ptr = "Hello, \\u{4f60}\\u{597d}\\u{ff0c}\\u{3053}\\u{3093}\\u{306b}\\u{3061}\\u{306f}\\u{4e16}\\u{754c}\\u{ff01}123Hi",
       .meta = (size_t)45U
     };
-  p1_use_str(eng);
-  p1_use_str(chn);
-  p1_use_str(jpn);
-  p1_use_str(mix);
+  more_str_use_str(eng);
+  more_str_use_str(chn);
+  more_str_use_str(jpn);
+  more_str_use_str(mix);
 }
 

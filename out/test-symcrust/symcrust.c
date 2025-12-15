@@ -38,7 +38,7 @@ static Eurydice_borrow_slice_u8 array_to_slice_shared_60(const Eurydice_array_u8
 }
 
 void
-p2_SymCrustMlKemPolyElementCompressAndEncode(
+symcrust_SymCrustMlKemPolyElementCompressAndEncode(
   const Eurydice_arr_bc *coeffs,
   uint32_t nBitsPerCoefficient,
   Eurydice_mut_borrow_slice_u8 dst

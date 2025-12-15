@@ -17,25 +17,36 @@ extern "C" {
 
 typedef Eurydice_unknown_struct alloc_vec_Vec;
 
-typedef struct p0_ThreeWays_s p0_ThreeWays;
+typedef struct lvalue_Struct_s lvalue_Struct;
 
-typedef struct p0_Struct_s p0_Struct;
+typedef struct lvalue_ThreeWays_s lvalue_ThreeWays;
 
-#define p0_Middle 0
-#define p0_Left 1
-#define p0_Right 2
+#define lvalue_Middle 0
+#define lvalue_Left 1
+#define lvalue_Right 2
 
-typedef uint8_t p0_ThreeWays_tags;
+typedef uint8_t lvalue_ThreeWays_tags;
 
-#define p0_A 0
-#define p0_B 1
-#define p0_C 2
+#define lvalue_A 0
+#define lvalue_B 1
+#define lvalue_C 2
 
-typedef uint8_t p0_Struct_tags;
+typedef uint8_t lvalue_Struct_tags;
 
-typedef struct p0_ThreeWays_s
+typedef struct lvalue_Struct_s
 {
-  p0_ThreeWays_tags tag;
+  lvalue_Struct_tags tag;
+  union {
+    Eurydice_vec case_A;
+    int32_t *case_B;
+  }
+  val;
+}
+lvalue_Struct;
+
+typedef struct lvalue_ThreeWays_s
+{
+  lvalue_ThreeWays_tags tag;
   union {
     int32_t case_Middle;
     Eurydice_vec case_Left;
@@ -43,27 +54,16 @@ typedef struct p0_ThreeWays_s
   }
   val;
 }
-p0_ThreeWays;
-
-typedef struct p0_Struct_s
-{
-  p0_Struct_tags tag;
-  union {
-    Eurydice_vec case_A;
-    int32_t *case_B;
-  }
-  val;
-}
-p0_Struct;
+lvalue_ThreeWays;
 
 void lvalue_main(void);
 
-p0_Struct p0_use_struct(p0_ThreeWays s);
+lvalue_Struct lvalue_use_struct(lvalue_ThreeWays s);
 
 /**
 This function found in impl {core::marker::Destruct for lvalue::ThreeWays}
 */
-void p1_drop_in_place_d9(p0_ThreeWays *_);
+void lvalue_ThreeWays_drop_in_place_d9(lvalue_ThreeWays *_);
 
 #if defined(__cplusplus)
 }

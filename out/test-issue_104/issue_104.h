@@ -23,7 +23,7 @@ typedef Eurydice_unknown_struct core_fmt_Arguments;
 
 typedef uint8_t core_panicking_AssertKind;
 
-extern const uint8_t P1_VAL;
+#define ISSUE_104__ISSUE_104__FUN_FOR_ISSUE_104__S__VAL (5U)
 
 /**
 A monomorphic instance of issue_104.sth
@@ -31,9 +31,9 @@ with types issue_104_S
 with const generics
 
 */
-uint8_t p2_sth_50(void);
+uint8_t issue_104_sth_50(void);
 
-uint8_t p2_call(void);
+uint8_t issue_104_call(void);
 
 void issue_104_main(void);
 

@@ -23,15 +23,15 @@ typedef struct Eurydice_arr_88_s Eurydice_arr_88;
 
 typedef struct core_option_Option_77_s core_option_Option_77;
 
+typedef struct tuple_d1_s tuple_d1;
+
 typedef struct Eurydice_arr_3d_s Eurydice_arr_3d;
 
 typedef struct Eurydice_arr_06_s Eurydice_arr_06;
 
 typedef struct Eurydice_arr_dd_s Eurydice_arr_dd;
 
-typedef struct p1_tuple_d1_s p1_tuple_d1;
-
-typedef struct p2_Key_s p2_Key;
+typedef struct nested_arrays_Key_s nested_arrays_Key;
 
 #define core_option_None 0
 #define core_option_Some 1
@@ -70,7 +70,7 @@ with const generics
 */
 typedef struct Eurydice_arr_88_s { uint8_t data[200U]; } Eurydice_arr_88;
 
-typedef struct p2_Key_s { uint32_t data[8U]; } p2_Key;
+typedef struct nested_arrays_Key_s { uint32_t data[8U]; } nested_arrays_Key;
 
 /**
 A monomorphic instance of Eurydice.arr
@@ -78,7 +78,7 @@ with types nested_arrays_Key
 with const generics
 - $3size_t
 */
-typedef struct Eurydice_arr_3d_s { p2_Key data[3U]; } Eurydice_arr_3d;
+typedef struct Eurydice_arr_3d_s { nested_arrays_Key data[3U]; } Eurydice_arr_3d;
 
 /**
 A monomorphic instance of Eurydice.arr
@@ -87,6 +87,18 @@ with const generics
 - $3size_t
 */
 typedef struct Eurydice_arr_06_s { Eurydice_arr_3d data[3U]; } Eurydice_arr_06;
+
+/**
+A monomorphic instance of K.
+with types size_t, core_option_Option_08
+
+*/
+typedef struct tuple_d1_s
+{
+  size_t fst;
+  core_option_Option_08 snd;
+}
+tuple_d1;
 
 /**
 A monomorphic instance of core.option.Option
@@ -108,18 +120,6 @@ with const generics
 */
 typedef struct Eurydice_arr_dd_s { Eurydice_arr_88 data[4U]; } Eurydice_arr_dd;
 
-/**
-A monomorphic instance of K.
-with types size_t, core_option_Option_08
-
-*/
-typedef struct p1_tuple_d1_s
-{
-  size_t fst;
-  core_option_Option_08 snd;
-}
-p1_tuple_d1;
-
 extern size_t core_clone_impls__core__clone__Clone_for_usize__clone(const size_t *x0);
 
 extern bool
@@ -137,17 +137,17 @@ core_iter_range__core__iter__range__Step_for_usize__backward_checked(size_t x0, 
 extern core_option_Option_08
 core_iter_range__core__iter__range__Step_for_usize__forward_checked(size_t x0, size_t x1);
 
-extern p1_tuple_d1
+extern tuple_d1
 core_iter_range__core__iter__range__Step_for_usize__steps_between(
   const size_t *x0,
   const size_t *x1
 );
 
-extern const p2_Key P2_ZERO;
+#define NESTED_ARRAYS_ZERO ((KRML_CLITERAL(nested_arrays_Key){ .data = { 0U, 1U, 2U, 3U, 4U, 5U, 6U, 7U } }))
 
 void nested_arrays_main(void);
 
-Eurydice_arr_dd p2_test(void);
+Eurydice_arr_dd nested_arrays_test(void);
 
 #if defined(__cplusplus)
 }

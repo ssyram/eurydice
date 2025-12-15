@@ -30,6 +30,9 @@ Supported options:|}
       ( "--keep-going",
         Arg.Set O.keep_going,
         " keep going even though extracting some definitions might fail" );
+      ( "--abbrev-prefices",
+        Arg.Set O.abbrev_prefices,
+        " use abbreviated prefixes for generated names" );
       "--no-const", Arg.Set O.no_const, " do not introduce the const keyword for pointers";
       "-fcomments", Arg.Set O.comments, " keep inline comments";
       "-funroll-loops", Arg.Set_int funroll_loops, " unrool loops up to N";

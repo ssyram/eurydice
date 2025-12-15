@@ -19,9 +19,9 @@ typedef struct core_option_Option_08_s core_option_Option_08;
 
 typedef struct core_option_Option_9e_s core_option_Option_9e;
 
-typedef struct p0_tuple_d1_s p0_tuple_d1;
-
 typedef struct core_option_Option_77_s core_option_Option_77;
+
+typedef struct tuple_d1_s tuple_d1;
 
 #define core_option_None 0
 #define core_option_Some 1
@@ -63,12 +63,12 @@ A monomorphic instance of K.
 with types size_t, core_option_Option_08
 
 */
-typedef struct p0_tuple_d1_s
+typedef struct tuple_d1_s
 {
   size_t fst;
   core_option_Option_08 snd;
 }
-p0_tuple_d1;
+tuple_d1;
 
 /**
 A monomorphic instance of core.option.Option
@@ -99,7 +99,7 @@ core_iter_range__core__iter__range__Step_for_i32__backward_checked(int32_t x0, s
 extern core_option_Option_9e
 core_iter_range__core__iter__range__Step_for_i32__forward_checked(int32_t x0, size_t x1);
 
-extern p0_tuple_d1
+extern tuple_d1
 core_iter_range__core__iter__range__Step_for_i32__steps_between(
   const int32_t *x0,
   const int32_t *x1
@@ -107,7 +107,7 @@ core_iter_range__core__iter__range__Step_for_i32__steps_between(
 
 void for_main(void);
 
-uint8_t p1_other(Eurydice_borrow_slice_u8 input);
+uint8_t for_other(Eurydice_borrow_slice_u8 input);
 
 #if defined(__cplusplus)
 }
