@@ -493,6 +493,8 @@ static inline Eurydice_vec Eurydice_vec_alloc2(size_t len, size_t element_sz) {
 }
 
 #define Eurydice_vec_alloc(len, t, _) (Eurydice_vec_alloc2((len), sizeof(t)))
+#define Eurydice_vec_len(v, _, _1) (v.len)
+#define Eurydice_vec_ptr(v, _, _1) (v.ptr)
 #define Eurydice_vec_overflows(len, t, _) (!((len) <= SIZE_MAX / (sizeof(t))))
 #define Eurydice_vec_failed(v, _, _1) ((v).ptr == NULL)
 #define Eurydice_layout(t, _)                                                  \

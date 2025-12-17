@@ -218,6 +218,7 @@ Supported options:|}
   Printf.printf "3️⃣ Monomorphization, datatypes\n";
   let files = Eurydice.Cleanup2.cosmetic#visit_files () files in
   let files = Eurydice.Cleanup2.resugar_loops#visit_files () files in
+  let files = Eurydice.Cleanup2.remove_unused_variables#visit_files () files in
   let files = Eurydice.Cleanup1.remove_terminal_returns#visit_files true files in
   let files = Eurydice.Cleanup1.remove_terminal_continues#visit_files false files in
   Eurydice.Logging.log "Phase2.1" "Phase 2.1:\n%a" pfiles files;

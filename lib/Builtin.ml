@@ -531,6 +531,24 @@ let vec_alloc =
     arg_names = [ "len" ];
   }
 
+let vec_len =
+  {
+    name = [ "Eurydice" ], "vec_len";
+    typ = Krml.Helpers.fold_arrow [ mk_vec (TBound 0) ] (TInt SizeT);
+    n_type_args = 1;
+    cg_args = [];
+    arg_names = [ "v" ];
+  }
+
+let vec_ptr =
+  {
+    name = [ "Eurydice" ], "vec_ptr";
+    typ = Krml.Helpers.fold_arrow [ mk_vec (TBound 0) ] (TBuf (TInt UInt8, false));
+    n_type_args = 1;
+    cg_args = [];
+    arg_names = [ "v" ];
+  }
+
 (* Will allocating len elements of type T overflow SIZE_MAX? *)
 let vec_overflows =
   {
@@ -998,6 +1016,8 @@ let builtin_funcs =
     shr_pv_u8;
     min_u32;
     vec_alloc;
+    vec_len;
+    vec_ptr;
     vec_overflows;
     vec_failed;
     layout;

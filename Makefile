@@ -100,6 +100,9 @@ test-global_ref: EXTRA_C = ../../test/core_cmp_lib.c
 test-lvalue: CFLAGS += -Wno-unused-but-set-variable
 test-issue_37: EXTRA_C = ../../test/supplement_issue_37.c
 
+test/use_vec.llbc: CHARON_EXTRA = \
+  --mir elaborated --desugar-drops
+
 
 test-%: test/%.llbc out/test-%/main.c | all
 	$(EURYDICE) $(EXTRA) --output out/test-$* $<

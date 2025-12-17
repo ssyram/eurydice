@@ -844,12 +844,187 @@ let resugar_loops =
         self#visit_expr env e_body)
       ) :: List.map (fun e -> self#visit_expr env (Krml.DeBruijn.subst eunit 0 e)) rest)
 
+    (* Vec iteration - Non-terminal position with let binding, followed by rest 
+       This also handles the case where there's a drop call after the loop *)
+    | [%cremepat {|
+      let iter =
+        alloc::vec::?::into_iter
+          <?t1,?..>
+          (?e_vec);
+      while true {
+        let x = alloc::vec::into_iter::?::next<?..>(&iter);
+        match x {
+          None -> break,
+          Some ? -> ?e_body
+        }
+      };
+      (
+        let drop_arg = ?;
+        alloc::vec::into_iter::IntoIter::?::drop_in_place
+          <?..>
+          (drop_arg);
+      ?e_rest..
+      )
+    |}] ->
+      let open Krml.Helpers in 
+      let e_vec = self#visit_expr env e_vec in
+      let e_vec_len_gen = with_type (Builtin.vec_len.typ) (EQualified Builtin.vec_len.name) in
+      let t_vec_len = fold_arrow [ Builtin.mk_vec t1 ] (TInt SizeT) in
+      let e_vec_len = with_type t_vec_len (ETApp (e_vec_len_gen,[],[],[t1])) in
+      let e_len = with_type usize (EApp (e_vec_len, [e_vec])) in
+      let e_some_x = with_type (Builtin.mk_option t1) (ECons ("Some", [with_type t1 (EBound 0)])) in
+      let i_binder = fresh_binder ~mut:true "i" usize in
+      let e_i = with_type usize (EBound 0) in
+      let e_vec_lifted = Krml.DeBruijn.lift 1 e_vec in
+      (* Get the char* ptr and cast to t1* *)
+      let e_vec_ptr_gen = with_type (Builtin.vec_ptr.typ) (EQualified Builtin.vec_ptr.name) in
+      let t_vec_ptr = fold_arrow [ Builtin.mk_vec t1 ] (TBuf (TInt UInt8, false)) in
+      let e_vec_ptr = with_type t_vec_ptr (ETApp (e_vec_ptr_gen,[],[],[t1])) in
+      let e_ptr_char = with_type (TBuf (TInt UInt8, false)) (EApp (e_vec_ptr, [e_vec_lifted])) in
+      let e_ptr = with_type (TBuf (t1, false)) (ECast (e_ptr_char, TBuf (t1, false))) in
+      let e_elem = with_type t1 (EBufRead (e_ptr, e_i)) in
+      let e_body_subst = Krml.DeBruijn.subst e_some_x 0 e_body in
+      let x_binder = fresh_binder "x_ele" t1 in
+      let e_for_body = with_type e_body.typ (ELet (x_binder, e_elem, 
+        Krml.DeBruijn.lift 0 (self#visit_expr env e_body_subst))) in
+      with_type e.typ @@ ESequence (with_type TUnit (EFor (i_binder,
+        zero_usize,
+        mk_lt SizeT (Krml.DeBruijn.lift 1 e_len),
+        mk_incr SizeT,
+        e_for_body))
+      :: List.map (fun e -> self#visit_expr env (Krml.DeBruijn.lift (-2) e)) e_rest)
+    | [%cremepat {|
+      let iter =
+        alloc::vec::?::into_iter
+          <?t1,?..>
+          (?e_vec);
+      while true {
+        let x = alloc::vec::into_iter::?::next<?..>(&iter);
+        match x {
+          None -> break,
+          Some ? -> ?e_body
+        }
+      };
+      (
+        let drop_arg = ?;
+        alloc::vec::into_iter::IntoIter::?::drop_in_place
+          <?..>
+          (drop_arg)
+      )
+    |}] ->
+      let open Krml.Helpers in 
+      let e_vec = self#visit_expr env e_vec in
+      let e_vec_len_gen = with_type (Builtin.vec_len.typ) (EQualified Builtin.vec_len.name) in
+      let t_vec_len = fold_arrow [ Builtin.mk_vec t1 ] (TInt SizeT) in
+      let e_vec_len = with_type t_vec_len (ETApp (e_vec_len_gen,[],[],[t1])) in
+      let e_len = with_type usize (EApp (e_vec_len, [e_vec])) in
+      let e_some_x = with_type (Builtin.mk_option t1) (ECons ("Some", [with_type t1 (EBound 0)])) in
+      let i_binder = fresh_binder ~mut:true "i" usize in
+      let e_i = with_type usize (EBound 0) in
+      let e_vec_lifted = Krml.DeBruijn.lift 1 e_vec in
+      (* Get the char* ptr and cast to t1* *)
+      let e_vec_ptr_gen = with_type (Builtin.vec_ptr.typ) (EQualified Builtin.vec_ptr.name) in
+      let t_vec_ptr = fold_arrow [ Builtin.mk_vec t1 ] (TBuf (TInt UInt8, false)) in
+      let e_vec_ptr = with_type t_vec_ptr (ETApp (e_vec_ptr_gen,[],[],[t1])) in
+      let e_ptr_char = with_type (TBuf (TInt UInt8, false)) (EApp (e_vec_ptr, [e_vec_lifted])) in
+      let e_ptr = with_type (TBuf (t1, false)) (ECast (e_ptr_char, TBuf (t1, false))) in
+      let e_elem = with_type t1 (EBufRead (e_ptr, e_i)) in
+      let e_body_subst = Krml.DeBruijn.subst e_some_x 0 e_body in
+      let x_binder = fresh_binder "x_ele" t1 in
+      let e_for_body = with_type e_body.typ (ELet (x_binder, e_elem, 
+        Krml.DeBruijn.lift 0 (self#visit_expr env e_body_subst))) in
+      with_type e.typ @@ EFor (i_binder,
+        zero_usize,
+        mk_lt SizeT (Krml.DeBruijn.lift 1 e_len),
+        mk_incr SizeT,
+        e_for_body)
     | _ ->
       super#visit_expr env e
 
 
 end
 [@ocamlformat "disable"]
+
+(* This pass removes a variable. 
+   The target variable is assumed to only occur on left hand side of EAssign, i.e. it's never read.
+   We will remove this variable as well as all the assignment *)
+let remove_variable =
+  object
+    (* The environment [i] is the variable that we are looking for. *)
+    inherit map_counting as super
+
+    method! visit_expr ((i, _) as env) e =
+      match e.node with
+      | EBound j ->
+          if j = i then
+            assert false
+          else
+            {
+              e with
+              node =
+                EBound
+                  (if j < i then
+                     j
+                   else
+                     (* The removal of target variable cause the index of outer binders to decrease by 1. 
+                        Reference to Krml.DeBruijn.subst
+                     *)
+                     j - 1);
+            }
+      | _ -> super#visit_expr env e
+
+    method! visit_EAssign ((i, _) as env) lhs rhs =
+      match lhs.node with
+      (* Assignment to target variable is replaced by Eunit *)
+      | EBound j when j = i -> EUnit
+      | _ -> super#visit_EAssign env lhs rhs
+  end
+
+let count_read =
+  object
+    (* The environment [i] is the variable that we are looking for. *)
+    inherit [_] reduce as super
+    method! extend i _ = i + 1
+    method zero = false
+    method plus = ( || )
+    method! visit_EBound (i, _) j = i = j
+    method! visit_EAssign (i, _) _lhs rhs = super#visit_expr_w i rhs
+  end
+
+let is_bool_literal e =
+  match e.node with
+  | EBool _ -> true
+  | _ -> false
+
+let all_bool_literal =
+  object
+    (* The environment [i] is the variable that we are looking for. *)
+    inherit [_] reduce as super
+    method! extend i _ = i + 1
+    method zero = true
+    method plus = ( && )
+
+    method! visit_EAssign ((i, _) as env) lhs rhs =
+      match lhs.node with
+      | EBound j when j = i -> is_bool_literal rhs
+      | _ -> super#visit_EAssign env lhs rhs
+  end
+
+let is_removable e1 e2 =
+  is_bool_literal e1 && (not (count_read#visit_expr_w 0 e2)) && all_bool_literal#visit_expr_w 0 e2
+
+(* This pass removes all  variables that are never read. *)
+let remove_unused_variables =
+  object
+    inherit [_] map as super
+
+    method! visit_ELet (((), _) as env) b e1 e2 =
+      if is_removable e1 e2 then
+        let e = remove_variable#visit_expr_w 0 e2 in
+        e.node
+      else
+        super#visit_ELet env b e1 e2
+  end
 
 let improve_names files =
   let renamed = Hashtbl.create 41 in
