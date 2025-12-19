@@ -171,7 +171,7 @@ let get_hash_name prefix =
       in
       (* Conflicts-resolved name *)
       let hash_name =
-        if conflict_counts = 1 then
+        if conflict_counts = 0 then
           hash_name
         else
           KPrint.bsprintf "%s%d" hash_name conflict_counts
