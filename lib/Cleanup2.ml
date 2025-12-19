@@ -608,6 +608,112 @@ let ends_with_return =
       | EReturn _ -> true
       | _ -> false)
 
+let expr_lst_to_expr expr_lst =
+  match List.rev expr_lst with
+  | [] -> Krml.Helpers.eunit
+  | e :: _ -> with_type e.typ (ESequence expr_lst)
+
+let only_drop_for_iter expr_lst =
+  (* Returns: (maybe the unique `e`, the times `@0` is visited) *)
+  let find_unique_let_take_addr_of_in expr =
+    let obj = object(self)
+      inherit [_] reduce as super
+      method zero = (None, 0)
+      method plus (e1, c1) (e2, c2) =
+        match e1, e2 with
+        | None, None -> (None, c1 + c2)
+        | Some e, None | None, Some e -> (Some e, c1 + c2)
+        | Some _, Some _ -> (None, c1 + c2) (* more than one found, so the first element is not important any more *)
+
+      method! visit_EBound (i, _) j = if i = j then (None, 1) else (None, 0)
+      method! visit_ELet (i, typ) b e1 e2 =
+        match e1.node with
+        | EAddrOf ({ node = EBound j; _ }) when i = j ->
+          let e2', c' = self#visit_expr_w (i + 1) e2 in
+          (match e2' with
+          | Some _ -> (None, c' + 1)  (* more than one use of @0, so the first value is not important any more *)
+          | None -> (Some e2, c' + 1))
+        | _ -> super#visit_ELet (i + 1, typ) b e1 e2
+    end
+    in
+    obj#visit_expr_w 0 expr
+  in
+  let nearest_binder_only_used_in_drops expr =
+    let is_zero_visit i e =
+      match e.node with
+      | EAddrOf ({ node = EBound j; _ }) -> i = j
+      | EBound j -> i = j
+      | _ -> false
+    in
+    (* Visiting returns (whether the nearest binder is only used in a drop, how many times it is visited) *)
+    let obj = object
+      inherit [_] reduce as super
+      method zero = (false, 0)
+      method plus (b1, c1) (b2, c2) = (b1 || b2, c1 + c2)
+
+      method! visit_EBound (i, _) j = if i = j then (false, 1) else (false, 0)
+      method! visit_expr_w i e =
+        match e with
+        | [%cremepat {|
+          alloc::vec::into_iter::IntoIter::?::drop_in_place<?..>(
+            ?drop_arg
+          )
+        |}] when is_zero_visit i drop_arg -> (true, 1)
+        | _ -> super#visit_expr_w i e
+    end
+    in
+    (* Exactly used once in the `drop_in_place` *)
+    obj#visit_expr_w 0 expr = (true, 1)
+  in
+  let expr = expr_lst_to_expr expr_lst in
+  (* Find the unique expression `e` such that:
+      let drop_arg = &@0 in e
+      this should be unique
+    *)
+  match find_unique_let_take_addr_of_in expr with
+  | (Some expr', 1) ->
+    (* To confirm that the `drop_arg` is only used to pass to a drop_in_place function *)
+    nearest_binder_only_used_in_drops expr'
+  | (None, 1) -> 
+    (* Otherwise, it is still visited once, so we check whether it is placed directly into `drop_in_place`
+        We can still use `nearest_binder_only_used_in_drops` as the nearest now is just `iter` itself
+    *)
+    nearest_binder_only_used_in_drops expr
+  | _ -> false
+
+let remove_iter_drop expr_lst =
+  let replace_unique_drop = object
+    inherit map_counting as super
+    method! visit_expr_w i e =
+      match e with
+      | [%cremepat {|
+        alloc::vec::into_iter::IntoIter::?::drop_in_place<?..>(
+          ?drop_arg
+        )
+      |}] when
+        match drop_arg.node with
+        | EAddrOf ({ node = EBound j; _ }) | EBound j -> i = j
+        | _ -> false
+      ->
+        Krml.Helpers.eunit
+      | _ -> super#visit_expr_w i e
+  end
+  in
+  let rmv_unique_let = object
+    inherit [_] map as super
+    method! visit_ELet ((rmv, i), typ) b e1 e2 =
+      match e1.node with
+      | EAddrOf ({ node = EBound j; _ }) when i = j ->
+        rmv := true;
+        (replace_unique_drop#visit_expr_w 0 e2).node
+      | _ -> super#visit_ELet ((rmv, i + 1), typ) b e1 e2
+  end
+  in
+  let expr = expr_lst_to_expr expr_lst in
+  let let_removed = ref false in
+  let expr = rmv_unique_let#visit_expr_w (let_removed, 0) expr in
+  if !let_removed then expr else replace_unique_drop#visit_expr_w 0 expr
+
 let resugar_loops =
   object(self)
   inherit [_] map as super
@@ -858,15 +964,10 @@ let resugar_loops =
           Some ? -> ?e_body
         }
       };
-      (
-        let drop_arg = ?;
-        alloc::vec::into_iter::IntoIter::?::drop_in_place
-          <?..>
-          (drop_arg);
       ?e_rest..
-      )
-    |}] ->
-      let open Krml.Helpers in 
+    |}] when only_drop_for_iter e_rest ->
+      (* We should confirm that the `iter` is only used for the potential `drop` below. *)
+      let open Krml.Helpers in
       let e_vec = self#visit_expr env e_vec in
       let e_vec_len_gen = with_type (Builtin.vec_len.typ) (EQualified Builtin.vec_len.name) in
       let t_vec_len = fold_arrow [ Builtin.mk_vec t1 ] (TInt SizeT) in
@@ -887,12 +988,14 @@ let resugar_loops =
       let x_binder = fresh_binder "x_ele" t1 in
       let e_for_body = with_type e_body.typ (ELet (x_binder, e_elem, 
         Krml.DeBruijn.lift 0 (self#visit_expr env e_body_subst))) in
+      let e_rest = remove_iter_drop e_rest in
+      let e_rest = Krml.DeBruijn.lift (-1) e_rest in
       with_type e.typ @@ ESequence (with_type TUnit (EFor (i_binder,
         zero_usize,
         mk_lt SizeT (Krml.DeBruijn.lift 1 e_len),
         mk_incr SizeT,
         e_for_body))
-      :: List.map (fun e -> self#visit_expr env (Krml.DeBruijn.lift (-2) e)) e_rest)
+      :: [ self#visit_expr env e_rest ])
     | [%cremepat {|
       let iter =
         alloc::vec::?::into_iter
