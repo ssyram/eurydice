@@ -147,6 +147,37 @@ let also_skip_prefix_for_external_types (scope_env, _) =
   end
 
 let prefix_abbrev = Hashtbl.create 42
+let hash_count = Hashtbl.create 42
+
+let get_hash_name prefix =
+  match Hashtbl.find_opt prefix_abbrev prefix with
+  | Some name -> name
+  | None ->
+      let two_digits_hash x =
+        let b62 = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" in
+        let n = Hashtbl.hash x land 0x3fff mod 3844 in
+        Printf.sprintf "p%c%c" b62.[n / 62] b62.[n mod 62]
+      in
+      let hash_name = two_digits_hash prefix in
+      (* Detect conflicts *)
+      let conflict_counts =
+        match Hashtbl.find_opt hash_count hash_name with
+        | Some count ->
+            Hashtbl.replace hash_count hash_name (count + 1);
+            count
+        | None ->
+            Hashtbl.add hash_count hash_name 1;
+            0
+      in
+      (* Conflicts-resolved name *)
+      let hash_name =
+        if conflict_counts = 1 then
+          hash_name
+        else
+          KPrint.bsprintf "%s%d" hash_name conflict_counts
+      in
+      Hashtbl.add prefix_abbrev prefix hash_name;
+      hash_name
 
 let lid_prefix_abbrev ((prefix, name) as lid) =
   if not !O.abbrev_prefices then
@@ -163,13 +194,7 @@ let lid_prefix_abbrev ((prefix, name) as lid) =
     | [ "Prims" ] when name = "string" -> lid
     | _ when name = "main" -> lid
     | _ ->
-        let hash =
-          try Hashtbl.find prefix_abbrev prefix
-          with Not_found ->
-            let next_id = KPrint.bsprintf "p%d" (Hashtbl.length prefix_abbrev) in
-            Hashtbl.add prefix_abbrev prefix next_id;
-            next_id
-        in
+        let hash = get_hash_name prefix in
         [ hash ], name
 
 let add_opaque_names files =
