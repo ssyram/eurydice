@@ -15,8 +15,6 @@
 extern "C" {
 #endif
 
-typedef Eurydice_unknown_struct core_fmt_Arguments;
-
 typedef struct Eurydice_arr_2e_s Eurydice_arr_2e;
 
 typedef struct Eurydice_arr_c6_s Eurydice_arr_c6;
@@ -311,6 +309,30 @@ bool array_const_eq_fd(Eurydice_arr_b2 x, Eurydice_arr_b2 y);
 void array_main(void);
 
 void array_references(void);
+
+#define array_mk_incr_closure__core__marker__Destruct_for_array__mk_incr__closure_K___drop_in_place(x_0, x_1, _ret_t) array_mk_incr_closure__core__marker__Destruct_for_array__mk_incr__closure_K___drop_in_place_(x_0, x_1)
+
+extern void
+array_mk_incr_closure__core__marker__Destruct_for_array__mk_incr__closure_K___drop_in_place_(
+  size_t x0,
+  void ***x1
+);
+
+#define array_nested_from_fn_closure__core__marker__Destruct_for_array__nested_from_fn__closure_K___drop_in_place(x_0, x_1, _ret_t) array_nested_from_fn_closure__core__marker__Destruct_for_array__nested_from_fn__closure_K___drop_in_place_(x_0, x_1)
+
+extern void
+array_nested_from_fn_closure__core__marker__Destruct_for_array__nested_from_fn__closure_K___drop_in_place_(
+  size_t x0,
+  void ***x1
+);
+
+#define array_plus_one_closure__core__marker__Destruct_for_array__plus_one__closure_K___drop_in_place(x_0, x_1, _ret_t) array_plus_one_closure__core__marker__Destruct_for_array__plus_one__closure_K___drop_in_place_(x_0, x_1)
+
+extern void
+array_plus_one_closure__core__marker__Destruct_for_array__plus_one__closure_K___drop_in_place_(
+  size_t x0,
+  void ***x1
+);
 
 #if defined(__cplusplus)
 }

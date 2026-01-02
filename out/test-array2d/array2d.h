@@ -15,8 +15,6 @@
 extern "C" {
 #endif
 
-typedef Eurydice_unknown_struct core_fmt_Arguments;
-
 typedef struct Eurydice_arr_b2_s Eurydice_arr_b2;
 
 typedef struct Eurydice_arr_1e_s Eurydice_arr_1e;

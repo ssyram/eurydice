@@ -192,6 +192,7 @@ let lid_prefix_abbrev ((prefix, name) as lid) =
     | "alloc" :: ("boxed" | "vec") :: _
     | "LowStar" :: _ -> lid
     | [ "Prims" ] when name = "string" -> lid
+    | [] -> lid
     | _ when name = "main" -> lid
     | _ ->
         let hash = get_hash_name prefix in
@@ -206,16 +207,14 @@ let add_opaque_names files =
       let new_decls = List.map mapper !AstOfLlbc.opaque_names in
       former @ [ name, new_decls @ decls ]
 
-let new_arg_binder arg_typ =
+let new_arg_binder ?(preferred_name : string option = None) arg_typ =
   let atom = Atom.fresh () in
-  with_type arg_typ
-    {
-      name = "arg" ^ Atom.show atom;
-      mut = true;
-      mark = ref (Mark.Present, Mark.AtMost 1);
-      meta = [];
-      atom;
-    }
+  let name =
+    match preferred_name with
+    | None -> "arg" ^ Atom.show atom
+    | Some name -> name
+  in
+  with_type arg_typ { name; mut = true; mark = ref (Mark.Present, Mark.AtMost 1); meta = []; atom }
 
 (** For the [Eurydice::unknown_struct] opaque type object [obj], returns [free(&obj.resource)] The
     param [obj] should be the param itself (instead of its pointer). *)
@@ -229,7 +228,12 @@ let free_unknown obj =
   let get_resource_ptr obj = with_type (TBuf (B.c_void_t, false)) (EField (obj, "resource")) in
   with_type TUnit (EApp (c_free_func, [ obj |> get_resource_ptr |> cast_to_void_ptr ]))
 
-let stub_opaque_drop_in_place files =
+let stub_opaque_and_empty_drop_in_place files =
+  let rec is_unit_ptr = function
+    | TUnit -> true
+    | TBuf (t, _) -> is_unit_ptr t
+    | _ -> false
+  in
   let mapper = function
     | DExternal (cc, flags, 0, 0, ((_, "drop_in_place") as f_name), typ, []) as ext -> (
         let ret, args = Helpers.flatten_arrow typ in
@@ -238,8 +242,18 @@ let stub_opaque_drop_in_place files =
             let body =
               Krml.Ast.EBound 0 |> Helpers.mk_deref ~const:false (TQualified t) |> free_unknown
             in
-            let arg_binder = new_arg_binder arg_typ in
+            let arg_binder = new_arg_binder ~preferred_name:(Some "arg") arg_typ in
             DFunction (cc, flags, 0, 0, TUnit, f_name, [ arg_binder ], body)
+        | [ (TBuf (t, _) as arg_typ) ], TUnit when is_unit_ptr t ->
+            DFunction
+              ( cc,
+                flags,
+                0,
+                0,
+                TUnit,
+                f_name,
+                [ new_arg_binder ~preferred_name:(Some "_") arg_typ ],
+                Helpers.eunit )
         | _ -> ext)
     | x -> x
   in
@@ -472,7 +486,11 @@ let stub_pure_extern_funcs files =
           | _ -> with_type ret (ECast (Helpers.zero_usize, ret))
         in
         let body = with_type ret (ESequence (drop_owned_args @ [ final_expr ])) in
-        let arg_binders = List.map new_arg_binder args in
+        let arg_binders =
+          List.mapi
+            (fun i typ -> new_arg_binder ~preferred_name:(Some ("x" ^ string_of_int i)) typ)
+            args
+        in
         DFunction (cc, flags, 0, 0, ret, name, arg_binders, body)
     | x -> x
   in
@@ -485,3 +503,12 @@ let simp_prefix files =
   end)
     #visit_files
     () files
+
+let print_hash_prefixes () =
+  let do_printing () =
+    let to_str (prefix, hash) = Printf.sprintf "%s |-> %s" (String.concat "::" prefix) hash in
+    Hashtbl.to_seq prefix_abbrev |> List.of_seq |> List.map to_str |> String.concat "\n"
+    |> Printf.printf "Prefix abbreviations:\n%s\n"
+  in
+  if !O.abbrev_prefices then
+    do_printing ()

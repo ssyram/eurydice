@@ -5,3 +5,5 @@ let fatal_errors = ref false
 let keep_going = ref false
 let no_const = ref false
 let abbrev_prefices = ref false
+let stub_extern = ref false
+let mono_extern_func = ref false

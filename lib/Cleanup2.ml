@@ -616,51 +616,69 @@ let expr_lst_to_expr expr_lst =
 let only_drop_for_iter expr_lst =
   (* Returns: (maybe the unique `e`, the times `@0` is visited) *)
   let find_unique_let_take_addr_of_in expr =
-    let obj = object(self)
-      inherit [_] reduce as super
-      method zero = (None, 0)
-      method plus (e1, c1) (e2, c2) =
-        match e1, e2 with
-        | None, None -> (None, c1 + c2)
-        | Some e, None | None, Some e -> (Some e, c1 + c2)
-        | Some _, Some _ -> (None, c1 + c2) (* more than one found, so the first element is not important any more *)
+    let obj =
+      object (self)
+        inherit [_] reduce as super
+        method zero = None, 0
 
-      method! visit_EBound (i, _) j = if i = j then (None, 1) else (None, 0)
-      method! visit_ELet (i, typ) b e1 e2 =
-        match e1.node with
-        | EAddrOf ({ node = EBound j; _ }) when i = j ->
-          let e2', c' = self#visit_expr_w (i + 1) e2 in
-          (match e2' with
-          | Some _ -> (None, c' + 1)  (* more than one use of @0, so the first value is not important any more *)
-          | None -> (Some e2, c' + 1))
-        | _ -> super#visit_ELet (i + 1, typ) b e1 e2
-    end
+        method plus (e1, c1) (e2, c2) =
+          match e1, e2 with
+          | None, None -> None, c1 + c2
+          | Some e, None | None, Some e -> Some e, c1 + c2
+          | Some _, Some _ -> None, c1 + c2
+        (* more than one found, so the first element is not important any more *)
+
+        method! visit_EBound (i, _) j =
+          if i = j then
+            None, 1
+          else
+            None, 0
+
+        method! visit_ELet (i, typ) b e1 e2 =
+          match e1.node with
+          | EAddrOf { node = EBound j; _ } when i = j -> (
+              let e2', c' = self#visit_expr_w (i + 1) e2 in
+              match e2' with
+              | Some _ ->
+                  None, c' + 1
+                  (* more than one use of @0, so the first value is not important any more *)
+              | None -> Some e2, c' + 1)
+          | _ -> super#visit_ELet (i + 1, typ) b e1 e2
+      end
     in
     obj#visit_expr_w 0 expr
   in
   let nearest_binder_only_used_in_drops expr =
     let is_zero_visit i e =
       match e.node with
-      | EAddrOf ({ node = EBound j; _ }) -> i = j
+      | EAddrOf { node = EBound j; _ } -> i = j
       | EBound j -> i = j
       | _ -> false
     in
     (* Visiting returns (whether the nearest binder is only used in a drop, how many times it is visited) *)
-    let obj = object
-      inherit [_] reduce as super
-      method zero = (false, 0)
-      method plus (b1, c1) (b2, c2) = (b1 || b2, c1 + c2)
+    let obj =
+      object
+        inherit [_] reduce as super
+        method zero = false, 0
+        method plus (b1, c1) (b2, c2) = b1 || b2, c1 + c2
 
-      method! visit_EBound (i, _) j = if i = j then (false, 1) else (false, 0)
-      method! visit_expr_w i e =
-        match e with
-        | [%cremepat {|
+        method! visit_EBound (i, _) j =
+          if i = j then
+            false, 1
+          else
+            false, 0
+
+        method! visit_expr_w i e =
+          match e with
+          | [%cremepat
+              {|
           alloc::vec::into_iter::IntoIter::?::drop_in_place<?..>(
             ?drop_arg
           )
-        |}] when is_zero_visit i drop_arg -> (true, 1)
-        | _ -> super#visit_expr_w i e
-    end
+        |}]
+            when is_zero_visit i drop_arg -> true, 1
+          | _ -> super#visit_expr_w i e
+      end
     in
     (* Exactly used once in the `drop_in_place` *)
     obj#visit_expr_w 0 expr = (true, 1)
@@ -671,48 +689,54 @@ let only_drop_for_iter expr_lst =
       this should be unique
     *)
   match find_unique_let_take_addr_of_in expr with
-  | (Some expr', 1) ->
-    (* To confirm that the `drop_arg` is only used to pass to a drop_in_place function *)
-    nearest_binder_only_used_in_drops expr'
-  | (None, 1) -> 
-    (* Otherwise, it is still visited once, so we check whether it is placed directly into `drop_in_place`
+  | Some expr', 1 ->
+      (* To confirm that the `drop_arg` is only used to pass to a drop_in_place function *)
+      nearest_binder_only_used_in_drops expr'
+  | None, 1 ->
+      (* Otherwise, it is still visited once, so we check whether it is placed directly into `drop_in_place`
         We can still use `nearest_binder_only_used_in_drops` as the nearest now is just `iter` itself
     *)
-    nearest_binder_only_used_in_drops expr
+      nearest_binder_only_used_in_drops expr
   | _ -> false
 
 let remove_iter_drop expr_lst =
-  let replace_unique_drop = object
-    inherit map_counting as super
-    method! visit_expr_w i e =
-      match e with
-      | [%cremepat {|
+  let replace_unique_drop =
+    object
+      inherit map_counting as super
+
+      method! visit_expr_w i e =
+        match e with
+        | [%cremepat
+            {|
         alloc::vec::into_iter::IntoIter::?::drop_in_place<?..>(
           ?drop_arg
         )
-      |}] when
-        match drop_arg.node with
-        | EAddrOf ({ node = EBound j; _ }) | EBound j -> i = j
-        | _ -> false
-      ->
-        Krml.Helpers.eunit
-      | _ -> super#visit_expr_w i e
-  end
+      |}]
+          when match drop_arg.node with
+               | EAddrOf { node = EBound j; _ } | EBound j -> i = j
+               | _ -> false -> Krml.Helpers.eunit
+        | _ -> super#visit_expr_w i e
+    end
   in
-  let rmv_unique_let = object
-    inherit [_] map as super
-    method! visit_ELet ((rmv, i), typ) b e1 e2 =
-      match e1.node with
-      | EAddrOf ({ node = EBound j; _ }) when i = j ->
-        rmv := true;
-        (replace_unique_drop#visit_expr_w 0 e2).node
-      | _ -> super#visit_ELet ((rmv, i + 1), typ) b e1 e2
-  end
+  let rmv_unique_let =
+    object
+      inherit [_] map as super
+
+      method! visit_ELet ((rmv, i), typ) b e1 e2 =
+        match e1.node with
+        | EAddrOf { node = EBound j; _ } when i = j ->
+            rmv := true;
+            (replace_unique_drop#visit_expr_w 0 e2).node
+        | _ -> super#visit_ELet ((rmv, i + 1), typ) b e1 e2
+    end
   in
   let expr = expr_lst_to_expr expr_lst in
   let let_removed = ref false in
   let expr = rmv_unique_let#visit_expr_w (let_removed, 0) expr in
-  if !let_removed then expr else replace_unique_drop#visit_expr_w 0 expr
+  if !let_removed then
+    expr
+  else
+    replace_unique_drop#visit_expr_w 0 expr
 
 let resugar_loops =
   object(self)

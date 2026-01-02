@@ -2633,7 +2633,8 @@ let decl_of_id (env : env) (id : C.item_id) : K.decl option =
       match kind with
       | Union _ | TDeclError _ -> None
       | Opaque ->
-          opaque_names := name :: !opaque_names;
+          if !Options.stub_extern then
+            opaque_names := name :: !opaque_names;
           None
       | Struct fields ->
           let fields =
@@ -2720,17 +2721,18 @@ let decl_of_id (env : env) (id : C.item_id) : K.decl option =
               let { K.n_cgs; n }, t = typ_of_signature env signature in
               let is_no_mono_name name =
                 match name with
-                | [ "core"; "array" ], "from_fn" -> true
-                | "core" :: "array" :: _, "map" -> true
-                | [ "core"; "slice"; "{@Slice<T>}" ], "len" -> true
-                | [ "core"; "slice"; "{@Slice<T>}" ], "copy_from_slice" -> true
-                | [ "core"; "slice"; "{@Slice<T>}" ], "split_at" -> true
-                | [ "core"; "slice"; "{@Slice<T>}" ], "split_at_mut" -> true
-                | "core" :: "array" :: _, "as_slice" -> true
+                | [ "core"; "array" ], "from_fn"
+                | "core" :: "array" :: _, "map"
+                | [ "core"; "slice"; "{@Slice<T>}" ], "len"
+                | [ "core"; "slice"; "{@Slice<T>}" ], "copy_from_slice"
+                | [ "core"; "slice"; "{@Slice<T>}" ], "split_at"
+                | [ "core"; "slice"; "{@Slice<T>}" ], "split_at_mut"
+                | "core" :: "array" :: _, "as_slice"
+                | "alloc" :: "vec" :: _, ("len" | "index") -> true
                 | _ -> false
               in
               let flags =
-                if is_no_mono_name name then
+                if (not !Options.mono_extern_func) || is_no_mono_name name then
                   []
                 else
                   [ Krml.Common.MonoExtFunc ]

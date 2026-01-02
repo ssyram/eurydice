@@ -15,10 +15,6 @@
 extern "C" {
 #endif
 
-typedef Eurydice_unknown_struct core_fmt_Arguments;
-
-typedef Eurydice_unknown_struct core_fmt_Formatter;
-
 #define issue_123_E3_C1 255
 
 typedef uint8_t issue_123_E3;

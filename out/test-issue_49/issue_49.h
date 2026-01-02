@@ -15,8 +15,6 @@
 extern "C" {
 #endif
 
-typedef Eurydice_unknown_struct core_fmt_Arguments;
-
 typedef struct core_option_Option_77_s core_option_Option_77;
 
 #define core_cmp_Ordering_Less -1

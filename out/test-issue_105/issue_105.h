@@ -15,8 +15,6 @@
 extern "C" {
 #endif
 
-typedef Eurydice_unknown_struct core_fmt_Arguments;
-
 typedef struct core_ops_control_flow_ControlFlow_19_s core_ops_control_flow_ControlFlow_19;
 
 typedef struct core_result_Result_8f_s core_result_Result_8f;

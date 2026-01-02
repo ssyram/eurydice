@@ -47,3 +47,11 @@ void closure_fn_cast_main(void)
   KRML_HOST_IGNORE(f((int32_t)1));
 }
 
+void
+closure_fn_cast_main_closure__core__marker__Destruct_for_closure_fn_cast__main__closure__drop_in_place(
+  void ***_
+)
+{
+
+}
+

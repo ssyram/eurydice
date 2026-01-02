@@ -34,9 +34,9 @@ int32_t closure_fn_cast_main_closure_as_fn(int32_t arg1);
 
 void closure_fn_cast_main(void);
 
-extern void
+void
 closure_fn_cast_main_closure__core__marker__Destruct_for_closure_fn_cast__main__closure__drop_in_place(
-  void ***x0
+  void ***_
 );
 
 #if defined(__cplusplus)

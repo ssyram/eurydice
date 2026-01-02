@@ -15,8 +15,6 @@
 extern "C" {
 #endif
 
-typedef Eurydice_unknown_struct alloc_vec_Vec;
-
 typedef struct lvalue_Struct_s lvalue_Struct;
 
 typedef struct lvalue_ThreeWays_s lvalue_ThreeWays;

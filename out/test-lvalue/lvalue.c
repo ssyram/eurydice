@@ -14,13 +14,11 @@ void lvalue_main(void)
 
 lvalue_Struct lvalue_use_struct(lvalue_ThreeWays s)
 {
-  bool uu____0 = false;
-  uu____0 = true;
-  lvalue_Struct uu____1;
+  lvalue_Struct uu____0;
   if (s.tag == lvalue_Middle)
   {
     int32_t i = s.val.case_Middle;
-    uu____1 =
+    uu____0 =
       (
         KRML_CLITERAL(lvalue_Struct){
           .tag = lvalue_B,
@@ -31,17 +29,17 @@ lvalue_Struct lvalue_use_struct(lvalue_ThreeWays s)
   else if (s.tag == lvalue_Left)
   {
     Eurydice_vec st = s.val.case_Left;
-    uu____1 = (KRML_CLITERAL(lvalue_Struct){ .tag = lvalue_A, .val = { .case_A = st } });
+    uu____0 = (KRML_CLITERAL(lvalue_Struct){ .tag = lvalue_A, .val = { .case_A = st } });
   }
   else
   {
-    uu____1 = (KRML_CLITERAL(lvalue_Struct){ .tag = lvalue_C });
+    uu____0 = (KRML_CLITERAL(lvalue_Struct){ .tag = lvalue_C });
   }
   if (!(s.tag == lvalue_Left))
   {
-    return uu____1;
+    return uu____0;
   }
-  return uu____1;
+  return uu____0;
 }
 
 /**

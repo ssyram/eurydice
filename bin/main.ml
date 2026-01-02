@@ -33,6 +33,10 @@ Supported options:|}
       ( "--abbrev-prefices",
         Arg.Set O.abbrev_prefices,
         " use abbreviated prefixes for generated names" );
+      "--stub-extern", Arg.Set O.stub_extern, " generate stubs for extern types and functions";
+      ( "--mono-extern-func",
+        Arg.Set O.mono_extern_func,
+        " monomorphize extern functions (but not built-ins)" );
       "--no-const", Arg.Set O.no_const, " do not introduce the const keyword for pointers";
       "-fcomments", Arg.Set O.comments, " keep inline comments";
       "-funroll-loops", Arg.Set_int funroll_loops, " unrool loops up to N";
@@ -323,7 +327,10 @@ Supported options:|}
   if errors then
     fail __FILE__ __LINE__;
 
+  let files = Eurydice.Cleanup3.stub_opaque_and_empty_drop_in_place files in
+  let files = Eurydice.Cleanup3.stub_pure_extern_funcs files in
   let files = Eurydice.Cleanup3.simp_prefix files in
+  let files = Eurydice.Cleanup3.add_opaque_names files in
 
   let scope_env = Krml.Simplify.allocate_c_env files in
   Eurydice.Cleanup3.(also_skip_prefix_for_external_types scope_env)#visit_files () files;
@@ -401,10 +408,8 @@ Supported options:|}
   in
   let files = Eurydice.Cleanup3.resolve_typ_dependencies files in
   Eurydice.Logging.log "Phase3.3" "Phase 3.5:\n%a" pfiles files;
-  let files = Eurydice.Cleanup3.add_opaque_names files in
-  let files = Eurydice.Cleanup3.stub_opaque_drop_in_place files in
-  let files = Eurydice.Cleanup3.stub_pure_extern_funcs files in
   let files = AstToCStar.mk_files files c_name_map Idents.LidSet.empty macros in
+  Eurydice.Cleanup3.print_hash_prefixes ();
 
   (* Uncomment to debug C* AST *)
   (* List.iter *)
