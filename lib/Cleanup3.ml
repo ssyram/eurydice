@@ -220,7 +220,7 @@ let new_arg_binder ?(preferred_name : string option = None) arg_typ =
     param [obj] should be the param itself (instead of its pointer). *)
 let free_unknown obj =
   let c_free_func =
-    with_type (TArrow (TBuf (B.c_void_t, false), TUnit)) (EQualified ([], "free"))
+    with_type (TArrow (TBuf (B.c_void_t, false), TUnit)) (EQualified (["Eurydice"], "free_unknown"))
   in
   let cast_to_void_ptr obj =
     with_type (TBuf (B.c_void_t, false)) (ECast (obj, TBuf (B.c_void_t, false)))
@@ -473,7 +473,7 @@ let stub_pure_extern_funcs files =
                   (EApp
                      ( with_type
                          (TArrow (TInt SizeT, TBuf (B.c_void_t, false)))
-                         (EQualified ([], "malloc")),
+                         (EQualified (["Eurydice"], "malloc_unknown")),
                        [ arg ] ))
               in
               let cast_to_char_ptr expr =
