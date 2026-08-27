@@ -15,8 +15,13 @@
 extern "C" {
 #endif
 
-<<<<<<< HEAD
-=======
+typedef struct names_Foo0_s
+{
+  uint32_t x;
+  uint32_t y;
+}
+names_Foo0;
+
 #define names_Foo 0
 #define names_Bar 1
 
@@ -38,13 +43,6 @@ typedef struct names_Baz_s
 }
 names_Baz;
 
-typedef struct names_Foo0_s
-{
-  uint32_t x;
-  uint32_t y;
-}
-names_Foo0;
-
 typedef struct names_Type_s
 {
   int32_t switch0;
@@ -54,7 +52,6 @@ names_Type;
 
 void names_f(uint32_t struct0);
 
->>>>>>> main
 void names_main(void);
 
 #if defined(__cplusplus)

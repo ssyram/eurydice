@@ -14,58 +14,18 @@ typedef struct const_uint32_t__x2_s
 }
 const_uint32_t__x2;
 
-void castunsize_main1(void)
-{
-  castunsize_S_f9 x = { .foo = 0U, .my_data = { .data = { 0U } } };
-  Eurydice_dst_ref_shared_88 x0 = { .ptr = (const castunsize_T *)&x, .meta = (size_t)4U };
-  /* original Rust expression is not an lvalue in C */
-  uint32_t lvalue = 0U;
-  const_uint32_t__x2
-  uu____0 = { .fst = &((const uint32_t *)x0.ptr->my_data)[3U], .snd = &lvalue };
-  EURYDICE_ASSERT(uu____0.fst[0U] == uu____0.snd[0U], "panic!");
-}
-
 /**
 A monomorphic instance of Eurydice.array_to_slice_mut
 with types uint32_t
 with const generics
 - N= 4
 */
-static Eurydice_dst_ref_mut_3c array_to_slice_mut_ad(Eurydice_arr_0d *a)
+static Eurydice_dst_ref_mut_0c array_to_slice_mut_32(Eurydice_arr_e5 *a)
 {
-  Eurydice_dst_ref_mut_3c lit;
+  Eurydice_dst_ref_mut_0c lit;
   lit.ptr = a->data;
   lit.meta = (size_t)4U;
   return lit;
-}
-
-void castunsize_main3(void)
-{
-  Eurydice_dst_ref_mut_3c
-  x =
-    array_to_slice_mut_ad(Eurydice_box_new((KRML_CLITERAL(Eurydice_arr_0d){ .data = { 0U } }),
-        Eurydice_arr_0d,
-        Eurydice_arr_0d *));
-  /* original Rust expression is not an lvalue in C */
-  uint32_t lvalue = 0U;
-  const_uint32_t__x2 uu____0 = { .fst = &x.ptr[3U], .snd = &lvalue };
-  EURYDICE_ASSERT(uu____0.fst[0U] == uu____0.snd[0U], "panic!");
-}
-
-/**
-A monomorphic instance of castunsize.main2
-with const generics
-- K= 5
-*/
-void castunsize_main2_c9(void)
-{
-  castunsize_S_bc x = { .foo = 0U, .my_data = { .data = { 0U } } };
-  Eurydice_dst_ref_shared_88 x0 = { .ptr = (const castunsize_T *)&x, .meta = (size_t)5U };
-  /* original Rust expression is not an lvalue in C */
-  uint32_t lvalue = 0U;
-  const_uint32_t__x2
-  uu____0 = { .fst = &((const uint32_t *)x0.ptr->my_data)[3U], .snd = &lvalue };
-  EURYDICE_ASSERT(uu____0.fst[0U] == uu____0.snd[0U], "panic!");
 }
 
 /**
@@ -74,12 +34,52 @@ with types uint32_t
 with const generics
 - N= 5
 */
-static Eurydice_dst_ref_mut_3c array_to_slice_mut_ff(Eurydice_arr_88 *a)
+static Eurydice_dst_ref_mut_0c array_to_slice_mut_d0(Eurydice_arr_fb *a)
 {
-  Eurydice_dst_ref_mut_3c lit;
+  Eurydice_dst_ref_mut_0c lit;
   lit.ptr = a->data;
   lit.meta = (size_t)5U;
   return lit;
+}
+
+void castunsize_main1(void)
+{
+  castunsize_S_e9 x = { .foo = 0U, .my_data = { .data = { 0U } } };
+  Eurydice_dst_ref_shared_8b x0 = { .ptr = (const castunsize_T *)&x, .meta = (size_t)4U };
+  /* original Rust expression is not an lvalue in C */
+  uint32_t lvalue = 0U;
+  const_uint32_t__x2
+  uu____0 = { .fst = &((const uint32_t *)x0.ptr->my_data)[3U], .snd = &lvalue };
+  EURYDICE_ASSERT(uu____0.fst[0U] == uu____0.snd[0U], "panic!");
+}
+
+/**
+A monomorphic instance of castunsize.main2
+with const generics
+- K= 5
+*/
+void castunsize_main2_a5(void)
+{
+  castunsize_S_b9 x = { .foo = 0U, .my_data = { .data = { 0U } } };
+  Eurydice_dst_ref_shared_8b x0 = { .ptr = (const castunsize_T *)&x, .meta = (size_t)5U };
+  /* original Rust expression is not an lvalue in C */
+  uint32_t lvalue = 0U;
+  const_uint32_t__x2
+  uu____0 = { .fst = &((const uint32_t *)x0.ptr->my_data)[3U], .snd = &lvalue };
+  EURYDICE_ASSERT(uu____0.fst[0U] == uu____0.snd[0U], "panic!");
+}
+
+void castunsize_main3(void)
+{
+  Eurydice_dst_ref_mut_0c
+  x =
+    array_to_slice_mut_32(Eurydice_box_new((KRML_CLITERAL(Eurydice_arr_e5){ .data = { 0U } }),
+        Eurydice_arr_e5,
+        Eurydice_arr_e5 *));
+  /* original Rust expression is not an lvalue in C */
+  uint32_t lvalue = 0U;
+  const_uint32_t__x2 uu____0 = { .fst = &x.ptr[3U], .snd = &lvalue };
+  EURYDICE_ASSERT(uu____0.fst[0U] == uu____0.snd[0U], "panic!");
 }
 
 /**
@@ -87,13 +87,13 @@ A monomorphic instance of castunsize.main4
 with const generics
 - K= 5
 */
-void castunsize_main4_c9(void)
+void castunsize_main4_a5(void)
 {
-  Eurydice_dst_ref_mut_3c
+  Eurydice_dst_ref_mut_0c
   x =
-    array_to_slice_mut_ff(Eurydice_box_new((KRML_CLITERAL(Eurydice_arr_88){ .data = { 0U } }),
-        Eurydice_arr_88,
-        Eurydice_arr_88 *));
+    array_to_slice_mut_d0(Eurydice_box_new((KRML_CLITERAL(Eurydice_arr_fb){ .data = { 0U } }),
+        Eurydice_arr_fb,
+        Eurydice_arr_fb *));
   /* original Rust expression is not an lvalue in C */
   uint32_t lvalue = 0U;
   const_uint32_t__x2 uu____0 = { .fst = &x.ptr[3U], .snd = &lvalue };
@@ -103,8 +103,8 @@ void castunsize_main4_c9(void)
 void castunsize_main(void)
 {
   castunsize_main1();
-  castunsize_main2_c9();
+  castunsize_main2_a5();
   castunsize_main3();
-  castunsize_main4_c9();
+  castunsize_main4_a5();
 }
 

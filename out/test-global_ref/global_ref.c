@@ -7,20 +7,6 @@
 
 #include "global_ref.h"
 
-static void *C_VAL_local_0 = (void *)0U;
-
-static void *const *C_VAL_local_1 = &C_VAL_local_0;
-
-void *const *const *global_ref_C_VAL_local_2 = &C_VAL_local_1;
-
-static int32_t S_VAL_local_0 = (int32_t)0;
-
-static const int32_t *S_VAL_local_1 = &S_VAL_local_0;
-
-static const int32_t *const *S_VAL_local_2 = &S_VAL_local_1;
-
-const int32_t *const *const *const global_ref_S_VAL = &S_VAL_local_2;
-
 typedef struct const_____x2_s
 {
   void *const *fst;
@@ -28,18 +14,28 @@ typedef struct const_____x2_s
 }
 const_____x2;
 
+static void *C_VAL_local_0 = (void *)0U;
+
+static void *const *C_VAL_local_1 = &C_VAL_local_0;
+
+void *const *const *global_ref_C_VAL_local_2 = &C_VAL_local_1;
+
+static int32_t S_VAL_local_0 = 0;
+
+static const int32_t *S_VAL_local_1 = &S_VAL_local_0;
+
+static const int32_t *const *S_VAL_local_2 = &S_VAL_local_1;
+
+const int32_t *const *const *const global_ref_S_VAL = &S_VAL_local_2;
+
 void global_ref_main(void)
 {
   /* original Rust expression is not an lvalue in C */
   void *lvalue = (void *)0U;
-<<<<<<< HEAD
-  _____x2 uu____0 = { .fst = GLOBAL_REF_C_VAL[0U][0U], .snd = &lvalue };
-  EURYDICE_ASSERT(core_cmp_impls__core__cmp__PartialEq____________eq(uu____0.fst, uu____0.snd),
-=======
   const_____x2 uu____0 = { .fst = GLOBAL_REF_C_VAL[0U][0U], .snd = &lvalue };
-  EURYDICE_ASSERT(core_cmp_impls__core__cmp__PartialEq_____for_____eq(uu____0.fst, uu____0.snd),
->>>>>>> main
+  EURYDICE_ASSERT(core_cmp_impls__impl_core__cmp__PartialEq_____for_____eq(uu____0.fst,
+      uu____0.snd),
     "panic!");
-  EURYDICE_ASSERT(global_ref_S_VAL[0U][0U][0U] == (int32_t)0, "panic!");
+  EURYDICE_ASSERT(!!(global_ref_S_VAL[0U][0U][0U] == 0), "assert failure");
 }
 

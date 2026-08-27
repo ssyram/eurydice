@@ -582,6 +582,37 @@ let layout =
 
 (* Helpers for common use *)
 
+let vec_len : K.lident = [ "Eurydice" ], "vec_len"
+let vec_index : K.lident = [ "Eurydice" ], "vec_index"
+let slice_len : K.lident = [ "Eurydice" ], "slice_len"
+let slice_copy : K.lident = [ "Eurydice" ], "slice_copy"
+let slice_split_at : K.lident = [ "Eurydice" ], "slice_split_at"
+let slice_split_at_mut : K.lident = [ "Eurydice" ], "slice_split_at_mut"
+let array_to_slice_lid const = [ "Eurydice" ], "array_to_slice" ^ suffix_of_const const
+let array_to_slice_shared : K.lident = array_to_slice_lid true
+let array_to_slice_mut : K.lident = array_to_slice_lid false
+let array_to_subslice_lid const = [ "Eurydice" ], "array_to_subslice" ^ suffix_of_const const
+let array_to_subslice_shared : K.lident = array_to_subslice_lid true
+let array_to_subslice_mut : K.lident = array_to_subslice_lid false
+let array_to_subslice_to_lid const = [ "Eurydice" ], "array_to_subslice_to" ^ suffix_of_const const
+let array_to_subslice_to_shared : K.lident = array_to_subslice_to_lid true
+let array_to_subslice_to_mut : K.lident = array_to_subslice_to_lid false
+
+let array_to_subslice_from_lid const =
+  [ "Eurydice" ], "array_to_subslice_from" ^ suffix_of_const const
+
+let array_to_subslice_from_shared : K.lident = array_to_subslice_from_lid true
+let array_to_subslice_from_mut : K.lident = array_to_subslice_from_lid false
+let slice_subslice_lid const = [ "Eurydice" ], "slice_subslice" ^ suffix_of_const const
+let slice_subslice_shared : K.lident = slice_subslice_lid true
+let slice_subslice_mut : K.lident = slice_subslice_lid false
+let slice_subslice_to_lid const = [ "Eurydice" ], "slice_subslice_to" ^ suffix_of_const const
+let slice_subslice_to_shared : K.lident = slice_subslice_to_lid true
+let slice_subslice_to_mut : K.lident = slice_subslice_to_lid false
+let slice_subslice_from_lid const = [ "Eurydice" ], "slice_subslice_from" ^ suffix_of_const const
+let slice_subslice_from_shared : K.lident = slice_subslice_from_lid true
+let slice_subslice_from_mut : K.lident = slice_subslice_from_lid false
+
 (* let array_to_slice<T;N> (a : &Arr<T,N>) = dst_ref { ptr = a->data; meta = N }  *)
 let array_to_slice_func const =
   let open Krml in
@@ -589,7 +620,7 @@ let array_to_slice_func const =
   let element_t = TBound 0 in
   let arrref_t = TBuf (mk_arr (TBound 0) (CgVar 0), const) in
   let ret_t = mk_slice ~const element_t in
-  let lid = [ "Eurydice" ], "array_to_slice" ^ suffix_of_const const in
+  let lid = array_to_slice_lid const in
   let binders = [ Helpers.fresh_binder "N" (TInt SizeT); Helpers.fresh_binder "a" arrref_t ] in
   let expr =
     (* args *)
@@ -611,7 +642,7 @@ let array_to_subslice_func const =
   let element_t = TBound 2 in
   let arrref_t = TBuf (mk_arr (TBound 2) (CgVar 0), const) in
   let ret_t = mk_slice ~const element_t in
-  let lid = [ "Eurydice" ], "array_to_subslice" ^ suffix_of_const const in
+  let lid = array_to_subslice_lid const in
   let binders =
     [
       Helpers.fresh_binder "N" (TInt SizeT);
@@ -626,7 +657,7 @@ let array_to_subslice_func const =
     let data = data_of_arrref ~const:true arrref element_t 0 in
     let r_start = mk_sizeT (EField (range, "start")) in
     let r_end = mk_sizeT (EField (range, "end")) in
-    let meta = mk_sizeT (EApp (Helpers.mk_op Sub SizeT, [ r_end; r_start ])) in
+    let meta = mk_sizeT (EApp (Helpers.mk_op Sub (TInt SizeT), [ r_end; r_start ])) in
     let ptr = with_type (TBuf (element_t, const)) (EBufSub (data, r_start)) in
     with_type ret_t (EFlat [ Some "ptr", ptr; Some "meta", meta ])
   in
@@ -643,7 +674,7 @@ let array_to_subslice_to_func const =
   let element_t = TBound 2 in
   let arrref_t = TBuf (mk_arr (TBound 2) (CgVar 0), const) in
   let ret_t = mk_slice ~const element_t in
-  let lid = [ "Eurydice" ], "array_to_subslice_to" ^ suffix_of_const const in
+  let lid = array_to_subslice_to_lid const in
   let binders =
     [
       Helpers.fresh_binder "N" (TInt SizeT);
@@ -673,7 +704,7 @@ let array_to_subslice_from_func const =
   let element_t = TBound 2 in
   let arrref_t = TBuf (mk_arr (TBound 2) (CgVar 0), const) in
   let ret_t = mk_slice ~const element_t in
-  let lid = [ "Eurydice" ], "array_to_subslice_from" ^ suffix_of_const const in
+  let lid = array_to_subslice_from_lid const in
   let binders =
     [
       Helpers.fresh_binder "N" (TInt SizeT);
@@ -688,7 +719,7 @@ let array_to_subslice_from_func const =
     let range = with_type (mk_range_from (TInt SizeT)) (EBound 0) in
     let data = data_of_arrref ~const:true arrref element_t 0 in
     let start = mk_sizeT (EField (range, "start")) in
-    let meta = mk_sizeT (EApp (Helpers.mk_op Sub SizeT, [ n; start ])) in
+    let meta = mk_sizeT (EApp (Helpers.mk_op Sub (TInt SizeT), [ n; start ])) in
     let ptr = with_type (TBuf (element_t, const)) (EBufSub (data, start)) in
     with_type ret_t (EFlat [ Some "ptr", ptr; Some "meta", meta ])
   in
@@ -704,7 +735,7 @@ let slice_subslice_func const =
   let open Ast in
   let element_t = TBound 2 in
   let slice_t = mk_slice ~const element_t in
-  let lid = [ "Eurydice" ], "slice_subslice" ^ suffix_of_const const in
+  let lid = slice_subslice_lid const in
   let binders =
     [ Helpers.fresh_binder "s" slice_t; Helpers.fresh_binder "r" (mk_range (TInt SizeT)) ]
   in
@@ -715,7 +746,7 @@ let slice_subslice_func const =
     let ptr = with_type (TBuf (element_t, const)) (EField (slice, "ptr")) in
     let r_start = mk_sizeT (EField (range, "start")) in
     let r_end = mk_sizeT (EField (range, "end")) in
-    let meta = mk_sizeT (EApp (Helpers.mk_op Sub SizeT, [ r_end; r_start ])) in
+    let meta = mk_sizeT (EApp (Helpers.mk_op Sub (TInt SizeT), [ r_end; r_start ])) in
     let ptr = with_type (TBuf (element_t, const)) (EBufSub (ptr, r_start)) in
     with_type slice_t (EFlat [ Some "ptr", ptr; Some "meta", meta ])
   in
@@ -731,7 +762,7 @@ let slice_subslice_to_func const =
   let open Ast in
   let element_t = TBound 2 in
   let slice_t = mk_slice ~const element_t in
-  let lid = [ "Eurydice" ], "slice_subslice_to" ^ suffix_of_const const in
+  let lid = slice_subslice_to_lid const in
   let binders =
     [ Helpers.fresh_binder "s" slice_t; Helpers.fresh_binder "r" (mk_range_to (TInt SizeT)) ]
   in
@@ -755,7 +786,7 @@ let slice_subslice_from_func const =
   let open Ast in
   let element_t = TBound 2 in
   let slice_t = mk_slice ~const element_t in
-  let lid = [ "Eurydice" ], "slice_subslice_from" ^ suffix_of_const const in
+  let lid = slice_subslice_from_lid const in
   let binders =
     [ Helpers.fresh_binder "s" slice_t; Helpers.fresh_binder "r" (mk_range_from (TInt SizeT)) ]
   in
@@ -767,13 +798,36 @@ let slice_subslice_from_func const =
     let meta = mk_sizeT (EField (slice, "meta")) in
     let start = mk_sizeT (EField (range, "start")) in
     let ptr = with_type (TBuf (element_t, const)) (EBufSub (ptr, start)) in
-    let meta = mk_sizeT (EApp (Helpers.mk_op Sub SizeT, [ meta; start ])) in
+    let meta = mk_sizeT (EApp (Helpers.mk_op Sub (TInt SizeT), [ meta; start ])) in
     with_type slice_t (EFlat [ Some "ptr", ptr; Some "meta", meta ])
   in
   DFunction (None, [ Private ], 0, 3, slice_t, lid, binders, expr)
 
 let slice_subslice_from_func_shared = slice_subslice_from_func true
 let slice_subslice_from_func_mut = slice_subslice_from_func false
+
+let readonly_builtin_lids =
+  Krml.Idents.LidSet.of_list
+    [
+      vec_len;
+      vec_index;
+      slice_len;
+      slice_index_shared.name;
+      slice_index_mut.name;
+      slice_to_ref_array.name;
+      slice_to_ref_array2.name;
+      slice_subslice_shared;
+      slice_subslice_mut;
+      slice_subslice_to_shared;
+      slice_subslice_to_mut;
+      slice_subslice_from_shared;
+      slice_subslice_from_mut;
+      array_to_slice_shared;
+      array_to_slice_mut;
+      array_to_subslice_shared;
+      array_to_subslice_mut;
+      array_repeat.name;
+    ]
 
 (* Not fully general *)
 let static_assert, static_assert_ref =
@@ -985,6 +1039,9 @@ let null_mut =
 
 (* -------------------------------------------------------------------------- *)
 
+let builtin_lids_without_func =
+  [ range; range_to; range_from; slice_len; slice_copy; slice_split_at; slice_split_at_mut ]
+
 let builtin_funcs =
   [
     (*array_to_subslice_mono;
@@ -1019,8 +1076,8 @@ let builtin_funcs =
   ]
   (* Declares the 128-bit operations *)
   @ begin
-      Op128Map.to_seq op_128_cfgs |> List.of_seq |> List.map snd
-    end
+    Op128Map.to_seq op_128_cfgs |> List.of_seq |> List.map snd
+  end
 
 let builtin_defined_funcs =
   [
@@ -1038,6 +1095,9 @@ let builtin_defined_funcs =
     slice_subslice_to_func_mut;
     slice_subslice_from_func_shared;
     slice_subslice_from_func_mut;
+    dst_ref_shared_decl;
+    dst_ref_mut_decl;
+    decl_of_arr;
   ]
 
 let files =

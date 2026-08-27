@@ -20,15 +20,13 @@ A monomorphic instance of Eurydice.dst_ref_shared
 with types Eurydice_c_char_t, size_t
 
 */
-typedef struct Eurydice_dst_ref_shared_65_s
+typedef struct Eurydice_dst_ref_shared_0d_s
 {
   const Eurydice_c_char_t *ptr;
   size_t meta;
 }
-Eurydice_dst_ref_shared_65;
+Eurydice_dst_ref_shared_0d;
 
-<<<<<<< HEAD
-=======
 #define core_result_Ok 0
 #define core_result_Err 1
 
@@ -37,7 +35,7 @@ typedef uint8_t core_result_Result_10;
 extern core_result_Result_10
 core_fmt__core__fmt__Formatter__a___write_str(
   core_fmt_Formatter *x0,
-  Eurydice_dst_ref_shared_65 x1
+  Eurydice_dst_ref_shared_0d x1
 );
 
 #define core_panicking_AssertKind_Eq 0
@@ -46,47 +44,22 @@ core_fmt__core__fmt__Formatter__a___write_str(
 
 typedef uint8_t core_panicking_AssertKind;
 
->>>>>>> main
 #define partial_eq_Enum_A 0
 
 typedef uint8_t partial_eq_Enum;
 
-extern bool
-core_cmp_impls__core__cmp__PartialEq________partial_eq__Enum________partial_eq__Enum____eq__________partial_eq__Enum__partial_eq__Enum_(
-  partial_eq_Enum **x0,
-  partial_eq_Enum **x1
-);
-
-#define core_result_Result_Ok 0
-#define core_result_Result_Err 1
-
-typedef uint8_t core_result_Result______core__fmt__Error_;
-
-extern core_result_Result______core__fmt__Error_
-core_fmt__core__fmt__Formatter________write_str_____(
-  core_fmt_Formatter_____ *x0,
-  Eurydice_str x1
-);
+/**
+This function found in impl {impl core::cmp::PartialEq<partial_eq::Enum> for partial_eq::Enum}
+*/
+bool partial_eq_eq_9e(const partial_eq_Enum *self, const partial_eq_Enum *other);
 
 /**
-This function found in impl {core::cmp::PartialEq::<partial_eq::Enum, partial_eq::Enum>}
+This function found in impl {impl core::fmt::Debug for partial_eq::Enum}
 */
-<<<<<<< HEAD
-bool partial_eq_eq_aa(partial_eq_Enum *self, partial_eq_Enum *other);
+core_result_Result_10 partial_eq_fmt_93(const partial_eq_Enum *self, core_fmt_Formatter *f);
 
 void partial_eq_main(void);
 
-=======
-bool partial_eq_eq_31(const partial_eq_Enum *self, const partial_eq_Enum *other);
-
-void partial_eq_main(void);
-
-/**
-This function found in impl {core::fmt::Debug for partial_eq::Enum}
-*/
-core_result_Result_10 partial_eq_fmt_29(const partial_eq_Enum *self, core_fmt_Formatter *f);
-
->>>>>>> main
 #if defined(__cplusplus)
 }
 #endif

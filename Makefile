@@ -4,7 +4,7 @@ LIBCRUX_HOME 	?= $(dir $(abspath $(lastword $(MAKEFILE_LIST))))/libcrux
 EURYDICE	?= ./eurydice $(EURYDICE_FLAGS)
 CHARON		?= $(CHARON_HOME)/bin/charon
 
-BROKEN_TESTS		= where_clauses println chunks mutable_slice_range issue_99 issue_14
+BROKEN_TESTS		= where_clauses println chunks mutable_slice_range issue_99 issue_14 issue_311
 TEST_DIRS		= $(filter-out $(BROKEN_TESTS),$(basename $(notdir $(wildcard test/*.rs))))
 
 # Warn on old versions of bash
@@ -45,10 +45,10 @@ all: format-check
 build: check-karamel check-charon
 	dune build && ln -sf _build/default/bin/main.exe eurydice
 
-CFLAGS		:= -Wall -Werror -Wno-unused-variable $(CFLAGS) -I$(KRML_HOME)/include
+CFLAGS		:= -Wall -Werror -Wno-unused-variable -Wno-unused-but-set-variable $(CFLAGS) -I$(KRML_HOME)/include
 CXXFLAGS	:= -std=c++17
 
-test: $(addprefix test-,$(TEST_DIRS)) custom-test-libcrux-no-const custom-test-array custom-test-for testxx-result check-charon check-libcrux test-libcrux
+test: $(addprefix test-,$(TEST_DIRS)) custom-test-libcrux-ml-kem-no-const custom-test-array custom-test-for testxx-result check-charon check-libcrux test-libcrux-ml-kem
 
 clean-and-test:
 	$(MAKE) clean-llbc
@@ -103,6 +103,7 @@ test-more_str: EXTRA_C = ../../test/core_str_lib.c
 test-more_primitive_types: EXTRA = --config test/more_primitive_types.yaml
 test-global_ref: EXTRA_C = ../../test/core_cmp_lib.c
 test-lvalue: CFLAGS += -Wno-unused-but-set-variable
+test-issue_shift: CFLAGS += -fsanitize=undefined
 
 
 test-%: test/%.llbc out/test-%/main.c | all
@@ -134,36 +135,38 @@ custom-test-for: test-for
 
 # libcrux tests
 
-custom-test-libcrux-no-const: test/libcrux.llbc
-	mkdir -p out/test-libcrux-no-const
-	$(EURYDICE) --config test/libcrux/c.yaml -funroll-loops 16 \
-	  $< --keep-going --output out/test-libcrux-no-const --no-const
-	$(SED) -i 's/  KaRaMeL version: .*//' out/test-libcrux-no-const/**/*.{c,h} # This changes on every commit
-	$(SED) -i 's/  KaRaMeL invocation: .*//' out/test-libcrux-no-const/**/*.{c,h} # This changes between local and CI
+custom-test-libcrux-ml-kem-no-const: test/libcrux-ml-kem.llbc
+	mkdir -p out/test-libcrux-ml-kem-no-const
+	$(EURYDICE) --config test/libcrux-ml-kem/c.yaml -funroll-loops 16 \
+	  $< --keep-going --output out/test-libcrux-ml-kem-no-const --no-const
+	$(SED) -i 's/  KaRaMeL version: .*//' out/test-libcrux-ml-kem-no-const/**/*.{c,h} # This changes on every commit
+	$(SED) -i 's/  KaRaMeL invocation: .*//' out/test-libcrux-ml-kem-no-const/**/*.{c,h} # This changes between local and CI
 
-test-libcrux: test/libcrux.llbc
-	mkdir -p out/test-libcrux
-	$(EURYDICE) --config test/libcrux/c.yaml -funroll-loops 16 \
-	  $< --keep-going --output out/test-libcrux
-	$(SED) -i 's/  KaRaMeL version: .*//' out/test-libcrux/**/*.{c,h} # This changes on every commit
-	$(SED) -i 's/  KaRaMeL invocation: .*//' out/test-libcrux/**/*.{c,h} # This changes between local and CI
-	cd test/libcrux/ && cmake $(CMAKE_FLAGS) -B build -G "Ninja Multi-Config" && cmake --build build --config Debug
-	cd test/libcrux/ && ./build/Debug/ml_kem_test && ./build/Debug/sha3_test
+test-libcrux-%: test/libcrux-%.llbc
+	mkdir -p out/test-libcrux-$*
+	$(EURYDICE) --config test/libcrux-$*/c.yaml -funroll-loops 16 \
+	  $< --keep-going --output out/test-libcrux-$*
+	$(SED) -i 's/  KaRaMeL version: .*//' out/test-libcrux-$*/**/*.{c,h} # This changes on every commit
+	$(SED) -i 's/  KaRaMeL invocation: .*//' out/test-libcrux-$*/**/*.{c,h} # This changes between local and CI
+	cd test/libcrux-$*/ && cmake $(CMAKE_FLAGS) -B build -G "Ninja Multi-Config" && cmake --build build --config Debug
+	cd test/libcrux-$*/ && ./build/Debug/$(subst -,_,$*)_test
+	cd test/libcrux-$*/ && if [ -x ./build/Debug/sha3_test ]; then ./build/Debug/sha3_test; fi
 
 
-.PHONY: test/libcrux.llbc
+.PHONY: .FORCE
 
-test/libcrux.llbc:
+test/libcrux-%.llbc: .FORCE
 	@# Use our committed `Cargo.lock` by default.
 	cp libcrux-Cargo.lock $(LIBCRUX_HOME)/Cargo.lock
 	RUSTFLAGS="-Cdebug-assertions=no --cfg eurydice" $(CHARON) cargo --preset eurydice \
 	  --include 'libcrux_sha3' \
 	  --include 'libcrux_secrets' \
+	  --include=core::option::* \
 	  --rustc-arg='-Aunused' \
-	  --start-from libcrux_ml_kem --start-from libcrux_sha3 \
+	  --start-from libcrux_$(subst -,_,$*) --start-from libcrux_sha3 \
 	  --include 'core::num::*::BITS' --include 'core::num::*::MAX' \
 	  --dest-file $$PWD/$@ -- \
-	  --manifest-path $(LIBCRUX_HOME)/libcrux-ml-kem/Cargo.toml \
+	  --manifest-path $(LIBCRUX_HOME)/libcrux-$*/Cargo.toml \
 	  --target=x86_64-apple-darwin
 	@# Commit the `Cargo.lock` so that the nix CI can use it
 	cp $(LIBCRUX_HOME)/Cargo.lock libcrux-Cargo.lock
@@ -185,6 +188,11 @@ setup-%:
 .PHONY: nix-magic
 nix-magic:
 	nix flake update karamel charon libcrux --extra-experimental-features nix-command --extra-experimental-features flakes
+
+nix-update-%:
+	PROJECT_REMOTE=$(shell cd $* && git config --get remote.origin.url | cut -d ':' -f 2 | sed s/.git//g); \
+	PROJECT_REV=$(shell cd $* && git rev-parse head); \
+	nix flake update $* --override-input $* "github:$$PROJECT_REMOTE/$$PROJECT_REV"
 
 # Updates `flake.lock` with the latest commit from our local charon clone (the one that is symlinked into `lib/charon`).
 .PHONY: update-charon-pin

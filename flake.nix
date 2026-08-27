@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.follows = "charon/nixpkgs";
+    nixpkgs.url = "nixpkgs/nixos-unstable";
     flake-utils.follows = "karamel/flake-utils";
     karamel.url = "github:FStarLang/karamel";
     karamel.inputs.nixpkgs.follows = "nixpkgs";
@@ -64,7 +64,14 @@
 
             nativeBuildInputs = [ gnugrep ] ++ (with ocamlPackages; [ menhir ]);
 
-            propagatedBuildInputs = [ krml charon-ml ocamlPackages.terminal ocamlPackages.yaml ] ++ (with ocamlPackages; [ menhirLib ]);
+            propagatedBuildInputs = [
+              krml
+              charon-ml
+            ] ++ (with ocamlPackages; [
+              terminal
+              yaml
+              menhirLib
+            ]);
 
             postInstall = ''
               ln -s ${charon}/bin/charon $out/bin/charon
@@ -161,7 +168,7 @@
               pkgs.gnumake
               pkgs.llvmPackages_18.clang-tools # For clang-format
               pkgs.ocamlPackages.ocaml
-              pkgs.ocamlPackages.ocamlformat_0_27_0
+              pkgs.ocamlPackages.ocamlformat_0_29_0
               pkgs.ocamlPackages.dune_3
             ];
           } ''
@@ -179,7 +186,7 @@
           pkgs.jq
           pkgs.llvmPackages_18.clang-tools # For clang-format
           pkgs.ocamlPackages.ocaml
-          pkgs.ocamlPackages.ocamlformat_0_27_0
+          pkgs.ocamlPackages.ocamlformat_0_29_0
           pkgs.ocamlPackages.menhir
           # ocaml-lsp's version must match the ocaml version used. Pinning
           # this here to save me a headache.

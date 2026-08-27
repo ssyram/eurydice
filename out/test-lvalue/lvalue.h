@@ -44,20 +44,20 @@ typedef struct lvalue_ThreeWays_s
   union {
     int32_t case_Middle;
     Eurydice_vec case_Left;
-    float64_t *case_Right;
+    double *case_Right;
   }
   val;
 }
 lvalue_ThreeWays;
 
-void lvalue_main(void);
+/**
+This function found in impl {impl core::marker::Destruct for lvalue::ThreeWays}
+*/
+void lvalue_ThreeWays_drop_glue_a5(lvalue_ThreeWays *_);
 
 lvalue_Struct lvalue_use_struct(lvalue_ThreeWays s);
 
-/**
-This function found in impl {core::marker::Destruct for lvalue::ThreeWays}
-*/
-void lvalue_ThreeWays_drop_in_place_d9(lvalue_ThreeWays *_);
+void lvalue_main(void);
 
 #if defined(__cplusplus)
 }

@@ -7,9 +7,19 @@
 
 #include "lvalue.h"
 
-void lvalue_main(void)
+/**
+This function found in impl {impl core::marker::Destruct for lvalue::ThreeWays}
+*/
+void lvalue_ThreeWays_drop_glue_a5(lvalue_ThreeWays *_)
 {
+  lvalue_ThreeWays scrut = _[0U];
+  if (!(scrut.tag == lvalue_Middle))
+  {
+    if (scrut.tag == lvalue_Left)
+    {
 
+    }
+  }
 }
 
 lvalue_Struct lvalue_use_struct(lvalue_ThreeWays s)
@@ -37,25 +47,18 @@ lvalue_Struct lvalue_use_struct(lvalue_ThreeWays s)
   {
     uu____1 = (KRML_CLITERAL(lvalue_Struct){ .tag = lvalue_C });
   }
-  if (!(s.tag == lvalue_Left))
+  if (s.tag == lvalue_Left)
   {
     return uu____1;
   }
-  return uu____1;
+  else
+  {
+    return uu____1;
+  }
 }
 
-/**
-This function found in impl {core::marker::Destruct for lvalue::ThreeWays}
-*/
-void lvalue_ThreeWays_drop_in_place_d9(lvalue_ThreeWays *_)
+void lvalue_main(void)
 {
-  lvalue_ThreeWays scrut = _[0U];
-  if (!(scrut.tag == lvalue_Middle))
-  {
-    if (scrut.tag == lvalue_Left)
-    {
 
-    }
-  }
 }
 

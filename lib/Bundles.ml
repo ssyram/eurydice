@@ -121,15 +121,14 @@ let parse_file (v : Yaml.value) : file =
               let parse_pattern_vis p = parse_pattern p, vis in
               let parse_exact_vis p = parse_exact p, vis in
               let defs, m_of, m_using, m_exact = parse ls in
-              begin
-                match o with
-                | `A pats -> List.map parse_pattern_vis pats @ defs, m_of, m_using, m_exact
-                | `O o ->
-                    ( map_or parse_pattern_vis o "patterns" @ map_or parse_exact_vis o "exact" @ defs,
-                      map_or parse_pattern_vis o "monomorphizations_of" @ m_of,
-                      map_or parse_pattern_vis o "monomorphizations_using" @ m_using,
-                      map_or parse_exact_vis o "monomorphizations_exact" @ m_exact )
-                | _ -> failwith (k ^ " neither a list nor object")
+              begin match o with
+              | `A pats -> List.map parse_pattern_vis pats @ defs, m_of, m_using, m_exact
+              | `O o ->
+                  ( map_or parse_pattern_vis o "patterns" @ map_or parse_exact_vis o "exact" @ defs,
+                    map_or parse_pattern_vis o "monomorphizations_of" @ m_of,
+                    map_or parse_pattern_vis o "monomorphizations_using" @ m_using,
+                    map_or parse_exact_vis o "monomorphizations_exact" @ m_exact )
+              | _ -> failwith (k ^ " neither a list nor object")
               end
           | _ :: ls -> parse ls
         in
@@ -210,10 +209,9 @@ let parse_config (v : Yaml.value) : config =
           in
           let skip_prefix = List.map (fun p -> Krml.Bundle.Module p) skip_prefix in
           Krml.Options.(no_prefix := !no_prefix @ skip_prefix));
-      begin
-        match List.assoc_opt "files" entries with
-        | Some (`A files) -> List.map parse_file files
-        | _ -> parsing_error "files is not a sequence"
+      begin match List.assoc_opt "files" entries with
+      | Some (`A files) -> List.map parse_file files
+      | _ -> parsing_error "files is not a sequence"
       end
   | _ -> parsing_error "YAML file must be an object with key files"
 
@@ -355,54 +353,208 @@ let libraries (files : Krml.Ast.file list) : files =
           decls ))
     files
 
-let topological_sort decls =
-  let module T = struct
-    type color = White | Gray | Black
-  end in
-  let open T in
-  let graph = Hashtbl.create 41 in
-  List.iter
-    (fun decl ->
-      let deps =
-        begin
-          object (self)
-            inherit [_] reduce
-            method zero = []
-            method plus = ( @ )
-            method! visit_EQualified _ lid = [ lid ]
-            method! visit_TQualified _ lid = [ lid ]
-            method! visit_TApp _ lid ts = [ lid ] @ List.concat_map (self#visit_typ ()) ts
-          end
-        end
-          #visit_decl
-          () decl
+(* Stable topological sort using the Kahn algorithm, choosing the earliest
+   input value whenever several values have no specific ordering constraints. *)
+module TopologicalSort (Item : sig
+  type t
+  type key
+
+  val key_of : t -> key
+  val dependencies : (key -> bool) -> t -> key list
+end) =
+struct
+  type key_set = (Item.key, unit) Hashtbl.t
+  type node = { i : int; value : Item.t; successors : key_set; indegree : int ref }
+  type graph = (Item.key, node) Hashtbl.t
+
+  let create_key_set () : key_set = Hashtbl.create 7
+
+  let add_key_to_set set key =
+    if Hashtbl.mem set key then
+      false
+    else begin
+      Hashtbl.add set key ();
+      true
+    end
+
+  let build_graph (values : Item.t list) : graph =
+    let graph = Hashtbl.create 41 in
+    let nodes = List.map (fun value -> Item.key_of value, value) values in
+    List.iteri
+      (fun i (key, value) ->
+        Hashtbl.replace graph key { i; value; successors = create_key_set (); indegree = ref 0 })
+      nodes;
+    List.iter
+      (fun (key, value) ->
+        let key_exists = Hashtbl.mem graph in
+        let dep_keys = create_key_set () in
+        List.iter
+          (fun dep_key ->
+            if dep_key <> key && key_exists dep_key then
+              ignore (add_key_to_set dep_keys dep_key))
+          (Item.dependencies key_exists value);
+        let node = Hashtbl.find graph key in
+        Hashtbl.iter
+          (fun dep_key () ->
+            let dep_node = Hashtbl.find graph dep_key in
+            if add_key_to_set dep_node.successors key then
+              incr node.indegree)
+          dep_keys)
+      nodes;
+    graph
+
+  let sort_graph (graph : graph) : Item.t list =
+    let module ReadySet = Set.Make (struct
+      type t = int * Item.key
+
+      let compare = compare
+    end) in
+    let first_remaining () : Item.key =
+      (* Find the remaining node with the smallest rank. *)
+      let _, key =
+        Option.get
+          (Hashtbl.fold
+             (fun key node best ->
+               match best with
+               | Some rank -> Some (min rank (node.i, key))
+               | None -> Some (node.i, key))
+             graph None)
       in
-      Hashtbl.add graph (lid_of_decl decl) (ref White, deps, decl))
-    decls;
-  let stack = ref [] in
-  let rec dfs lid =
-    if Hashtbl.mem graph lid then
-      let r, deps, decl = Hashtbl.find graph lid in
-      match !r with
-      | Black -> ()
-      | Gray -> ()
-      | White ->
-          r := Gray;
-          List.iter dfs deps;
-          r := Black;
-          stack := decl :: !stack
-  in
-  List.iter (fun decl -> dfs (lid_of_decl decl)) decls;
-  List.rev !stack
+      key
+    in
+    (* Keep a priority queue of nodes that have no ordering constraints left. *)
+    let ready =
+      Hashtbl.fold
+        (fun key node ready ->
+          if !(node.indegree) = 0 then
+            ReadySet.add (node.i, key) ready
+          else
+            ready)
+        graph ReadySet.empty
+    in
+    let ready = ref ready in
+    let result = ref [] in
+    while Hashtbl.length graph > 0 do
+      let key =
+        if ReadySet.is_empty !ready then
+          (* If all nodes have ordering constraints, there's a cycle. We emit the smallest index node. *)
+          first_remaining ()
+        else
+          let k = ReadySet.min_elt !ready in
+          ready := ReadySet.remove k !ready;
+          snd k
+      in
+      let node = Hashtbl.find graph key in
+      result := node.value :: !result;
+      Hashtbl.remove graph key;
+      Hashtbl.iter
+        (fun successor_key () ->
+          match Hashtbl.find_opt graph successor_key with
+          | None -> ()
+          | Some successor ->
+              decr successor.indegree;
+              if !(successor.indegree) = 0 then
+                ready := ReadySet.add (successor.i, successor_key) !ready)
+        node.successors
+    done;
+    List.rev !result
+
+  let sort (values : Item.t list) : Item.t list =
+    let graph = build_graph values in
+    sort_graph graph
+end
+
+module DeclTopologicalSort = TopologicalSort (struct
+  type t = decl
+  type key = lident * [ `Forward | `Regular ]
+
+  let key_of decl : key =
+    let direction =
+      match decl with
+      | DType (_, _, _, _, Forward _) -> `Forward
+      | _ -> `Regular
+    in
+    lid_of_decl decl, direction
+
+  let dependencies (key_exists : key -> bool) (decl : t) : key list =
+    (* Treat a forward declaration as a dependency of its regular definition. *)
+    let own_forward_dependency =
+      match key_of decl with
+      | lid, `Regular -> [ lid, `Forward ]
+      | _, `Forward -> []
+    in
+    let key_for_dep lid under_ref : key =
+      let forward_key = lid, `Forward in
+      let regular_key = lid, `Regular in
+      if key_exists forward_key && under_ref then
+        forward_key
+      else
+        regular_key
+    in
+    let deps =
+      begin
+        object (self)
+          inherit [_] reduce as super
+          method zero = []
+          method plus = ( @ )
+          method! visit_EQualified (under_ref, _) lid = [ key_for_dep lid under_ref ]
+          method! visit_TQualified under_ref lid = [ key_for_dep lid under_ref ]
+
+          method! visit_TApp under_ref lid ts =
+            key_for_dep lid under_ref :: List.concat_map (self#visit_typ under_ref) ts
+
+          method! visit_TBuf _ t const = super#visit_TBuf true t const
+        end
+      end
+        #visit_decl
+        false decl
+    in
+    deps @ own_forward_dependency
+end)
+
+let topological_sort decls = DeclTopologicalSort.sort decls
+
+module LidMap = Krml.Idents.LidMap
+
+(* Because the krml monomorphization procedure is not optimal, it is sometimes
+   the case the our topological sort places a forward declaration *after* the
+   corresponding struct. Filter those out! *)
+let filter_forward files =
+  let seen = Hashtbl.create 41 in
+  List.map
+    (fun (file, decls) ->
+      ( file,
+        List.filter_map
+          (fun decl ->
+            match decl with
+            | DType (lid, _, _, _, Forward _) when Hashtbl.mem seen lid -> None
+            | _ ->
+                Hashtbl.add seen (lid_of_decl decl) ();
+                Some decl)
+          decls ))
+    files
 
 (* Second phase of bundling, post-monomorphization. This is Eurydice-specific,
    as we oftentimes need to move definitions that have been /specialized/ using
-   e.g. a platform-specific trait into their own file. *)
+   e.g. a platform-specific trait into their own file.
+
+   Note that there may be multiple definitions per `lid`, because of forward structs. *)
 let reassign_monomorphizations (files : Krml.Ast.file list) (config : config) =
   let open Krml.Ast in
   let open Krml.PrintAst.Ops in
   (* Pure sanity check *)
-  let count_decls files = List.fold_left (fun acc (_, decls) -> List.length decls + acc) 0 files in
+  let count_decls files =
+    List.fold_left
+      (fun acc (_, decls) ->
+        let add_incr lid map =
+          if LidMap.mem lid map then
+            LidMap.add lid (LidMap.find lid map + 1) map
+          else
+            LidMap.add lid 1 map
+        in
+        List.fold_left (fun acc decl -> add_incr (lid_of_decl decl) acc) acc decls)
+      LidMap.empty files
+  in
   let c0 = count_decls files in
   let target_of_lid = Hashtbl.create 41 in
   let ( ||| ) o1 o2 =
@@ -411,6 +563,7 @@ let reassign_monomorphizations (files : Krml.Ast.file list) (config : config) =
     | None -> o2
   in
   let reverse_type_map =
+    (* Maps t____u (an lid) to t<u> (a type application) *)
     let map = Hashtbl.create 41 in
     Hashtbl.iter
       (fun node (_, monomorphized_lid) ->
@@ -448,6 +601,11 @@ let reassign_monomorphizations (files : Krml.Ast.file list) (config : config) =
       () t
   in
   (* Review the function monomorphization state.
+
+     THOUGHTS: maybe this should just all be grouped as a single field? Do we really care about
+     catching `t<u>` but not `u<t>`? (i.e., distinguish monomorphizations *of* from
+     monomorphizations using?
+
      Semantics of `monomorphizations_using`:
        if `lid`, below, is the result of a (function) monomorphization that
        *uses* (in its arguments, `cgs`, below) an `lid'` that matches a
@@ -482,7 +640,7 @@ let reassign_monomorphizations (files : Krml.Ast.file list) (config : config) =
                 | _ -> None)
               cgs
             |||
-            (* Monomorphiztation using given type name *)
+            (* Monomorphization using given type name *)
             List.find_map (uses monomorphizations_using) ts
             |||
             (* Monomorphization of a given polymorphic name *)
@@ -534,16 +692,20 @@ let reassign_monomorphizations (files : Krml.Ast.file list) (config : config) =
           List.filter
             (fun decl ->
               let lid = lid_of_decl decl in
-              match Hashtbl.find_opt target_of_lid lid with
-              | None -> true
-              | Some (target, inline_static, (_, vis, _)) ->
-                  let decl = adjust vis decl in
-                  if inline_static then
-                    record_inline_static lid;
-                  if Hashtbl.mem reassigned target then
-                    Hashtbl.replace reassigned target (decl :: Hashtbl.find reassigned target)
-                  else
-                    Hashtbl.add reassigned target [ decl ];
+              match Hashtbl.find_all target_of_lid lid with
+              | exception Not_found -> true
+              | [] -> true
+              | entries ->
+                  List.iter
+                    (fun (target, inline_static, (_, vis, _)) ->
+                      let decl = adjust vis decl in
+                      if inline_static then
+                        record_inline_static lid;
+                      if Hashtbl.mem reassigned target then
+                        Hashtbl.replace reassigned target (decl :: Hashtbl.find reassigned target)
+                      else
+                        Hashtbl.add reassigned target [ decl ])
+                    (List.rev entries);
                   false)
             decls ))
       files
@@ -568,10 +730,21 @@ let reassign_monomorphizations (files : Krml.Ast.file list) (config : config) =
   let files = files @ Hashtbl.fold (fun f reassigned acc -> (f, reassigned) :: acc) reassigned [] in
 
   (* A quick topological sort to make sure type declarations come *before*
-     functions that use them. *)
+     functions that use them. Note that this is incompatible with forward structs. *)
   let files = List.map (fun (f, decls) -> f, topological_sort decls) files in
-
   let c1 = count_decls files in
-  if c0 <> c1 then
-    Krml.Warn.fatal_error "Previous %d declarations, now %d\n" c0 c1;
+  ignore
+    (LidMap.merge
+       (fun lid v1 v2 ->
+         match v1, v2 with
+         | None, None -> failwith "impossible"
+         | Some v1, None -> Krml.Warn.fatal_error "lost %d declaration for %a\n" v1 plid lid
+         | None, Some v2 -> Krml.Warn.fatal_error "gained %d declaration for %a\n" v2 plid lid
+         | Some v1, Some v2 ->
+             if v1 != v2 then
+               Krml.Warn.fatal_error "mismatch on %a: %d != %d\n" plid lid v1 v2
+             else
+               None)
+       c0 c1);
+  let files = filter_forward files in
   files

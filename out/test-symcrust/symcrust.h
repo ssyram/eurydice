@@ -15,20 +15,47 @@
 extern "C" {
 #endif
 
-extern uint8_t core_clone_impls__core__clone__Clone_for_u8__clone(const uint8_t *x0);
+/**
+A monomorphic instance of n-tuple
+with types size_t, bool
 
-extern size_t core_clone_impls__core__clone__Clone_for_usize__clone(const size_t *x0);
+*/
+typedef struct tuple_c9_s
+{
+  size_t fst;
+  bool snd;
+}
+tuple_c9;
+
+/**
+A monomorphic instance of core.ops.range.Range
+with types size_t
+
+*/
+typedef struct core_ops_range_Range_87_s
+{
+  size_t start;
+  size_t end;
+}
+core_ops_range_Range_87;
+
+/**
+A monomorphic instance of Eurydice.arr
+with types uint16_t
+with const generics
+- $256size_t
+*/
+typedef struct Eurydice_arr_82_s { uint16_t data[256U]; } Eurydice_arr_82;
+
+extern size_t core_clone_impls__impl_core__clone__Clone_for_usize__clone(const size_t *x0);
+
+extern uint8_t core_clone_impls__impl_core__clone__Clone_for_u8__clone(const uint8_t *x0);
 
 #define core_cmp_Ordering_Less -1
 #define core_cmp_Ordering_Equal 0
 #define core_cmp_Ordering_Greater 1
 
 typedef int8_t core_cmp_Ordering;
-
-extern uint32_t core_cmp_impls__core__cmp__Ord_for_u32__min(uint32_t x0, uint32_t x1);
-
-extern bool
-core_cmp_impls__core__cmp__PartialEq_usize__for_usize__eq(const size_t *x0, const size_t *x1);
 
 #define core_option_None 0
 #define core_option_Some 1
@@ -47,77 +74,79 @@ typedef struct core_option_Option_77_s
 }
 core_option_Option_77;
 
-extern core_option_Option_77
-core_cmp_impls__core__cmp__PartialOrd_usize__for_usize__partial_cmp(
-  const size_t *x0,
-  const size_t *x1
-);
-
-static inline uint32_t core_convert_num__core__convert__From_u16__for_u32__from(uint16_t x0);
-
-static inline uint64_t core_convert_num__core__convert__From_u32__for_u64__from(uint32_t x0);
-
 /**
 A monomorphic instance of core.option.Option
 with types size_t
 
 */
-typedef struct core_option_Option_08_s
+typedef struct core_option_Option_87_s
 {
   core_option_Option_77_tags tag;
   size_t f0;
 }
-core_option_Option_08;
-
-extern core_option_Option_08
-core_iter_range__core__iter__range__Step_for_usize__backward_checked(size_t x0, size_t x1);
-
-extern core_option_Option_08
-core_iter_range__core__iter__range__Step_for_usize__forward_checked(size_t x0, size_t x1);
+core_option_Option_87;
 
 /**
-A monomorphic instance of K.
-with types size_t, core_option_Option_08
+A monomorphic instance of n-tuple
+with types size_t, core_option_Option_87
 
 */
-typedef struct tuple_d1_s
+typedef struct tuple_21_s
 {
   size_t fst;
-  core_option_Option_08 snd;
+  core_option_Option_87 snd;
 }
-tuple_d1;
+tuple_21;
 
-extern tuple_d1
-core_iter_range__core__iter__range__Step_for_usize__steps_between(
+extern bool
+core_cmp_impls__impl_core__cmp__PartialEq_usize__for_usize__eq(
+  const size_t *x0,
+  const size_t *x1
+);
+
+extern core_option_Option_77
+core_cmp_impls__impl_core__cmp__PartialOrd_usize__for_usize__partial_cmp(
+  const size_t *x0,
+  const size_t *x1
+);
+
+extern uint32_t core_cmp_impls__impl_core__cmp__Ord_for_u32__min(uint32_t x0, uint32_t x1);
+
+static inline uint64_t
+core_convert_num__impl_core__convert__From_u32__for_u64__from(uint32_t x0);
+
+static inline uint32_t
+core_convert_num__impl_core__convert__From_u16__for_u32__from(uint16_t x0);
+
+extern tuple_c9
+core_iter_range__impl_core__iter__range__Step_for_usize__backward_overflowing(
+  size_t x0,
+  size_t x1
+);
+
+extern tuple_c9
+core_iter_range__impl_core__iter__range__Step_for_usize__forward_overflowing(
+  size_t x0,
+  size_t x1
+);
+
+extern core_option_Option_87
+core_iter_range__impl_core__iter__range__Step_for_usize__backward_checked(size_t x0, size_t x1);
+
+extern core_option_Option_87
+core_iter_range__impl_core__iter__range__Step_for_usize__forward_checked(size_t x0, size_t x1);
+
+extern tuple_21
+core_iter_range__impl_core__iter__range__Step_for_usize__steps_between(
   const size_t *x0,
   const size_t *x1
 );
 
 static inline Eurydice_array_u8x4 core_num__u32__to_le_bytes(uint32_t x0);
 
-/**
-A monomorphic instance of core.ops.range.Range
-with types size_t
-
-*/
-typedef struct core_ops_range_Range_08_s
-{
-  size_t start;
-  size_t end;
-}
-core_ops_range_Range_08;
-
-/**
-A monomorphic instance of Eurydice.arr
-with types uint16_t
-with const generics
-- $256size_t
-*/
-typedef struct Eurydice_arr_bc_s { uint16_t data[256U]; } Eurydice_arr_bc;
-
 void
 symcrust_SymCrustMlKemPolyElementCompressAndEncode(
-  const Eurydice_arr_bc *coeffs,
+  const Eurydice_arr_82 *coeffs,
   uint32_t nBitsPerCoefficient,
   Eurydice_mut_borrow_slice_u8 dst
 );

@@ -1,11 +1,8 @@
 #include "partial_eq.h"
 
-extern core_result_Result______core__fmt__Error_
-core_fmt__core__fmt__Formatter________write_str_____(
-  core_fmt_Formatter_____ *x0,
-  Eurydice_str x1
-) {
-  return core_result_Result_Ok;
+extern core_result_Result_10
+core_fmt__core__fmt__Formatter__a___write_str(core_fmt_Formatter *x0, Eurydice_dst_ref_shared_0d x1) {
+  return core_result_Ok;
 }
 
 extern bool

@@ -21,42 +21,36 @@ with types uint8_t
 with const generics
 - $16size_t
 */
-typedef struct Eurydice_arr_88_s { uint8_t data[16U]; } Eurydice_arr_88;
+typedef struct Eurydice_arr_b2_s { uint8_t data[16U]; } Eurydice_arr_b2;
 
 #define core_option_None 0
 #define core_option_Some 1
 
-typedef uint8_t core_option_Option_bc_tags;
+typedef uint8_t core_option_Option_9e_tags;
 
 /**
 A monomorphic instance of core.option.Option
-with types Eurydice_arr_88
+with types Eurydice_arr_b2
 
 */
-typedef struct core_option_Option_bc_s
+typedef struct core_option_Option_9e_s
 {
-  core_option_Option_bc_tags tag;
-  Eurydice_arr_88 f0;
+  core_option_Option_9e_tags tag;
+  Eurydice_arr_b2 f0;
 }
-core_option_Option_bc;
-
-typedef core_option_Option_bc option_S;
-
-typedef Eurydice_arr_88 option_Val;
-
-void option_main(void);
+core_option_Option_9e;
 
 /**
 A monomorphic instance of core.option.Option
-with types const Eurydice_arr_88*
+with types const Eurydice_arr_b2*
 
 */
-typedef struct core_option_Option_e3_s
+typedef struct core_option_Option_4d_s
 {
-  core_option_Option_bc_tags tag;
-  const Eurydice_arr_88 *f0;
+  core_option_Option_9e_tags tag;
+  const Eurydice_arr_b2 *f0;
 }
-core_option_Option_e3;
+core_option_Option_4d;
 
 /**
  Converts from `&Option<T>` to `Option<&T>`.
@@ -81,19 +75,25 @@ core_option_Option_e3;
  ```
 */
 /**
-This function found in impl {core::option::Option<T>[TraitClause@0]}
+This function found in impl {core::option::Option<T>[@TraitClause0]}
 */
 /**
-A monomorphic instance of core.option.as_ref_cd
+A monomorphic instance of core.option.as_ref_99
 with types Eurydice_arr uint8_t[[$16size_t]]
 
 */
-core_option_Option_e3 core_option_as_ref_cd_ca(const core_option_Option_bc *self);
+core_option_Option_4d core_option_as_ref_99_4f(const core_option_Option_9e *self);
+
+typedef Eurydice_arr_b2 option_Val;
+
+typedef core_option_Option_9e option_S;
 
 /**
 This function found in impl {option::S}
 */
-core_option_Option_e3 option_option_ref_b6(const core_option_Option_bc *self);
+core_option_Option_4d option_option_ref_b6(const core_option_Option_9e *self);
+
+void option_main(void);
 
 #if defined(__cplusplus)
 }

@@ -16,25 +16,16 @@ extern "C" {
 #endif
 
 /**
-A monomorphic instance of we_need_charon_monomorphization.use_ref
-with types Eurydice_derefed_slice int32_t
-
-*/
-void we_need_charon_monomorphization_use_ref_ee(const int32_t (*_t)[]);
-
-/**
 A monomorphic instance of Eurydice.dst_ref_shared
 with types int32_t, size_t
 
 */
-typedef struct Eurydice_dst_ref_shared_fc_s
+typedef struct Eurydice_dst_ref_shared_83_s
 {
   const int32_t *ptr;
   size_t meta;
 }
-Eurydice_dst_ref_shared_fc;
-
-void we_need_charon_monomorphization_supply_ref(Eurydice_dst_ref_shared_fc s);
+Eurydice_dst_ref_shared_83;
 
 /**
 A monomorphic instance of Eurydice.arr
@@ -42,7 +33,16 @@ with types int32_t
 with const generics
 - $3size_t
 */
-typedef struct Eurydice_arr_8d_s { int32_t data[3U]; } Eurydice_arr_8d;
+typedef struct Eurydice_arr_bf_s { int32_t data[3U]; } Eurydice_arr_bf;
+
+/**
+A monomorphic instance of we_need_charon_monomorphization.use_ref
+with types Eurydice_derefed_slice int32_t
+
+*/
+void we_need_charon_monomorphization_use_ref_ee(const int32_t (*_t)[]);
+
+void we_need_charon_monomorphization_supply_ref(Eurydice_dst_ref_shared_83 s);
 
 void we_need_charon_monomorphization_main(void);
 

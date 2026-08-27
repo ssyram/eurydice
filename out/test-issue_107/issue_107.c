@@ -7,6 +7,14 @@
 
 #include "issue_107.h"
 
+/**
+This function found in impl {impl issue_107::Fun for issue_107::MyStruct}
+*/
+uint8_t issue_107_f_0b(void)
+{
+  return 5U;
+}
+
 void issue_107_main(void)
 {
 

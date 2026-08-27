@@ -143,7 +143,7 @@ let remove_assignments =
         | EWhile (e, e') ->
             mk t e0.meta
             @@ close_now_over not_yet_closed (count e) (fun not_yet_closed ->
-                   EWhile (self#visit_expr_w not_yet_closed e, recurse_or_close not_yet_closed e'))
+                EWhile (self#visit_expr_w not_yet_closed e, recurse_or_close not_yet_closed e'))
         | ESwitch (e, branches) ->
             mk t e0.meta
             @@ close_now_over not_yet_closed
@@ -180,8 +180,8 @@ let remove_assignments =
                else will be using the variable after that. *)
             mk t e0.meta
             @@ close_now_over not_yet_closed (count e0) (fun not_yet_closed ->
-                   (* not_yet_closed should be empty at this stage *)
-                   (self#visit_expr_w not_yet_closed e0).node)
+                (* not_yet_closed should be empty at this stage *)
+                (self#visit_expr_w not_yet_closed e0).node)
       in
 
       match e1.node with
@@ -425,9 +425,14 @@ let unsigned_overflow_is_ok_in_c =
         | "usize" -> SizeT
         | _ -> failwith "not an unsigned crate name"
       in
+      let as_t t = TInt (as_w t) in
       match e.node with
       | EQualified ([ "core"; "num"; t; _ ], "wrapping_add") when is_u t ->
-          EApp (Krml.Helpers.mk_op Add (as_w t), es)
+          EApp (Krml.Helpers.mk_op Add (as_t t), es)
+      | EQualified ([ "core"; "num"; t; _ ], "wrapping_sub") when is_u t ->
+          EApp (Krml.Helpers.mk_op Sub (as_t t), es)
+      | EQualified ([ "core"; "num"; t; _ ], "wrapping_mul") when is_u t ->
+          EApp (Krml.Helpers.mk_op Mult (as_t t), es)
       | _ -> super#visit_EApp env e es
   end
 
@@ -445,7 +450,12 @@ let remove_slice_eq =
         else
           Builtin.slice_eq_mut
       in
+      let fallback () =
+        let deref e = with_type (H.assert_tbuf e.typ) (EBufRead (e, H.zero_usize)) in
+        with_type TBool (EApp (List.hd eq, [ deref s1; deref s2 ]))
+      in
       match flatten_tapp t with
+      | exception Invalid_argument _ -> fallback ()
       | lid, [ t ], [] when lid = Builtin.derefed_slice ->
           let rec is_flat = function
             | TArray (t, _) -> is_flat t
@@ -455,19 +465,17 @@ let remove_slice_eq =
           if not (is_flat t) then
             failwith "TODO: slice eq at non-flat types";
           with_type TBool (EApp (Builtin.expr_of_builtin_t slice_eq [ t ], [ s1; s2 ]))
-      | _ ->
-          let deref e = with_type (H.assert_tbuf e.typ) (EBufRead (e, H.zero_usize)) in
-          with_type TBool (EApp (List.hd eq, [ deref s1; deref s2 ]))
+      | _ -> fallback ()
 
     method! visit_expr _ e =
       match e with
-      | [%cremepat {| core::cmp::impls::?impl::eq(#?eq..)<?t,?u>(?s1, ?s2) |}] -> begin
-          match impl with
-          | "{core::cmp::PartialEq<&0 mut (B)> for &1 mut (A)}" ->
+      | [%cremepat {| core::cmp::impls::?impl::eq(#?eq..)<?t,?u>(?s1, ?s2) |}] ->
+          begin match impl with
+          | "{impl core::cmp::PartialEq<&'_0 mut B> for &'_1 mut A}" ->
               self#do_it ~const:false eq t u s1 s2
-          | "{core::cmp::PartialEq<&0 (B)> for &1 (A)}" -> self#do_it ~const:true eq t u s1 s2
-          | _ -> failwith "unknown eq impl in core::cmp::impls"
-        end
+          | "{impl core::cmp::PartialEq<&'_0 B> for &'_1 A}" -> self#do_it ~const:true eq t u s1 s2
+          | _ -> failwith ("unknown eq impl in core::cmp::impls: " ^ impl)
+          end
       | _ -> super#visit_expr ((), e.typ) e
   end
 

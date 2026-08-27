@@ -12,94 +12,94 @@ A monomorphic instance of Eurydice.dst_ref_mut
 with types Eurydice_c_char_t, size_t
 
 */
-typedef struct dst_ref_mut_65_s
+typedef struct dst_ref_mut_0d_s
 {
   Eurydice_c_char_t *ptr;
   size_t meta;
 }
-dst_ref_mut_65;
+dst_ref_mut_0d;
 
 #define None 0
 #define Some 1
 
-typedef uint8_t Option_02_tags;
+typedef uint8_t Option_9f_tags;
 
 /**
 A monomorphic instance of core.option.Option
-with types Eurydice_dst_ref_shared_65
+with types Eurydice_dst_ref_shared_0d
 
 */
-typedef struct Option_02_s
+typedef struct Option_9f_s
 {
-  Option_02_tags tag;
-  Eurydice_dst_ref_shared_65 f0;
+  Option_9f_tags tag;
+  Eurydice_dst_ref_shared_0d f0;
 }
-Option_02;
-
-extern Option_02
-core_str_traits__core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize__core__marker__Sized_usize____get(
-  size_t x0,
-  Eurydice_dst_ref_shared_65 x1
-);
+Option_9f;
 
 /**
 A monomorphic instance of core.option.Option
-with types Eurydice_dst_ref_mut_65
+with types Eurydice_dst_ref_mut_0d
 
 */
-typedef struct Option_53_s
+typedef struct Option_c0_s
 {
-  Option_02_tags tag;
-  dst_ref_mut_65 f0;
+  Option_9f_tags tag;
+  dst_ref_mut_0d f0;
 }
-Option_53;
+Option_c0;
 
-extern Option_53
-core_str_traits__core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize__core__marker__Sized_usize____get_mut(
+extern dst_ref_mut_0d
+core_str_traits__impl_core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize___built_in_impl_core__marker__Sized_for_usize____index_mut(
   size_t x0,
-  dst_ref_mut_65 x1
+  dst_ref_mut_0d x1
 );
 
-extern Eurydice_dst_ref_shared_65
-core_str_traits__core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize__core__marker__Sized_usize____get_unchecked(
+extern Eurydice_dst_ref_shared_0d
+core_str_traits__impl_core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize___built_in_impl_core__marker__Sized_for_usize____index(
   size_t x0,
-  Eurydice_dst_ref_shared_65 x1
+  Eurydice_dst_ref_shared_0d x1
 );
 
-extern dst_ref_mut_65
-core_str_traits__core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize__core__marker__Sized_usize____get_unchecked_mut(
+extern dst_ref_mut_0d
+core_str_traits__impl_core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize___built_in_impl_core__marker__Sized_for_usize____get_unchecked_mut(
   size_t x0,
-  dst_ref_mut_65 x1
+  dst_ref_mut_0d x1
 );
 
-extern Eurydice_dst_ref_shared_65
-core_str_traits__core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize__core__marker__Sized_usize____index(
+extern Eurydice_dst_ref_shared_0d
+core_str_traits__impl_core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize___built_in_impl_core__marker__Sized_for_usize____get_unchecked(
   size_t x0,
-  Eurydice_dst_ref_shared_65 x1
+  Eurydice_dst_ref_shared_0d x1
 );
 
-extern dst_ref_mut_65
-core_str_traits__core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize__core__marker__Sized_usize____index_mut(
+extern Option_c0
+core_str_traits__impl_core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize___built_in_impl_core__marker__Sized_for_usize____get_mut(
   size_t x0,
-  dst_ref_mut_65 x1
+  dst_ref_mut_0d x1
+);
+
+extern Option_9f
+core_str_traits__impl_core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize___built_in_impl_core__marker__Sized_for_usize____get(
+  size_t x0,
+  Eurydice_dst_ref_shared_0d x1
 );
 
 void substr_main(void)
 {
-  Eurydice_dst_ref_shared_65 str = { .ptr = "abc", .meta = (size_t)3U };
-  Eurydice_dst_ref_shared_65
+  Eurydice_dst_ref_shared_0d str = { .ptr = "abc", .meta = (size_t)3U };
+  Eurydice_dst_ref_shared_0d
   take =
-    core_str_traits__core__ops__index__Index_I__Clause1_Output__for_str__index(core_str_traits__core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize__core__marker__Sized_usize____get,
-      core_str_traits__core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize__core__marker__Sized_usize____get_mut,
-      core_str_traits__core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize__core__marker__Sized_usize____get_unchecked,
-      core_str_traits__core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize__core__marker__Sized_usize____get_unchecked_mut,
-      core_str_traits__core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize__core__marker__Sized_usize____index,
-      core_str_traits__core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize__core__marker__Sized_usize____index_mut,
+    core_str_traits__impl_core__ops__index__Index_I__Clause1_Output__for_str__index(core_str_traits__impl_core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize___built_in_impl_core__marker__Sized_for_usize____get,
+      core_str_traits__impl_core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize___built_in_impl_core__marker__Sized_for_usize____get_mut,
+      core_str_traits__impl_core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize___built_in_impl_core__marker__Sized_for_usize____get_unchecked,
+      core_str_traits__impl_core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize___built_in_impl_core__marker__Sized_for_usize____get_unchecked_mut,
+      core_str_traits__impl_core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize___built_in_impl_core__marker__Sized_for_usize____index,
+      core_str_traits__impl_core__slice__index__SliceIndex_str__str__for_core__ops__range__RangeFrom_usize___built_in_impl_core__marker__Sized_for_usize____index_mut,
       str,
       (size_t)1U,
       size_t,
       Eurydice_c_char_t [],
-      Eurydice_dst_ref_shared_65);
-  EURYDICE_ASSERT(core_str__str__len(take) == (size_t)2U, "panic!");
+      Eurydice_dst_ref_shared_0d);
+  EURYDICE_ASSERT(!!(core_str__str__len(take) == (size_t)2U), "assert failure");
 }
 

@@ -8,20 +8,31 @@
 #include "trait_generics.h"
 
 /**
-This function found in impl {trait_generics::MyFnOnce::<trait_generics::Foo::<10usize>>}
+This function found in impl {impl trait_generics::MyFnOnce for trait_generics::Foo<K>}
 */
-uint32_t trait_generics_call_once__10usize__29(void)
+/**
+A monomorphic instance of trait_generics.call_once_b2
+with const generics
+- K= 10
+*/
+uint32_t trait_generics_call_once_b2_55(void)
 {
   return 0U;
 }
 
-void trait_generics_from_fn__trait_generics__Foo___10usize__(void)
+/**
+A monomorphic instance of trait_generics.from_fn
+with types trait_generics_Foo[[$10size_t]]
+with const generics
+
+*/
+void trait_generics_from_fn_74(void)
 {
-  trait_generics_call_once__10usize__29();
+  trait_generics_call_once_b2_55();
 }
 
 void trait_generics_main(void)
 {
-  trait_generics_from_fn__trait_generics__Foo___10usize__();
+  trait_generics_from_fn_74();
 }
 

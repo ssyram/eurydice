@@ -7,59 +7,6 @@
 
 #include "closure.h"
 
-/**
-This function found in impl {core::ops::function::FnMut<(usize), usize> for closure::f::closure::closure<0, 1>}
-*/
-size_t closure_f_closure_call_mut_8a(closure_f_closure_closure *_, size_t tupled_args)
-{
-  size_t j = tupled_args;
-  return _->fst->data[0U] + _->snd[0U] + j;
-}
-
-/**
-This function found in impl {core::ops::function::FnOnce<(usize), usize> for closure::f::closure::closure<0, 1>}
-*/
-size_t closure_f_closure_call_once_b7(closure_f_closure_closure _, size_t _0)
-{
-  return closure_f_closure_call_mut_8a(&_, _0);
-}
-
-/**
-This function found in impl {core::ops::function::FnMut<(usize), [usize; 1usize]> for closure::f::closure<0>}
-*/
-Eurydice_arr_e4 closure_f_call_mut_82(const Eurydice_arr_e4 **_, size_t tupled_args)
-{
-  size_t i0 = tupled_args;
-  Eurydice_arr_e4 arr_struct;
-  {
-    /* original Rust expression is not an lvalue in C */
-    closure_f_closure_closure lvalue = { .fst = _[0U], .snd = &i0 };
-    arr_struct.data[0U] = closure_f_closure_call_mut_8a(&lvalue, (size_t)0U);
-  }
-  return arr_struct;
-}
-
-/**
-This function found in impl {core::ops::function::FnOnce<(usize), [usize; 1usize]> for closure::f::closure<0>}
-*/
-Eurydice_arr_e4 closure_f_call_once_86(const Eurydice_arr_e4 *_, size_t _0)
-{
-  return closure_f_call_mut_82(&_, _0);
-}
-
-Eurydice_arr_6a closure_f(void)
-{
-  Eurydice_arr_e4 s = { .data = { 0U } };
-  Eurydice_arr_6a arr_struct;
-  {
-    /* original Rust expression is not an lvalue in C */
-    const Eurydice_arr_e4 *lvalue = &s;
-    arr_struct.data[0U] = closure_f_call_mut_82(&lvalue, (size_t)0U);
-  }
-  Eurydice_arr_6a a = arr_struct;
-  return a;
-}
-
 typedef struct const_size_t__x2_s
 {
   const size_t *fst;
@@ -67,10 +14,79 @@ typedef struct const_size_t__x2_s
 }
 const_size_t__x2;
 
+/**
+This function found in impl {impl core::marker::Destruct for closure::f::closure<'_0>}
+*/
+void closure_f_closure_drop_glue_03(const Eurydice_arr_58 **_)
+{
+
+}
+
+/**
+This function found in impl {impl core::marker::Destruct for closure::f::closure::closure<'_0, '_1>}
+*/
+void closure_f_closure_closure_drop_glue_a5(closure_f_closure_closure *_)
+{
+
+}
+
+/**
+This function found in impl {impl core::ops::function::FnMut<(usize,), usize> for closure::f::closure::closure<'_0, '_1>}
+*/
+size_t closure_f_closure_call_mut_50(closure_f_closure_closure *_, size_t tupled_args)
+{
+  size_t j = tupled_args;
+  return _->fst->data[0U] + _->snd[0U] + j;
+}
+
+/**
+This function found in impl {impl core::ops::function::FnOnce<(usize,), usize> for closure::f::closure::closure<'_0, '_1>}
+*/
+size_t closure_f_closure_call_once_c1(closure_f_closure_closure _, size_t _0)
+{
+  return closure_f_closure_call_mut_50(&_, _0);
+}
+
+/**
+This function found in impl {impl core::ops::function::FnMut<(usize,), [usize; 1 : usize]> for closure::f::closure<'_0>}
+*/
+Eurydice_arr_58 closure_f_call_mut_92(const Eurydice_arr_58 **_, size_t tupled_args)
+{
+  size_t i0 = tupled_args;
+  Eurydice_arr_58 arr_struct;
+  {
+    /* original Rust expression is not an lvalue in C */
+    closure_f_closure_closure lvalue = { .fst = _[0U], .snd = &i0 };
+    arr_struct.data[0U] = closure_f_closure_call_mut_50(&lvalue, (size_t)0U);
+  }
+  return arr_struct;
+}
+
+/**
+This function found in impl {impl core::ops::function::FnOnce<(usize,), [usize; 1 : usize]> for closure::f::closure<'_0>}
+*/
+Eurydice_arr_58 closure_f_call_once_b7(const Eurydice_arr_58 *_, size_t _0)
+{
+  return closure_f_call_mut_92(&_, _0);
+}
+
+Eurydice_arr_2d closure_f(void)
+{
+  Eurydice_arr_58 s = { .data = { 0U } };
+  Eurydice_arr_2d arr_struct;
+  {
+    /* original Rust expression is not an lvalue in C */
+    const Eurydice_arr_58 *lvalue = &s;
+    arr_struct.data[0U] = closure_f_call_mut_92(&lvalue, (size_t)0U);
+  }
+  Eurydice_arr_2d a = arr_struct;
+  return a;
+}
+
 void closure_main(void)
 {
   /* original Rust expression is not an lvalue in C */
-  Eurydice_arr_6a lvalue = closure_f();
+  Eurydice_arr_2d lvalue = closure_f();
   size_t actual = lvalue.data->data[0U];
   size_t expected = (size_t)0U;
   const_size_t__x2 uu____0 = { .fst = &actual, .snd = &expected };

@@ -7,9 +7,23 @@
 
 #include "traits3.h"
 
-void traits3_keccak___u64__u64___2usize_(void)
+/**
+A monomorphic instance of traits3.keccak
+with types (uint64_t * uint64_t)
+with const generics
+- N= 2
+*/
+void traits3_keccak_ea(void)
 {
 
+}
+
+/**
+This function found in impl {impl traits3::internal::KeccakItem<2 : usize> for (u64, u64)}
+*/
+traits3_uint64x2_t traits3_zero_81(void)
+{
+  return (KRML_CLITERAL(traits3_uint64x2_t){ .fst = 0ULL, .snd = 0ULL });
 }
 
 void traits3_keccakx2(void)

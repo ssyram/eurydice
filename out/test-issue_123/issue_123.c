@@ -7,11 +7,6 @@
 
 #include "issue_123.h"
 
-int32_t issue_123_fun(issue_123_E e)
-{
-  return (int32_t)(ptrdiff_t)e;
-}
-
 typedef struct const_ptrdiff_t__x2_s
 {
   const ptrdiff_t *fst;
@@ -26,6 +21,21 @@ typedef struct const_int32_t__x2_s
 }
 const_int32_t__x2;
 
+/**
+This function found in impl {impl core::cmp::PartialEq<issue_123::E2> for issue_123::E2}
+*/
+inline bool issue_123_eq_76(const issue_123_E2 *self, const issue_123_E2 *other)
+{
+  ptrdiff_t __self_discr = (ptrdiff_t)self[0U];
+  ptrdiff_t __arg1_discr = (ptrdiff_t)other[0U];
+  return __self_discr == __arg1_discr;
+}
+
+int32_t issue_123_fun(issue_123_E e)
+{
+  return (int32_t)(ptrdiff_t)e;
+}
+
 void issue_123_main(void)
 {
   /* original Rust expression is not an lvalue in C */
@@ -37,18 +47,8 @@ void issue_123_main(void)
   /* original Rust expression is not an lvalue in C */
   int32_t lvalue2 = issue_123_fun(issue_123_E_One);
   /* original Rust expression is not an lvalue in C */
-  int32_t lvalue = (int32_t)1;
+  int32_t lvalue = 1;
   const_int32_t__x2 uu____1 = { .fst = &lvalue2, .snd = &lvalue };
   EURYDICE_ASSERT(uu____1.fst[0U] == uu____1.snd[0U], "panic!");
-}
-
-/**
-This function found in impl {core::cmp::PartialEq<issue_123::E2> for issue_123::E2}
-*/
-inline bool issue_123_eq_e3(const issue_123_E2 *self, const issue_123_E2 *other)
-{
-  ptrdiff_t __self_discr = (ptrdiff_t)self[0U];
-  ptrdiff_t __arg1_discr = (ptrdiff_t)other[0U];
-  return __self_discr == __arg1_discr;
 }
 

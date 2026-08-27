@@ -7,6 +7,20 @@
 
 #include "issue_128.h"
 
+/**
+A monomorphic instance of Eurydice.array_to_slice_shared
+with types uint8_t
+with const generics
+- N= 0
+*/
+static Eurydice_borrow_slice_u8 array_to_slice_shared_08(const Eurydice_arr_bb *a)
+{
+  Eurydice_borrow_slice_u8 lit;
+  lit.ptr = a->data;
+  lit.meta = (size_t)0U;
+  return lit;
+}
+
 void issue_128_fun_a(Eurydice_borrow_slice_u8 _x)
 {
 
@@ -37,24 +51,10 @@ void issue_128_use_enum(issue_128_E e, Eurydice_borrow_slice_u8 x)
   }
 }
 
-/**
-A monomorphic instance of Eurydice.array_to_slice_shared
-with types uint8_t
-with const generics
-- N= 0
-*/
-static Eurydice_borrow_slice_u8 array_to_slice_shared_5d(const Eurydice_arr_51 *a)
-{
-  Eurydice_borrow_slice_u8 lit;
-  lit.ptr = a->data;
-  lit.meta = (size_t)0U;
-  return lit;
-}
-
 void issue_128_main(void)
 {
   /* original Rust expression is not an lvalue in C */
-  Eurydice_arr_51 lvalue = Eurydice_empty_array((void *)0U, uint8_t, Eurydice_arr_51);
-  issue_128_use_enum(issue_128_E_A, array_to_slice_shared_5d(&lvalue));
+  Eurydice_arr_bb lvalue = Eurydice_empty_array((void *)0U, uint8_t, Eurydice_arr_bb);
+  issue_128_use_enum(issue_128_E_A, array_to_slice_shared_08(&lvalue));
 }
 

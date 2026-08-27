@@ -7,6 +7,82 @@
 
 #include "more_primitive_types.h"
 
+/**
+A monomorphic instance of Eurydice.arr
+with types uint8_t
+with const generics
+- $6size_t
+*/
+typedef struct arr_d7_s { uint8_t data[6U]; } arr_d7;
+
+int32_t more_primitive_types_match_u128(const more_primitive_types_MorePrimitiveTypes *p)
+{
+  if
+  (
+    !(Eurydice_Int128_u128_eq(p->uint128, Eurydice_Int128_u128_from_bits(0x0ULL, 0xffffULL)) ||
+      Eurydice_Int128_u128_eq(p->uint128,
+        Eurydice_Int128_u128_from_bits(0x0ULL, 0xffffffffULL)))
+  )
+  {
+    if
+    (
+      Eurydice_Int128_u128_eq(p->uint128,
+        Eurydice_Int128_u128_from_bits(0xffffffffffffULL, 0xffffffffffffffffULL))
+    )
+    {
+      return 4;
+    }
+    else if
+    (
+      Eurydice_Int128_u128_eq(p->uint128,
+        Eurydice_Int128_u128_from_bits(0xffffffffffffffffULL, 0xffffffffffffffffULL))
+    )
+    {
+      return 5;
+    }
+    else
+    {
+      return 1;
+    }
+  }
+  return 3;
+}
+
+int32_t more_primitive_types_match_i128(const more_primitive_types_MorePrimitiveTypes *p)
+{
+  if
+  (
+    !(Eurydice_Int128_i128_eq(p->int128,
+      Eurydice_Int128_i128_from_bits(0xffffffffffffffffULL, 0xffffffffffff0001ULL))
+    ||
+      Eurydice_Int128_i128_eq(p->int128,
+        Eurydice_Int128_i128_from_bits(0xffffffffffffffffULL, 0xffffffff00000001ULL)))
+  )
+  {
+    if
+    (
+      Eurydice_Int128_i128_eq(p->int128,
+        Eurydice_Int128_i128_from_bits(0xffffffffffffffffULL, 0x1ULL))
+    )
+    {
+      return 4;
+    }
+    else if
+    (
+      Eurydice_Int128_i128_eq(p->int128,
+        Eurydice_Int128_i128_from_bits(0xfffff00000000000ULL, 0x1ULL))
+    )
+    {
+      return 5;
+    }
+    else
+    {
+      return 1;
+    }
+  }
+  return 3;
+}
+
 int32_t more_primitive_types_int128_operations(more_primitive_types_MorePrimitiveTypes *p)
 {
   Eurydice_Int128_int128_t uu____0 = p->int128;
@@ -36,175 +112,61 @@ int32_t more_primitive_types_int128_operations(more_primitive_types_MorePrimitiv
   return (int32_t)x;
 }
 
-int32_t more_primitive_types_match_u128(const more_primitive_types_MorePrimitiveTypes *p)
-{
-  if
-  (
-    !(Eurydice_Int128_u128_eq(p->uint128, Eurydice_Int128_u128_from_bits(0x0ULL, 0xffffULL)) ||
-      Eurydice_Int128_u128_eq(p->uint128,
-        Eurydice_Int128_u128_from_bits(0x0ULL, 0xffffffffULL)))
-  )
-  {
-    if
-    (
-      Eurydice_Int128_u128_eq(p->uint128,
-        Eurydice_Int128_u128_from_bits(0xffffffffffffULL, 0xffffffffffffffffULL))
-    )
-    {
-      return (int32_t)4;
-    }
-    else if
-    (
-      Eurydice_Int128_u128_eq(p->uint128,
-        Eurydice_Int128_u128_from_bits(0xffffffffffffffffULL, 0xffffffffffffffffULL))
-    )
-    {
-      return (int32_t)5;
-    }
-    else
-    {
-      return (int32_t)1;
-    }
-  }
-  return (int32_t)3;
-}
-
-int32_t more_primitive_types_match_i128(const more_primitive_types_MorePrimitiveTypes *p)
-{
-  if
-  (
-    !(Eurydice_Int128_i128_eq(p->int128,
-      Eurydice_Int128_i128_from_bits(0xffffffffffffffffULL, 0xffffffffffff0001ULL))
-    ||
-      Eurydice_Int128_i128_eq(p->int128,
-        Eurydice_Int128_i128_from_bits(0xffffffffffffffffULL, 0xffffffff00000001ULL)))
-  )
-  {
-    if
-    (
-      Eurydice_Int128_i128_eq(p->int128,
-        Eurydice_Int128_i128_from_bits(0xffffffffffffffffULL, 0x1ULL))
-    )
-    {
-      return (int32_t)4;
-    }
-    else if
-    (
-      Eurydice_Int128_i128_eq(p->int128,
-        Eurydice_Int128_i128_from_bits(0xfffff00000000000ULL, 0x1ULL))
-    )
-    {
-      return (int32_t)5;
-    }
-    else
-    {
-      return (int32_t)1;
-    }
-  }
-  return (int32_t)3;
-}
-
-/**
-A monomorphic instance of Eurydice.arr
-with types uint8_t
-with const generics
-- $6size_t
-*/
-typedef struct arr_fd_s { uint8_t data[6U]; } arr_fd;
-
-void more_primitive_types_use_more_primitive_types(void)
-{
-  /* original Rust expression is not an lvalue in C */
-  arr_fd lvalue = { .data = { 97U, 104U, 101U, 108U, 108U, 111U } };
-  const arr_fd *s = &lvalue;
-  more_primitive_types_MorePrimitiveTypes
-  p =
-    {
-      .int128 = Eurydice_Int128_i128_from_bits(0xfffff00000000000ULL, 0x1ULL),
-      .uint128 = Eurydice_Int128_u128_from_bits(0xffffffffffffULL, 0xffffffffffffffffULL),
-      .c = 97U
-    };
-  more_primitive_types_match_u128(&p);
-  more_primitive_types_match_i128(&p);
-  EURYDICE_ASSERT(p.c == (uint32_t)s->data[0U], "panic!");
-}
-
-void more_primitive_types_main(void)
-{
-  more_primitive_types_use_more_primitive_types();
-}
-
 int32_t more_primitive_types_more_operations(more_primitive_types_MorePrimitiveTypes *p)
 {
-  int32_t result = (int32_t)0;
+  int32_t result = 0;
   Eurydice_Int128_int128_t uu____0 = p->int128;
-  result =
-    result +
-      (int32_t)Eurydice_Int128_i128_add(uu____0, Eurydice_Int128_i128_from_bits(0x0ULL, 0x1ULL));
+  result +=
+    (int32_t)Eurydice_Int128_i128_add(uu____0, Eurydice_Int128_i128_from_bits(0x0ULL, 0x1ULL));
   Eurydice_Int128_uint128_t uu____1 = p->uint128;
-  result =
-    result +
-      (int32_t)Eurydice_Int128_u128_add(uu____1, Eurydice_Int128_u128_from_bits(0x0ULL, 0x1ULL));
+  result +=
+    (int32_t)Eurydice_Int128_u128_add(uu____1, Eurydice_Int128_u128_from_bits(0x0ULL, 0x1ULL));
   Eurydice_Int128_int128_t uu____2 = p->int128;
-  result =
-    result +
-      (int32_t)Eurydice_Int128_i128_sub(uu____2, Eurydice_Int128_i128_from_bits(0x0ULL, 0x1ULL));
+  result +=
+    (int32_t)Eurydice_Int128_i128_sub(uu____2, Eurydice_Int128_i128_from_bits(0x0ULL, 0x1ULL));
   Eurydice_Int128_uint128_t uu____3 = p->uint128;
-  result =
-    result +
-      (int32_t)Eurydice_Int128_u128_sub(uu____3, Eurydice_Int128_u128_from_bits(0x0ULL, 0x1ULL));
+  result +=
+    (int32_t)Eurydice_Int128_u128_sub(uu____3, Eurydice_Int128_u128_from_bits(0x0ULL, 0x1ULL));
   Eurydice_Int128_int128_t uu____4 = p->int128;
-  result =
-    result +
-      (int32_t)Eurydice_Int128_i128_mul(uu____4, Eurydice_Int128_i128_from_bits(0x0ULL, 0x2ULL));
+  result +=
+    (int32_t)Eurydice_Int128_i128_mul(uu____4, Eurydice_Int128_i128_from_bits(0x0ULL, 0x2ULL));
   Eurydice_Int128_uint128_t uu____5 = p->uint128;
-  result =
-    result +
-      (int32_t)Eurydice_Int128_u128_mul(uu____5, Eurydice_Int128_u128_from_bits(0x0ULL, 0x2ULL));
+  result +=
+    (int32_t)Eurydice_Int128_u128_mul(uu____5, Eurydice_Int128_u128_from_bits(0x0ULL, 0x2ULL));
   Eurydice_Int128_int128_t uu____6 = p->int128;
-  result =
-    result +
-      (int32_t)Eurydice_Int128_i128_div(uu____6, Eurydice_Int128_i128_from_bits(0x0ULL, 0x2ULL));
+  result +=
+    (int32_t)Eurydice_Int128_i128_div(uu____6, Eurydice_Int128_i128_from_bits(0x0ULL, 0x2ULL));
   Eurydice_Int128_uint128_t uu____7 = p->uint128;
-  result =
-    result +
-      (int32_t)Eurydice_Int128_u128_div(uu____7, Eurydice_Int128_u128_from_bits(0x0ULL, 0x2ULL));
+  result +=
+    (int32_t)Eurydice_Int128_u128_div(uu____7, Eurydice_Int128_u128_from_bits(0x0ULL, 0x2ULL));
   Eurydice_Int128_int128_t uu____8 = p->int128;
-  result =
-    result +
-      (int32_t)Eurydice_Int128_i128_mod(uu____8, Eurydice_Int128_i128_from_bits(0x0ULL, 0x3ULL));
+  result +=
+    (int32_t)Eurydice_Int128_i128_mod(uu____8, Eurydice_Int128_i128_from_bits(0x0ULL, 0x3ULL));
   Eurydice_Int128_uint128_t uu____9 = p->uint128;
-  result =
-    result +
-      (int32_t)Eurydice_Int128_u128_mod(uu____9, Eurydice_Int128_u128_from_bits(0x0ULL, 0x3ULL));
-  result = result + (int32_t)Eurydice_Int128_i128_shl(p->int128, 1U);
-  result = result + (int32_t)Eurydice_Int128_u128_shl(p->uint128, 1U);
-  result = result + (int32_t)Eurydice_Int128_i128_shr(p->int128, 1U);
-  result = result + (int32_t)Eurydice_Int128_u128_shr(p->uint128, 1U);
+  result +=
+    (int32_t)Eurydice_Int128_u128_mod(uu____9, Eurydice_Int128_u128_from_bits(0x0ULL, 0x3ULL));
+  result += (int32_t)Eurydice_Int128_i128_shl(p->int128, 1U);
+  result += (int32_t)Eurydice_Int128_u128_shl(p->uint128, 1U);
+  result += (int32_t)Eurydice_Int128_i128_shr(p->int128, 1U);
+  result += (int32_t)Eurydice_Int128_u128_shr(p->uint128, 1U);
   Eurydice_Int128_int128_t uu____10 = p->int128;
-  result =
-    result +
-      (int32_t)Eurydice_Int128_i128_band(uu____10, Eurydice_Int128_i128_from_bits(0x0ULL, 0xffULL));
+  result +=
+    (int32_t)Eurydice_Int128_i128_band(uu____10, Eurydice_Int128_i128_from_bits(0x0ULL, 0xffULL));
   Eurydice_Int128_uint128_t uu____11 = p->uint128;
-  result =
-    result +
-      (int32_t)Eurydice_Int128_u128_band(uu____11, Eurydice_Int128_u128_from_bits(0x0ULL, 0xffULL));
+  result +=
+    (int32_t)Eurydice_Int128_u128_band(uu____11, Eurydice_Int128_u128_from_bits(0x0ULL, 0xffULL));
   Eurydice_Int128_int128_t uu____12 = p->int128;
-  result =
-    result +
-      (int32_t)Eurydice_Int128_i128_bor(uu____12, Eurydice_Int128_i128_from_bits(0x0ULL, 0xffULL));
+  result +=
+    (int32_t)Eurydice_Int128_i128_bor(uu____12, Eurydice_Int128_i128_from_bits(0x0ULL, 0xffULL));
   Eurydice_Int128_uint128_t uu____13 = p->uint128;
-  result =
-    result +
-      (int32_t)Eurydice_Int128_u128_bor(uu____13, Eurydice_Int128_u128_from_bits(0x0ULL, 0xffULL));
+  result +=
+    (int32_t)Eurydice_Int128_u128_bor(uu____13, Eurydice_Int128_u128_from_bits(0x0ULL, 0xffULL));
   Eurydice_Int128_int128_t uu____14 = p->int128;
-  result =
-    result +
-      (int32_t)Eurydice_Int128_i128_bxor(uu____14, Eurydice_Int128_i128_from_bits(0x0ULL, 0xffULL));
+  result +=
+    (int32_t)Eurydice_Int128_i128_bxor(uu____14, Eurydice_Int128_i128_from_bits(0x0ULL, 0xffULL));
   Eurydice_Int128_uint128_t uu____15 = p->uint128;
-  result =
-    result +
-      (int32_t)Eurydice_Int128_u128_bxor(uu____15, Eurydice_Int128_u128_from_bits(0x0ULL, 0xffULL));
+  result +=
+    (int32_t)Eurydice_Int128_u128_bxor(uu____15, Eurydice_Int128_u128_from_bits(0x0ULL, 0xffULL));
   Eurydice_Int128_int128_t uu____16 = p->int128;
   if (Eurydice_Int128_i128_eq(uu____16, Eurydice_Int128_i128_from_bits(0x0ULL, 0x0ULL)))
   {
@@ -265,8 +227,30 @@ int32_t more_primitive_types_more_operations(more_primitive_types_MorePrimitiveT
   {
     result++;
   }
-  result = result + (int32_t)Eurydice_Int128_i128_neg(p->int128);
-  result = result + (int32_t)Eurydice_Int128_i128_bnot(p->int128);
+  result += (int32_t)Eurydice_Int128_i128_neg(p->int128);
+  result += (int32_t)Eurydice_Int128_i128_bnot(p->int128);
   return result + (int32_t)Eurydice_Int128_u128_bnot(p->uint128);
+}
+
+void more_primitive_types_use_more_primitive_types(void)
+{
+  /* original Rust expression is not an lvalue in C */
+  arr_d7 lvalue = { .data = { 97U, 104U, 101U, 108U, 108U, 111U } };
+  const arr_d7 *s = &lvalue;
+  more_primitive_types_MorePrimitiveTypes
+  p =
+    {
+      .int128 = Eurydice_Int128_i128_from_bits(0xfffff00000000000ULL, 0x1ULL),
+      .uint128 = Eurydice_Int128_u128_from_bits(0xffffffffffffULL, 0xffffffffffffffffULL),
+      .c = 97U
+    };
+  more_primitive_types_match_u128(&p);
+  more_primitive_types_match_i128(&p);
+  EURYDICE_ASSERT(!!(p.c == (uint32_t)s->data[0U]), "assert failure");
+}
+
+void more_primitive_types_main(void)
+{
+  more_primitive_types_use_more_primitive_types();
 }
 

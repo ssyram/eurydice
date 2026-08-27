@@ -15,114 +15,135 @@
 extern "C" {
 #endif
 
-<<<<<<< HEAD
-extern uint64_t core_clone_impls__core__clone__Clone___u64___clone(uint64_t *x0);
+/**
+A monomorphic instance of n-tuple
+with types uint64_t, size_t
 
-extern size_t core_clone_impls__core__clone__Clone___usize___clone(size_t *x0);
-=======
-extern uint64_t core_clone_impls__core__clone__Clone_for_u64__clone(const uint64_t *x0);
-
-extern size_t core_clone_impls__core__clone__Clone_for_usize__clone(const size_t *x0);
->>>>>>> main
-
-static inline uint64_t core_convert_num__core__convert__From___u64__u16___from(uint16_t x0);
-
-static inline size_t core_convert_num__core__convert__From___usize__u16___from(uint16_t x0);
+*/
+typedef struct tuple_3d_s
+{
+  uint64_t fst;
+  size_t snd;
+}
+tuple_3d;
 
 /**
-This function found in impl {where_clauses_simple::Ops::<usize, 3usize>}
+A monomorphic instance of n-tuple
+with types size_t, uint64_t
+
 */
-size_t where_clauses_simple_of_u16__3usize__ad(uint16_t x);
+typedef struct tuple_7d_s
+{
+  size_t fst;
+  uint64_t snd;
+}
+tuple_7d;
 
 /**
-<<<<<<< HEAD
-This function found in impl {where_clauses_simple::Ops::<usize, 3usize>}
-*/
-size_t where_clauses_simple_add__3usize__ad(uint16_t x[3U], size_t y);
-=======
-A monomorphic instance of Eurydice.arr
-with types uint16_t
-with const generics
-- $3size_t
-*/
-typedef struct Eurydice_arr_7f_s { uint16_t data[3U]; } Eurydice_arr_7f;
-
-/**
-This function found in impl {where_clauses_simple::Ops<K> for usize}
-*/
-/**
-A monomorphic instance of where_clauses_simple.add_81
-with const generics
-- K= 3
-*/
-size_t where_clauses_simple_add_81_e0(Eurydice_arr_7f x, size_t y);
->>>>>>> 3d7a1f48969c69a2ca824c933a6b0159a355cef3
-
-size_t where_clauses_simple_fn_k__usize__3usize_(void);
-
-void where_clauses_simple_k_calls_k(void);
-
-/**
-<<<<<<< HEAD
-This function found in impl {where_clauses_simple::Ops::<u64, 1usize>}
-*/
-uint64_t where_clauses_simple_of_u16_70(uint16_t x);
-=======
 A monomorphic instance of Eurydice.arr
 with types uint16_t
 with const generics
 - $1size_t
 */
-typedef struct Eurydice_arr_2e_s { uint16_t data[1U]; } Eurydice_arr_2e;
+typedef struct Eurydice_arr_96_s { uint16_t data[1U]; } Eurydice_arr_96;
 
 /**
-This function found in impl {where_clauses_simple::Ops<1usize> for u64}
+A monomorphic instance of Eurydice.arr
+with types uint16_t
+with const generics
+- $3size_t
 */
-uint64_t where_clauses_simple_add_19(Eurydice_arr_2e x, uint64_t y);
->>>>>>> 3d7a1f48969c69a2ca824c933a6b0159a355cef3
+typedef struct Eurydice_arr_dc_s { uint16_t data[3U]; } Eurydice_arr_dc;
+
+extern size_t core_clone_impls__impl_core__clone__Clone_for_usize__clone(const size_t *x0);
+
+extern uint64_t core_clone_impls__impl_core__clone__Clone_for_u64__clone(const uint64_t *x0);
+
+static inline uint64_t
+core_convert_num__impl_core__convert__From_u16__for_u64__from(uint16_t x0);
+
+static inline size_t
+core_convert_num__impl_core__convert__From_u16__for_usize__from(uint16_t x0);
+
+#define core_panicking_AssertKind_Eq 0
+#define core_panicking_AssertKind_Ne 1
+#define core_panicking_AssertKind_Match 2
+
+typedef uint8_t core_panicking_AssertKind;
 
 /**
-This function found in impl {where_clauses_simple::Ops::<u64, 1usize>}
+This function found in impl {impl where_clauses_simple::Ops<1 : usize> for u64}
 */
-uint64_t where_clauses_simple_add_70(uint16_t x[1U], uint64_t y);
+uint64_t where_clauses_simple_of_u16_cc(uint16_t x);
 
-<<<<<<< HEAD
-uint64_t where_clauses_simple_fn_k__u64__1usize_(void);
-=======
+/**
+This function found in impl {impl where_clauses_simple::Ops<1 : usize> for u64}
+*/
+uint64_t where_clauses_simple_add_cc(Eurydice_arr_96 x, uint64_t y);
+
+/**
+This function found in impl {impl where_clauses_simple::Ops<K> for usize}
+*/
+/**
+A monomorphic instance of where_clauses_simple.of_u16_2c
+with const generics
+- K= 3
+*/
+size_t where_clauses_simple_of_u16_2c_78(uint16_t x);
+
+/**
+This function found in impl {impl where_clauses_simple::Ops<K> for usize}
+*/
+/**
+A monomorphic instance of where_clauses_simple.of_u16_2c
+with const generics
+- K= 1
+*/
+size_t where_clauses_simple_of_u16_2c_6c(uint16_t x);
+
+/**
+This function found in impl {impl where_clauses_simple::Ops<K> for usize}
+*/
+/**
+A monomorphic instance of where_clauses_simple.add_2c
+with const generics
+- K= 3
+*/
+size_t where_clauses_simple_add_2c_78(Eurydice_arr_dc x, size_t y);
+
+/**
+This function found in impl {impl where_clauses_simple::Ops<K> for usize}
+*/
+/**
+A monomorphic instance of where_clauses_simple.add_2c
+with const generics
+- K= 1
+*/
+size_t where_clauses_simple_add_2c_6c(Eurydice_arr_96 x, size_t y);
+
 /**
 A monomorphic instance of where_clauses_simple.fn_k
 with types uint64_t
 with const generics
 - K= 1
 */
-uint64_t where_clauses_simple_fn_k_e4(void);
->>>>>>> 3d7a1f48969c69a2ca824c933a6b0159a355cef3
-
-void where_clauses_simple_k_calls_one(void);
+uint64_t where_clauses_simple_fn_k_1c(void);
 
 /**
-This function found in impl {where_clauses_simple::Ops::<usize, 1usize>}
-*/
-size_t where_clauses_simple_of_u16__1usize__ff(uint16_t x);
-
-/**
-This function found in impl {where_clauses_simple::Ops::<usize, 1usize>}
-*/
-<<<<<<< HEAD
-size_t where_clauses_simple_add__1usize__ff(uint16_t x[1U], size_t y);
-
-size_t where_clauses_simple_fn_1__usize_(void);
-
-void where_clauses_simple_one_calls_k(void);
-
-uint64_t where_clauses_simple_fn_1__u64_(void);
-=======
-/**
-A monomorphic instance of where_clauses_simple.add_81
+A monomorphic instance of where_clauses_simple.fn_k
+with types size_t
 with const generics
-- K= 1
+- K= 3
 */
-size_t where_clauses_simple_add_81_74(Eurydice_arr_2e x, size_t y);
+size_t where_clauses_simple_fn_k_f3(void);
+
+/**
+A monomorphic instance of where_clauses_simple.fn_1
+with types uint64_t
+with const generics
+
+*/
+uint64_t where_clauses_simple_fn_1_fd(void);
 
 /**
 A monomorphic instance of where_clauses_simple.fn_1
@@ -130,58 +151,31 @@ with types size_t
 with const generics
 
 */
-size_t where_clauses_simple_fn_1_a5(void);
+size_t where_clauses_simple_fn_1_2f(void);
+
+void where_clauses_simple_k_calls_k(void);
+
+void where_clauses_simple_k_calls_one(void);
 
 void where_clauses_simple_one_calls_k(void);
 
-/**
-A monomorphic instance of where_clauses_simple.fn_1
-with types uint64_t
-with const generics
-
-*/
-uint64_t where_clauses_simple_fn_1_e5(void);
->>>>>>> 3d7a1f48969c69a2ca824c933a6b0159a355cef3
-
 void where_clauses_simple_one_calls_one(void);
 
-/**
-A monomorphic instance of K.
-with types uint64_t, size_t
-
-*/
-typedef struct tuple_65_s
-{
-  uint64_t fst;
-  size_t snd;
-}
-tuple_65;
-
-<<<<<<< HEAD
-tuple_65 where_clauses_simple_double__u64__usize_(uint64_t x, size_t y);
-=======
 /**
 A monomorphic instance of where_clauses_simple.double
 with types uint64_t, size_t
 with const generics
 
 */
-tuple_65 where_clauses_simple_double_f1(uint64_t x, size_t y);
->>>>>>> 3d7a1f48969c69a2ca824c933a6b0159a355cef3
+tuple_3d where_clauses_simple_double_e2(uint64_t x, size_t y);
 
 /**
-A monomorphic instance of K.
+A monomorphic instance of where_clauses_simple.double_k
 with types size_t, uint64_t
-
+with const generics
+- K= 3
 */
-typedef struct tuple_b6_s
-{
-  size_t fst;
-  uint64_t snd;
-}
-tuple_b6;
-
-tuple_b6 where_clauses_simple_double_k__usize__u64__3usize_(size_t x, uint64_t y);
+tuple_7d where_clauses_simple_double_k_c8(size_t x, uint64_t y);
 
 void where_clauses_simple_main(void);
 

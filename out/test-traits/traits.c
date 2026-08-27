@@ -8,13 +8,24 @@
 #include "traits.h"
 
 /**
-This function found in impl {traits::ToInt::<traits::Foo>}
+A monomorphic instance of Eurydice.array_to_subslice_shared
+with types traits_Foo, core_ops_range_Range size_t, Eurydice_derefed_slice traits_Foo
+with const generics
+- N= 2
 */
-<<<<<<< HEAD
-uint32_t traits_to_int_32(traits_Foo *self)
-=======
-uint32_t traits_to_int_ac(const traits_Foo *self)
->>>>>>> main
+static Eurydice_dst_ref_shared_42
+array_to_subslice_shared_7d(const Eurydice_arr_0e *a, core_ops_range_Range_87 r)
+{
+  return
+    (
+      KRML_CLITERAL(Eurydice_dst_ref_shared_42){ .ptr = a->data + r.start, .meta = r.end - r.start }
+    );
+}
+
+/**
+This function found in impl {impl traits::ToInt for traits::Foo}
+*/
+uint32_t traits_to_int_62(const traits_Foo *self)
 {
   switch (self[0U])
   {
@@ -36,72 +47,22 @@ uint32_t traits_to_int_ac(const traits_Foo *self)
 }
 
 /**
-<<<<<<< HEAD
-This function found in impl {traits::ToInt::<&'_ (@Slice<traits::Foo>)>}
+This function found in impl {impl traits::ToInt for &'_0 [traits::Foo]}
 */
-uint32_t traits_to_int______95(Eurydice_slice *self)
+uint32_t traits_to_int_db(const Eurydice_dst_ref_shared_42 *self)
 {
-  uint32_t
-  uu____0 =
-    traits_to_int_32(&Eurydice_slice_index(self[0U], (size_t)0U, traits_Foo, traits_Foo *));
-  return
-    uu____0 *
-      traits_to_int_32(&Eurydice_slice_index(self[0U], (size_t)1U, traits_Foo, traits_Foo *));
-=======
-This function found in impl {traits::ToInt for &0 ([traits::Foo])}
-*/
-uint32_t traits_to_int_0f(const Eurydice_dst_ref_shared_e2 *self)
-{
-  uint32_t uu____0 = traits_to_int_ac(&self->ptr[0U]);
-  return uu____0 * traits_to_int_ac(&self->ptr[1U]);
-}
-
-/**
-A monomorphic instance of Eurydice.array_to_subslice_shared
-with types traits_Foo, core_ops_range_Range size_t, Eurydice_derefed_slice traits_Foo
-with const generics
-- N= 2
-*/
-static Eurydice_dst_ref_shared_e2
-array_to_subslice_shared_91(const Eurydice_arr_e2 *a, core_ops_range_Range_08 r)
-{
-  return
-    (
-      KRML_CLITERAL(Eurydice_dst_ref_shared_e2){ .ptr = a->data + r.start, .meta = r.end - r.start }
-    );
->>>>>>> main
+  uint32_t uu____0 = traits_to_int_62(&self->ptr[0U]);
+  return uu____0 * traits_to_int_62(&self->ptr[1U]);
 }
 
 void traits_main(void)
 {
-  Eurydice_arr_e2 foos = { .data = { traits_Foo_Foo1, traits_Foo_Foo2 } };
+  Eurydice_arr_0e foos = { .data = { traits_Foo_Foo1, traits_Foo_Foo2 } };
   /* original Rust expression is not an lvalue in C */
-<<<<<<< HEAD
-  Eurydice_slice
-<<<<<<< HEAD
+  Eurydice_dst_ref_shared_42
   lvalue =
-    Eurydice_array_to_subslice_mono((size_t)2U,
-      foos,
-      (KRML_CLITERAL(core_ops_range_Range__usize_){ .start = (size_t)0U, .end = (size_t)2U }),
-      traits_Foo,
-      core_ops_range_Range__usize_,
-      Eurydice_slice);
-  if (!(traits_to_int______95(&lvalue) != 2U))
-=======
-  lvalue = Eurydice_array_to_subslice3(&foos, (size_t)0U, (size_t)2U, traits_Foo *);
-  if (!(traits_to_int_88(&lvalue) != 2U))
->>>>>>> 3d7a1f48969c69a2ca824c933a6b0159a355cef3
-=======
-  Eurydice_dst_ref_shared_e2
-  lvalue =
-    array_to_subslice_shared_91(&foos,
-      (KRML_CLITERAL(core_ops_range_Range_08){ .start = (size_t)0U, .end = (size_t)2U }));
-  if (!(traits_to_int_0f(&lvalue) != 2U))
->>>>>>> main
-  {
-    return;
-  }
-  KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n", __FILE__, __LINE__, "panic!");
-  KRML_HOST_EXIT(255U);
+    array_to_subslice_shared_7d(&foos,
+      (KRML_CLITERAL(core_ops_range_Range_87){ .start = (size_t)0U, .end = (size_t)2U }));
+  EURYDICE_ASSERT(!(traits_to_int_db(&lvalue) != 2U), "assert failure");
 }
 

@@ -15,23 +15,6 @@
 extern "C" {
 #endif
 
-<<<<<<< HEAD
-extern size_t core_clone_impls__core__clone__Clone___usize___clone(size_t *x0);
-=======
-extern size_t core_clone_impls__core__clone__Clone_for_usize__clone(const size_t *x0);
-
-#define core_panicking_AssertKind_Eq 0
-#define core_panicking_AssertKind_Ne 1
-#define core_panicking_AssertKind_Match 2
-
-typedef uint8_t core_panicking_AssertKind;
->>>>>>> main
-
-/**
-This function found in impl {where_clauses_closures::Ops::<usize, 1usize>}
-*/
-size_t where_clauses_closures_zero_77(void);
-
 typedef struct size_t_x2_s
 {
   size_t fst;
@@ -39,16 +22,53 @@ typedef struct size_t_x2_s
 }
 size_t_x2;
 
-<<<<<<< HEAD
-size_t_x2 where_clauses_closures_test__usize__1usize_(void);
-=======
 /**
 A monomorphic instance of Eurydice.arr
 with types size_t
 with const generics
 - $1size_t
 */
-typedef struct Eurydice_arr_e4_s { size_t data[1U]; } Eurydice_arr_e4;
+typedef struct Eurydice_arr_58_s { size_t data[1U]; } Eurydice_arr_58;
+
+extern size_t core_clone_impls__impl_core__clone__Clone_for_usize__clone(const size_t *x0);
+
+#define core_panicking_AssertKind_Eq 0
+#define core_panicking_AssertKind_Ne 1
+#define core_panicking_AssertKind_Match 2
+
+typedef uint8_t core_panicking_AssertKind;
+
+/**
+This function found in impl {impl where_clauses_closures::Ops<1 : usize> for usize}
+*/
+size_t where_clauses_closures_of_usize_ec(size_t x);
+
+/**
+This function found in impl {impl where_clauses_closures::Ops<1 : usize> for usize}
+*/
+size_t where_clauses_closures_zero_ec(void);
+
+/**
+This function found in impl {impl core::ops::function::FnMut<(usize,), T> for where_clauses_closures::test::closure<T, K>[@TraitClause0, @TraitClause1, @TraitClause2]}
+*/
+/**
+A monomorphic instance of where_clauses_closures.test.call_mut_0c
+with types size_t
+with const generics
+- K= 1
+*/
+size_t where_clauses_closures_test_call_mut_0c_df(void **_, size_t tupled_args);
+
+/**
+This function found in impl {impl core::ops::function::FnOnce<(usize,), T> for where_clauses_closures::test::closure<T, K>[@TraitClause0, @TraitClause1, @TraitClause2]}
+*/
+/**
+A monomorphic instance of where_clauses_closures.test.call_once_8c
+with types size_t
+with const generics
+- K= 1
+*/
+size_t where_clauses_closures_test_call_once_8c_df(size_t _);
 
 /**
 A monomorphic instance of where_clauses_closures.test
@@ -56,20 +76,9 @@ with types size_t
 with const generics
 - K= 1
 */
-size_t_x2 where_clauses_closures_test_e3(void);
->>>>>>> 3d7a1f48969c69a2ca824c933a6b0159a355cef3
+size_t_x2 where_clauses_closures_test_df(void);
 
 void where_clauses_closures_main(void);
-
-/**
-This function found in impl {where_clauses_closures::Ops::<usize, 1usize>}
-*/
-size_t where_clauses_closures_of_usize_77(size_t x);
-
-/**
-This function found in impl {core::ops::function::FnMut::<where_clauses_closures::test::closure::<usize, 1usize>, (usize)>}
-*/
-size_t where_clauses_closures_test_call_mut__usize__1usize__8a(void **_, size_t tupled_args);
 
 #if defined(__cplusplus)
 }

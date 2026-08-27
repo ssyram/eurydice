@@ -24,23 +24,20 @@ let remove_array_eq =
             let pattern_array_eq =
               Str.regexp {|\{core::cmp::PartialEq::<\[.*;.*\], \[.*;.*\]>\}|}
             in
-            let matches_array_eq_slice =
+            let pattern_array_eq_slice =
               Str.regexp {|\{core::cmp::PartialEq::<&.* \[.*\], \[.*;.*\]>\}|}
             in
-            (*todo: this pattern is not tested yet*)
             let matches_array_eq s =
               match s with
-              | "{core::cmp::PartialEq<[U; N]> for [T; N]}" -> true (* non-monomorphized LLBC *)
-              | _ -> (
-                  try Str.string_match pattern_array_eq s 0
-                  with Not_found ->
-                    let _ = print_string s in
-                    false)
+              | "{impl core::cmp::PartialEq<[U; N]> for [T; N]}"
+              | "{core::cmp::PartialEq<[U; N]> for [T; N]}" -> true
+              | _ -> Str.string_match pattern_array_eq s 0
             in
             let matches_array_eq_slice s =
               match s with
+              | "{impl core::cmp::PartialEq<&'_0 [U]> for [T; N]}"
               | "{core::cmp::PartialEq<&0 ([U])> for [T; N]}" -> true
-              | _ -> ( try Str.string_match matches_array_eq_slice s 0 with Not_found -> false)
+              | _ -> Str.string_match pattern_array_eq_slice s 0
             in
             if matches_array_eq impl then
               with_type TBool

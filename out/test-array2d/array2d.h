@@ -15,51 +15,43 @@
 extern "C" {
 #endif
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-bool array2d_f(uint32_t x[4U][2U]);
-=======
-extern bool core_cmp_impls__core__cmp__PartialEq_u32__for_u32__eq(uint32_t *x0, uint32_t *x1);
-=======
-extern bool
-core_cmp_impls__core__cmp__PartialEq_u32__for_u32__eq(const uint32_t *x0, const uint32_t *x1);
->>>>>>> main
-
-extern bool
-core_cmp_impls__core__cmp__PartialEq_u32__for_u32__ne(const uint32_t *x0, const uint32_t *x1);
-
 /**
 A monomorphic instance of Eurydice.arr
 with types uint32_t
 with const generics
 - $2size_t
 */
-typedef struct Eurydice_arr_b2_s { uint32_t data[2U]; } Eurydice_arr_b2;
+typedef struct Eurydice_arr_a0_s { uint32_t data[2U]; } Eurydice_arr_a0;
 
 /**
 A monomorphic instance of Eurydice.arr
-with types Eurydice_arr_b2
+with types Eurydice_arr_a0
 with const generics
 - $4size_t
 */
-typedef struct Eurydice_arr_1e_s { Eurydice_arr_b2 data[4U]; } Eurydice_arr_1e;
+typedef struct Eurydice_arr_ac_s { Eurydice_arr_a0 data[4U]; } Eurydice_arr_ac;
 
-<<<<<<< HEAD
-bool array2d_f(Eurydice_arr_c0 x);
->>>>>>> 3d7a1f48969c69a2ca824c933a6b0159a355cef3
-=======
-bool array2d_f(Eurydice_arr_1e x);
+extern bool
+core_cmp_impls__impl_core__cmp__PartialEq_u32__for_u32__ne(
+  const uint32_t *x0,
+  const uint32_t *x1
+);
+
+extern bool
+core_cmp_impls__impl_core__cmp__PartialEq_u32__for_u32__eq(
+  const uint32_t *x0,
+  const uint32_t *x1
+);
 
 #define core_panicking_AssertKind_Eq 0
 #define core_panicking_AssertKind_Ne 1
 #define core_panicking_AssertKind_Match 2
 
 typedef uint8_t core_panicking_AssertKind;
->>>>>>> main
+
+bool array2d_f(Eurydice_arr_ac x);
 
 void array2d_main(void);
-
-extern bool core_cmp_impls__core__cmp__PartialEq___u32__u32___eq(uint32_t *x0, uint32_t *x1);
 
 #if defined(__cplusplus)
 }

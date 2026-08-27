@@ -15,43 +15,31 @@
 extern "C" {
 #endif
 
-static inline Eurydice_array_u8x4 core_num__u32__to_be_bytes(uint32_t x0);
-
 /**
 A monomorphic instance of core.ops.range.RangeTo
 with types size_t
 
 */
-typedef size_t core_ops_range_RangeTo_08;
+typedef size_t core_ops_range_RangeTo_87;
 
 /**
 A monomorphic instance of core.ops.range.RangeFrom
 with types size_t
 
 */
-typedef size_t core_ops_range_RangeFrom_08;
+typedef size_t core_ops_range_RangeFrom_87;
 
 /**
 A monomorphic instance of Eurydice.dst_ref_shared
 with types uint32_t, size_t
 
 */
-typedef struct Eurydice_dst_ref_shared_3c_s
+typedef struct Eurydice_dst_ref_shared_0c_s
 {
   const uint32_t *ptr;
   size_t meta;
 }
-Eurydice_dst_ref_shared_3c;
-
-<<<<<<< HEAD
-void const_generics_serialize__8usize_(Eurydice_slice re, uint8_t ret[8U]);
-=======
-/**
-A monomorphic instance of const_generics.serialize
-with const generics
-- OUT_LEN= 8
-*/
-Eurydice_array_u8x8 const_generics_serialize_3b(Eurydice_dst_ref_shared_3c re);
+Eurydice_dst_ref_shared_0c;
 
 /**
 A monomorphic instance of Eurydice.arr
@@ -59,28 +47,75 @@ with types uint32_t
 with const generics
 - $2size_t
 */
-typedef struct Eurydice_arr_b2_s { uint32_t data[2U]; } Eurydice_arr_b2;
->>>>>>> 3d7a1f48969c69a2ca824c933a6b0159a355cef3
+typedef struct Eurydice_arr_a0_s { uint32_t data[2U]; } Eurydice_arr_a0;
 
-void const_generics_main(void);
-
-typedef struct const_generics_Pair__u32__u32__2usize__2usize__s
-{
-  Eurydice_arr_b2 left;
-  Eurydice_arr_b2 right;
-}
-const_generics_Pair__u32__u32__2usize__2usize_;
-
-<<<<<<< HEAD
-typedef struct const_generics_Pair__u32__u64__2usize__4usize__s
-=======
 /**
 A monomorphic instance of Eurydice.arr
 with types uint64_t
 with const generics
 - $4size_t
 */
-typedef struct Eurydice_arr_61_s { uint64_t data[4U]; } Eurydice_arr_61;
+typedef struct Eurydice_arr_e4_s { uint64_t data[4U]; } Eurydice_arr_e4;
+
+/**
+A monomorphic instance of Eurydice.arr
+with types uint32_t
+with const generics
+- $1size_t
+*/
+typedef struct Eurydice_arr_d5_s { uint32_t data[1U]; } Eurydice_arr_d5;
+
+/**
+A monomorphic instance of Eurydice.arr
+with types size_t
+with const generics
+- $1size_t
+*/
+typedef struct Eurydice_arr_58_s { size_t data[1U]; } Eurydice_arr_58;
+
+/**
+A monomorphic instance of Eurydice.arr
+with types uint32_t
+with const generics
+- $3size_t
+*/
+typedef struct Eurydice_arr_a5_s { uint32_t data[3U]; } Eurydice_arr_a5;
+
+/**
+A monomorphic instance of Eurydice.arr
+with types size_t
+with const generics
+- $3size_t
+*/
+typedef struct Eurydice_arr_eb_s { size_t data[3U]; } Eurydice_arr_eb;
+
+extern uint32_t core_clone_impls__impl_core__clone__Clone_for_u32__clone(const uint32_t *x0);
+
+extern uint64_t core_clone_impls__impl_core__clone__Clone_for_u64__clone(const uint64_t *x0);
+
+extern uint8_t core_clone_impls__impl_core__clone__Clone_for_u8__clone(const uint8_t *x0);
+
+static inline Eurydice_array_u8x4 core_num__u32__to_be_bytes(uint32_t x0);
+
+#define core_panicking_AssertKind_Eq 0
+#define core_panicking_AssertKind_Ne 1
+#define core_panicking_AssertKind_Match 2
+
+typedef uint8_t core_panicking_AssertKind;
+
+/**
+A monomorphic instance of const_generics.Pair
+with types uint32_t, uint32_t
+with const generics
+- $2size_t
+- $2size_t
+*/
+typedef struct const_generics_Pair_30_s
+{
+  Eurydice_arr_a0 left;
+  Eurydice_arr_a0 right;
+}
+const_generics_Pair_30;
 
 /**
 A monomorphic instance of const_generics.Pair
@@ -89,46 +124,37 @@ with const generics
 - $2size_t
 - $4size_t
 */
-typedef struct const_generics_Pair_a5_s
->>>>>>> 3d7a1f48969c69a2ca824c933a6b0159a355cef3
+typedef struct const_generics_Pair_67_s
 {
-  Eurydice_arr_b2 left;
-  Eurydice_arr_61 right;
+  Eurydice_arr_a0 left;
+  Eurydice_arr_e4 right;
 }
-const_generics_Pair__u32__u64__2usize__4usize_;
+const_generics_Pair_67;
 
-typedef struct const_generics_Pair__u64__u32__4usize__2usize__s
+/**
+A monomorphic instance of const_generics.Pair
+with types uint64_t, uint32_t
+with const generics
+- $4size_t
+- $2size_t
+*/
+typedef struct const_generics_Pair_54_s
 {
-  Eurydice_arr_61 left;
-  Eurydice_arr_b2 right;
+  Eurydice_arr_e4 left;
+  Eurydice_arr_a0 right;
 }
-const_generics_Pair__u64__u32__4usize__2usize_;
+const_generics_Pair_54;
 
-const_generics_Pair__u32__u32__2usize__2usize_
-const_generics_mk_pairs__u32__u64__2usize__4usize_(uint32_t x, uint64_t y);
+/**
+A monomorphic instance of const_generics.mk_pairs
+with types uint32_t, uint64_t
+with const generics
+- N= 2
+- M= 4
+*/
+const_generics_Pair_30 const_generics_mk_pairs_67(uint32_t x, uint64_t y);
 
 void const_generics_main1(void);
-
-<<<<<<< HEAD
-bool const_generics_f__1usize__2u32_(uint32_t x, size_t y);
-
-bool const_generics_f__3usize__4u32_(uint32_t x, size_t y);
-=======
-/**
-A monomorphic instance of Eurydice.arr
-with types uint32_t
-with const generics
-- $1size_t
-*/
-typedef struct Eurydice_arr_a5_s { uint32_t data[1U]; } Eurydice_arr_a5;
-
-/**
-A monomorphic instance of Eurydice.arr
-with types size_t
-with const generics
-- $1size_t
-*/
-typedef struct Eurydice_arr_e4_s { size_t data[1U]; } Eurydice_arr_e4;
 
 /**
 A monomorphic instance of const_generics.f
@@ -136,23 +162,7 @@ with const generics
 - FOO= 1
 - BAR= 2
 */
-bool const_generics_f_e5(uint32_t x, size_t y);
-
-/**
-A monomorphic instance of Eurydice.arr
-with types uint32_t
-with const generics
-- $3size_t
-*/
-typedef struct Eurydice_arr_6f_s { uint32_t data[3U]; } Eurydice_arr_6f;
-
-/**
-A monomorphic instance of Eurydice.arr
-with types size_t
-with const generics
-- $3size_t
-*/
-typedef struct Eurydice_arr_c8_s { size_t data[3U]; } Eurydice_arr_c8;
+bool const_generics_f_06(uint32_t x, size_t y);
 
 /**
 A monomorphic instance of const_generics.f
@@ -160,45 +170,26 @@ with const generics
 - FOO= 3
 - BAR= 4
 */
-bool const_generics_f_70(uint32_t x, size_t y);
->>>>>>> 3d7a1f48969c69a2ca824c933a6b0159a355cef3
+bool const_generics_f_16(uint32_t x, size_t y);
 
-bool const_generics_g__3usize__4u32_(uint32_t x, size_t y);
+/**
+A monomorphic instance of const_generics.g
+with const generics
+- BAR= 3
+- FOO= 4
+*/
+bool const_generics_g_16(uint32_t x, size_t y);
 
 void const_generics_main3(void);
 
-<<<<<<< HEAD
-extern uint32_t core_clone_impls__core__clone__Clone___u32___clone(uint32_t *x0);
+/**
+A monomorphic instance of const_generics.serialize
+with const generics
+- OUT_LEN= 8
+*/
+Eurydice_array_u8x8 const_generics_serialize_70(Eurydice_dst_ref_shared_0c re);
 
-extern uint64_t core_clone_impls__core__clone__Clone___u64___clone(uint64_t *x0);
-
-extern uint8_t core_clone_impls__core__clone__Clone___u8___clone(uint8_t *x0);
-
-#define core_option_Option_None 0
-#define core_option_Option_Some 1
-
-typedef uint8_t core_option_Option________Slice_u8____tags;
-
-typedef struct core_option_Option________Slice_u8____s
-{
-  core_option_Option________Slice_u8____tags tag;
-  Eurydice_slice f0;
-}
-core_option_Option________Slice_u8___;
-
-typedef struct core_option_Option______mut___Slice_u8____s
-{
-  core_option_Option________Slice_u8____tags tag;
-  Eurydice_slice f0;
-}
-core_option_Option______mut___Slice_u8___;
-=======
-extern uint32_t core_clone_impls__core__clone__Clone_for_u32__clone(const uint32_t *x0);
-
-extern uint64_t core_clone_impls__core__clone__Clone_for_u64__clone(const uint64_t *x0);
-
-extern uint8_t core_clone_impls__core__clone__Clone_for_u8__clone(const uint8_t *x0);
->>>>>>> main
+void const_generics_main(void);
 
 #if defined(__cplusplus)
 }

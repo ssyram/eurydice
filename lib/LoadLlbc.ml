@@ -1,7 +1,8 @@
 let load_file filename =
-  let ic = Yojson.Basic.from_file filename in
-  match Charon.LlbcOfJson.crate_of_json ic with
-  | Ok r -> r
+  match Charon.OfJson.crate_of_json_file filename with
+  (* Clear short names to make printing more deterministic, since printed names
+     are relied on in a bunch of places. *)
+  | Ok r -> { r with short_names = [] }
   | Error e ->
       Printf.fprintf stderr
         "Error loading JSON. This is typically due to a discrepancy between charon-ml and charon. \
