@@ -1881,6 +1881,7 @@ let drop_unused_type files =
     object (self)
       inherit [_] iter as super
       method! visit_EQualified (before, _) lid = self#discover before lid
+      method! visit_EString (before, _) _ = self#discover before ([ "Prims" ], "string")
       method! visit_TQualified before lid = self#discover before lid
 
       method! visit_TApp before lid ts =
