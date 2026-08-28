@@ -1083,6 +1083,34 @@ let resugar_loops =
       let e_body_sub = Krml.DeBruijn.subst e_some_i 0 e_body in 
       Some (t1, e_start, e_end, [e_body_sub], [])
 
+    | [%cremepat {|
+      let iter =
+        core::iter::traits::collect::?::into_iter::?range_name
+          ({ start: ?e_start, end: ?e_end });
+      while true {
+        let x = core::iter::range::?::next::?t1_name(&iter);
+        match x {
+          None -> break,
+          Some ? -> ?e_unit
+        };
+        (let i = match x {
+           Some ? -> ?e_i
+         };
+         ?e_body)
+      }
+    |}]
+      when Krml.KString.starts_with range_name "<core::ops::range::Range::"
+           && e_unit.node = EUnit && e_i.node = EBound 0 ->
+      let t1 = type_of_int_name t1_name in
+      let e_some_i =
+        with_type (Builtin.mk_option t1) (ECons ("Some", [ with_type t1 (EBound 0) ]))
+      in
+      (* Keep the new for-loop's `i` binder, but remove the temporary option and iterator. *)
+      let e_body =
+        Krml.DeBruijn.subst eunit 1 (Krml.DeBruijn.subst e_some_i 1 e_body)
+      in
+      Some (t1, e_start, e_end, [ e_body ], [])
+
       | [%cremepat {|
       let iter =
         core::iter::traits::collect::?::into_iter::?range_name
@@ -1120,6 +1148,35 @@ let resugar_loops =
       let e_body_sub = Krml.DeBruijn.subst e_some_i 0 e_body in
       let rest_sub = List.map (fun e -> (Krml.DeBruijn.subst eunit 0 e)) rest in
       Some (t1, e_start, e_end, [e_body_sub], rest_sub)
+
+    | [%cremepat {|
+      let iter =
+        core::iter::traits::collect::?::into_iter::?range_name
+          ({ start: ?e_start, end: ?e_end });
+      while true {
+        let x = core::iter::range::?::next::?t1_name(&iter);
+        match x {
+          None -> break,
+          Some ? -> ?e_unit
+        };
+        (let i = match x {
+           Some ? -> ?e_i
+         };
+         ?e_body)
+      };
+      ?rest..
+    |}]
+      when Krml.KString.starts_with range_name "<core::ops::range::Range::"
+           && e_unit.node = EUnit && e_i.node = EBound 0 ->
+      let t1 = type_of_int_name t1_name in
+      let e_some_i =
+        with_type (Builtin.mk_option t1) (ECons ("Some", [ with_type t1 (EBound 0) ]))
+      in
+      (* Keep the new for-loop's `i` binder, but remove the temporary option and iterator. *)
+      let e_body =
+        Krml.DeBruijn.subst eunit 1 (Krml.DeBruijn.subst e_some_i 1 e_body)
+      in
+      Some (t1, e_start, e_end, [ e_body ], rest)
 
     (* Special variant that appears in external crates -- TODO: do we need variants of all other
        patterns? *)
