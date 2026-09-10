@@ -746,6 +746,80 @@ let resugar_loops =
   method! visit_expr ((), _ as env) e =
     let open Krml.Helpers in
     let step_by = match e with
+      (* Monomorphized Iterator::step_by keeps the range in its name, and the loop's
+         option test and payload extraction are separate matches. *)
+      | [%cremepat {|
+        let iter = core::iter::traits::collect::?::into_iter::?iter_name(
+          core::iter::traits::iterator::Iterator::step_by::?range_name(
+            { start: ?e_start, end: ?e_end }, ?e_increment));
+        while true {
+          let x = core::iter::adapters::step_by::?::next::?next_name(&iter);
+          match x { None -> break, Some ? -> ?e_unit };
+          (let i = match x { Some ? -> ?e_i }; ?e_body)
+        };
+        ?rest..
+      |}]
+        when Krml.KString.starts_with iter_name "<core::iter::adapters::step_by::StepBy::"
+             && Krml.KString.starts_with range_name "<core::ops::range::Range::"
+             && range_name = next_name && e_unit.node = EUnit && e_i.node = EBound 0 ->
+        let t1 = e_start.typ in
+        let e_some_i = with_type (Builtin.mk_option t1)
+          (ECons ("Some", [with_type t1 (EBound 0)])) in
+        let e_body = Krml.DeBruijn.subst eunit 1
+          (Krml.DeBruijn.subst e_some_i 1 e_body) in
+        Some (t1, e_start, e_end, e_increment, [e_body], rest)
+
+      | [%cremepat {|
+        let iter = core::iter::traits::collect::?::into_iter::?iter_name(
+          core::iter::traits::iterator::Iterator::step_by::?range_name(
+            { start: ?e_start, end: ?e_end }, ?e_increment));
+        while true {
+          let x = core::iter::adapters::step_by::?::next::?next_name(&iter);
+          match x { None -> break, Some ? -> ?e_unit };
+          (let i = match x { Some ? -> ?e_i }; ?e_body)
+        }
+      |}]
+        when Krml.KString.starts_with iter_name "<core::iter::adapters::step_by::StepBy::"
+             && Krml.KString.starts_with range_name "<core::ops::range::Range::"
+             && range_name = next_name && e_unit.node = EUnit && e_i.node = EBound 0 ->
+        let t1 = e_start.typ in
+        let e_some_i = with_type (Builtin.mk_option t1)
+          (ECons ("Some", [with_type t1 (EBound 0)])) in
+        let e_body = Krml.DeBruijn.subst eunit 1
+          (Krml.DeBruijn.subst e_some_i 1 e_body) in
+        Some (t1, e_start, e_end, e_increment, [e_body], [])
+
+      | [%cremepat {|
+        let iter = core::iter::traits::collect::?::into_iter::?iter_name(
+          core::iter::traits::iterator::Iterator::step_by::?range_name(
+            { start: ?e_start, end: ?e_end }, ?e_increment));
+        while true {
+          match (core::iter::adapters::step_by::?::next::?next_name(&iter)) {
+            None -> break, Some ? -> ?e_body
+          }
+        };
+        ?rest..
+      |}]
+        when Krml.KString.starts_with iter_name "<core::iter::adapters::step_by::StepBy::"
+             && Krml.KString.starts_with range_name "<core::ops::range::Range::"
+             && range_name = next_name ->
+        Some (e_start.typ, e_start, e_end, e_increment, [e_body], rest)
+
+      | [%cremepat {|
+        let iter = core::iter::traits::collect::?::into_iter::?iter_name(
+          core::iter::traits::iterator::Iterator::step_by::?range_name(
+            { start: ?e_start, end: ?e_end }, ?e_increment));
+        while true {
+          match (core::iter::adapters::step_by::?::next::?next_name(&iter)) {
+            None -> break, Some ? -> ?e_body
+          }
+        }
+      |}]
+        when Krml.KString.starts_with iter_name "<core::iter::adapters::step_by::StepBy::"
+             && Krml.KString.starts_with range_name "<core::ops::range::Range::"
+             && range_name = next_name ->
+        Some (e_start.typ, e_start, e_end, e_increment, [e_body], [])
+
       (* Non-terminal position (step-by for-loop) *)
       | [%cremepat {|
         let iter =
