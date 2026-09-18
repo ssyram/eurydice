@@ -394,6 +394,77 @@ let expand_mono_slice_ops =
       | _ -> super#visit_expr env e
   end
 
+(* Lower monomorphic str RangeFrom indexing without relying on a generic C stub.
+   Evaluate both arguments once, preserve aliasing, and abort on invalid bounds or
+   a UTF-8 continuation byte. The end position is valid and must not be read. *)
+let expand_mono_str_index =
+  object
+    inherit [_] map as super
+
+    method! visit_expr env e =
+      match AstOfLlbc.re_polymorphize e with
+      | [%cremepat {| core::str::traits::?impl::index<?range_t>(?str, ?range) |}]
+        when Krml.KString.starts_with impl "{impl core::ops::index::Index<"
+             && range_t = TQualified ([ "core"; "ops"; "range"; "RangeFrom" ], "<usize>")
+             && str.typ = Builtin.str_t ~const:true
+             && e.typ = str.typ ->
+          let str = super#visit_expr_w () str in
+          let range = super#visit_expr_w () range in
+          let s = with_type str.typ (EBound 1) in
+          let r = with_type range.typ (EBound 0) in
+          let start = with_type (TInt SizeT) (EField (r, "start")) in
+          let len = with_type (TInt SizeT) (EField (s, "meta")) in
+          let ptr =
+            with_type (TBuf (Builtin.c_char_t, constness_of_slice_type str.typ)) (EField (s, "ptr"))
+          in
+          let in_bounds = with_type TBool (EApp (H.mk_op Lte (TInt SizeT), [ start; len ])) in
+          let at_end = with_type TBool (EApp (H.mk_op Eq (TInt SizeT), [ start; len ])) in
+          let byte =
+            with_type (TInt UInt8)
+              (ECast (with_type Builtin.c_char_t (EBufRead (ptr, start)), TInt UInt8))
+          in
+          let masked =
+            with_type (TInt UInt8)
+              (EApp (H.mk_op BAnd (TInt UInt8), [ byte; expr_of_constant (UInt8, "192") ]))
+          in
+          let boundary =
+            with_type TBool
+              (EApp (H.mk_op Neq (TInt UInt8), [ masked; expr_of_constant (UInt8, "128") ]))
+          in
+          let check condition message =
+            H.with_unit
+              (EIfThenElse (condition, H.eunit, H.with_unit (EAbort (Some TUnit, Some message))))
+          in
+          let result =
+            with_type e.typ
+              (EFlat
+                 [
+                   Some "ptr", with_type ptr.typ (EBufSub (ptr, start));
+                   Some "meta", with_type len.typ (EApp (H.mk_op Sub (TInt SizeT), [ len; start ]));
+                 ])
+          in
+          with_type e.typ
+            (ELet
+               ( H.fresh_binder "str" str.typ,
+                 str,
+                 with_type e.typ
+                   (ELet
+                      ( H.fresh_binder "range" range.typ,
+                        Krml.DeBruijn.lift 1 range,
+                        with_type e.typ
+                          (ESequence
+                             [
+                               check in_bounds "string index out of bounds";
+                               H.with_unit
+                                 (EIfThenElse
+                                    ( at_end,
+                                      H.eunit,
+                                      check boundary "string index is not a character boundary" ));
+                               result;
+                             ]) )) ))
+      | _ -> super#visit_expr env e
+  end
+
 let precleanup files =
   (* Match the existing glue representation of opaque TryFromSliceError. *)
   let files =
@@ -413,6 +484,7 @@ let precleanup files =
   let files = drop_unused_builtin files in
   let files = expand_mono_slice_to_array#visit_files (0, 0) files in
   let files = expand_mono_slice_ops#visit_files () files in
+  let files = expand_mono_str_index#visit_files () files in
   let files = expand_slice_to_array#visit_files (0, 0) files in
   files
 
