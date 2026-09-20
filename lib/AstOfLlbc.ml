@@ -3007,6 +3007,113 @@ let is_global_initializer : C.fun_source -> bool = function
   | GlobalInitializerFun _ -> true
   | _ -> false
 
+(** Recover opaque, monomorphic shared-reference PartialEq methods from the concrete trait metadata
+    and an already extracted underlying method. Only the standard library reference impl and default
+    [ne] are synthesized; custom implementations are never replaced by structural or pointer
+    comparison. If the underlying method is absent or ambiguous, leave the original external
+    declaration intact. *)
+let partial_eq_forwarder env (decl : C.fun_decl) =
+  let monomorphic (decl : C.fun_decl) =
+    decl.generics.types = [] && decl.generics.const_generics = []
+    && decl.generics.trait_clauses = []
+  in
+  match decl.body, decl.src with
+  | ( C.OpaqueBody,
+      (C.TraitImplFun (_, trait_ref, item_id, _) | C.TraitDefaultFun (trait_ref, item_id)) )
+    when monomorphic decl ->
+      let trait_decl = env.get_nth_trait_decl trait_ref.id in
+      let trait_name = pure_lid_of_name env (pure_c_name trait_decl.item_meta.name) in
+      let name = pure_lid_of_name env (pure_c_name decl.item_meta.name) in
+      let method_name = Charon.GAstUtils.get_method_name env.crate trait_ref.id item_id in
+      let forwarding =
+        match trait_name, name, trait_ref.generics.types with
+        | ( ([ "core"; "cmp" ], "PartialEq"),
+            ([ "core"; "cmp"; "impls"; _ ], ("eq" | "ne")),
+            [ C.TRef (_, a, C.RShared); C.TRef (_, b, C.RShared) ] ) ->
+            Some ([ a; b ], method_name, true, false)
+        | ([ "core"; "cmp" ], "PartialEq"), ([ "core"; "cmp"; "PartialEq" ], "ne"), [ a; b ] ->
+            Some ([ a; b ], "eq", false, true)
+        | _ -> None
+      in
+      Option.bind forwarding (fun (types, target_method, deref, negate) ->
+          let erase = List.map Charon.Substitute.erase_regions in
+          let candidates =
+            C.FunDeclId.Map.to_list env.crate.fun_decls
+            |> List.filter (fun (_, (candidate : C.fun_decl)) ->
+                monomorphic candidate
+                &&
+                match candidate.src with
+                | C.TraitImplFun (_, target, item_id, _) | C.TraitDefaultFun (target, item_id) ->
+                    target.id = trait_ref.id
+                    && erase target.generics.types = erase types
+                    && Charon.GAstUtils.get_method_name env.crate target.id item_id = target_method
+                | _ -> false)
+          in
+          match candidates with
+          | [ (id, target) ] ->
+              let { K.n_cgs; n }, typ = typ_of_signature env (C.bound_fun_sig_of_decl decl) in
+              let output, inputs = Krml.Helpers.flatten_arrow typ in
+              let arguments =
+                List.mapi (fun i t -> K.with_type t (K.EBound (List.length inputs - i - 1))) inputs
+              in
+              let arguments =
+                if deref then
+                  List.map
+                    (fun e ->
+                      Krml.Helpers.mk_deref ~const:(not !Options.no_const)
+                        (Krml.Helpers.assert_tbuf e.K.typ)
+                        e.node)
+                    arguments
+                else
+                  arguments
+              in
+              let fn_ptr : C.fn_ptr =
+                {
+                  kind = FunId (FRegular id);
+                  generics =
+                    {
+                      C.empty_generic_args with
+                      regions = List.map (fun _ -> C.RErased) target.generics.regions;
+                    };
+                }
+              in
+              let callee, _, _ = expression_of_fn_ptr env fn_ptr in
+              let ret, expected = Krml.Helpers.flatten_arrow callee.typ in
+              if
+                n_cgs <> 0 || n <> 0 || output <> K.TBool || ret <> output
+                || List.map (fun e -> e.K.typ) arguments <> expected
+              then
+                None
+              else
+                let body = K.with_type output (K.EApp (callee, arguments)) in
+                let body =
+                  if negate then
+                    K.with_type output (K.EApp (Krml.Helpers.mk_op Not K.TBool, [ body ]))
+                  else
+                    body
+                in
+                L.log "AstOfLlbc" "Recovered PartialEq forwarding: %s -> %s"
+                  (string_of_name env decl.item_meta.name)
+                  (string_of_name env target.item_meta.name);
+                Some
+                  (K.DFunction
+                     ( None,
+                       flags_of_meta decl.item_meta,
+                       0,
+                       0,
+                       output,
+                       lid_of_name env decl.item_meta.name,
+                       List.mapi
+                         (fun i t -> Krml.Helpers.fresh_binder ("arg" ^ string_of_int i) t)
+                         inputs,
+                       body ))
+          | _ ->
+              L.log "AstOfLlbc" "Cannot recover PartialEq forwarding: %s (%d target methods)"
+                (string_of_name env decl.item_meta.name)
+                (List.length candidates);
+              None)
+  | _ -> None
+
 let decl_of_id (env : env) (id : C.item_id) : K.decl option =
   match id with
   | IdType id -> begin
@@ -3109,8 +3216,12 @@ let decl_of_id (env : env) (id : C.item_id) : K.decl option =
               | UnstructuredBody _ ),
               _ ) ->
               (* Opaque function *)
-              let { K.n_cgs; n }, t = typ_of_signature env (C.bound_fun_sig_of_decl decl) in
-              Some (K.DExternal (None, [], n_cgs, n, name, t, []))
+              begin match partial_eq_forwarder env decl with
+              | Some decl -> Some decl
+              | None ->
+                  let { K.n_cgs; n }, t = typ_of_signature env (C.bound_fun_sig_of_decl decl) in
+                  Some (K.DExternal (None, [], n_cgs, n, name, t, []))
+              end
           | StructuredBody { locals; body; _ }, _ ->
               if is_global_initializer src then
                 None
