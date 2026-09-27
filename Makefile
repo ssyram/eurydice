@@ -95,7 +95,6 @@ test/lvalue.llbc: CHARON_EXTRA = \
 
 test-substr: EXTRA_C = -I../../test ../../test/substr_impl.c
 test-substr: EXTRA = --config test/substr.yaml
-test-partial_eq: EXTRA_C = ../../test/partial_eq_stubs.c
 test-nested_arrays: EXTRA = -funroll-loops 0
 test-array: EXTRA = -fcomments
 test-symcrust: CFLAGS += -Wno-unused-function
