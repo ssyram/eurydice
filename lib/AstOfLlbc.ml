@@ -2380,6 +2380,29 @@ let maybe_reborrow_slice t_dst e_src =
                mk (with_type e_src.typ (EBound 0)) ))
   | _ -> e_src
 
+(** Construct a raw pointer to [pointee] from an address and metadata. Use the same representation
+    as ordinary references, including mutability and [--no-const]. Reject mismatched metadata rather
+    than silently discarding a DST's length or vtable. *)
+let expression_of_ptr_from_parts env pointee rk address metadata =
+  let const = const_of_ref_kind rk in
+  let target = ptr_typ_of_ty env ~const pointee in
+  let address = expression_of_operand env address in
+  let metadata = expression_of_operand env metadata in
+  let check_metadata expected =
+    if metadata.K.typ <> expected then
+      fail "PtrFromParts: expected metadata %a, got %a" ptyp expected ptyp metadata.typ
+  in
+  match target with
+  | K.TBuf _ ->
+      check_metadata K.TUnit;
+      K.with_type target (K.ECast (address, target))
+  | K.TApp (lid, [ base; meta ]) when is_dst_ref lid ->
+      check_metadata meta;
+      let ptr_ty = K.TBuf (base, const) in
+      let ptr = K.with_type ptr_ty (K.ECast (address, ptr_ty)) in
+      K.with_type target (K.EFlat [ Some "ptr", ptr; Some "meta", metadata ])
+  | _ -> fail "PtrFromParts: unsupported pointer representation %a" ptyp target
+
 let expression_of_rvalue (env : env) (p : C.rvalue) expected_ty : K.expr =
   match p with
   | Use (op, _) -> expression_of_operand env op
@@ -2542,6 +2565,8 @@ let expression_of_rvalue (env : env) (p : C.rvalue) expected_ty : K.expr =
       K.(
         with_type expected_t
           (EApp (Builtin.(expr_of_builtin_t discriminant) [ e.typ; expected_t ], [ e ])))
+  | Aggregate (AggregatedRawPtr (pointee, rk), [ address; metadata ]) ->
+      expression_of_ptr_from_parts env pointee rk address metadata
   | Aggregate (AggregatedAdt ({ id = TBuiltin TTuple; _ }, _, None), ops) ->
       begin match ops with
       | [] -> K.with_type TUnit K.EUnit
@@ -2709,6 +2734,18 @@ and expression_of_statement_kind (env : env) (ret_var : C.local_id) (s : C.state
       | _ -> Krml.Helpers.eunit
       end
   | Assert (a, _on_failure, _) -> expression_of_assertion env a
+  | Call
+      ( {
+          func =
+            FnOpRegular
+              { kind = FunId (FBuiltin (PtrFromParts rk)); generics = { types = [ pointee ]; _ } };
+          args = [ address; metadata ];
+          dest;
+        },
+        _ ) ->
+      let dest = expression_of_place env dest in
+      let rhs = expression_of_ptr_from_parts env pointee rk address metadata in
+      Krml.Helpers.with_unit (K.EAssign (dest, rhs))
   | Call
       ( {
           func =
