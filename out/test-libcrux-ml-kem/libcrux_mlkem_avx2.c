@@ -111,10 +111,10 @@ static KRML_MUSTINLINE Eurydice_arr_58 PRFxN_3b(const Eurydice_arr_801 *input)
   Eurydice_arr_89 out1 = { .data = { 0U } };
   Eurydice_arr_89 out2 = { .data = { 0U } };
   Eurydice_arr_89 out3 = { .data = { 0U } };
-  libcrux_sha3_avx2_x4_shake256(Eurydice_array_to_slice_shared_b5(input->data),
+  libcrux_sha3_avx2_x4_shake256(Eurydice_array_to_slice_shared_b5(&input->data[0U]),
     Eurydice_array_to_slice_shared_b5(&input->data[1U]),
     Eurydice_array_to_slice_shared_b5(&input->data[2U]),
-    Eurydice_array_to_slice_shared_b5(input->data),
+    Eurydice_array_to_slice_shared_b5(&input->data[0U]),
     Eurydice_array_to_slice_mut_78(&out0),
     Eurydice_array_to_slice_mut_78(&out1),
     Eurydice_array_to_slice_mut_78(&out2),
@@ -140,7 +140,7 @@ static KRML_MUSTINLINE Eurydice_arr_3b0 PRFxN_f5(const Eurydice_arr_890 *input)
   Eurydice_arr_89 out1 = { .data = { 0U } };
   Eurydice_arr_89 out2 = { .data = { 0U } };
   Eurydice_arr_89 out3 = { .data = { 0U } };
-  libcrux_sha3_avx2_x4_shake256(Eurydice_array_to_slice_shared_b5(input->data),
+  libcrux_sha3_avx2_x4_shake256(Eurydice_array_to_slice_shared_b5(&input->data[0U]),
     Eurydice_array_to_slice_shared_b5(&input->data[1U]),
     Eurydice_array_to_slice_shared_b5(&input->data[2U]),
     Eurydice_array_to_slice_shared_b5(&input->data[3U]),
@@ -168,10 +168,10 @@ static KRML_MUSTINLINE Eurydice_arr_f3 PRFxN_d50(const Eurydice_arr_4d *input)
   Eurydice_arr_89 out1 = { .data = { 0U } };
   Eurydice_arr_89 out2 = { .data = { 0U } };
   Eurydice_arr_89 out3 = { .data = { 0U } };
-  libcrux_sha3_avx2_x4_shake256(Eurydice_array_to_slice_shared_b5(input->data),
+  libcrux_sha3_avx2_x4_shake256(Eurydice_array_to_slice_shared_b5(&input->data[0U]),
     Eurydice_array_to_slice_shared_b5(&input->data[1U]),
-    Eurydice_array_to_slice_shared_b5(input->data),
-    Eurydice_array_to_slice_shared_b5(input->data),
+    Eurydice_array_to_slice_shared_b5(&input->data[0U]),
+    Eurydice_array_to_slice_shared_b5(&input->data[0U]),
     Eurydice_array_to_slice_mut_78(&out0),
     Eurydice_array_to_slice_mut_78(&out1),
     Eurydice_array_to_slice_mut_78(&out2),
@@ -194,10 +194,10 @@ static KRML_MUSTINLINE Eurydice_arr_eb PRFxN_d5(const Eurydice_arr_4d *input)
   Eurydice_arr_1c out1 = { .data = { 0U } };
   Eurydice_arr_1c out2 = { .data = { 0U } };
   Eurydice_arr_1c out3 = { .data = { 0U } };
-  libcrux_sha3_avx2_x4_shake256(Eurydice_array_to_slice_shared_b5(input->data),
+  libcrux_sha3_avx2_x4_shake256(Eurydice_array_to_slice_shared_b5(&input->data[0U]),
     Eurydice_array_to_slice_shared_b5(&input->data[1U]),
-    Eurydice_array_to_slice_shared_b5(input->data),
-    Eurydice_array_to_slice_shared_b5(input->data),
+    Eurydice_array_to_slice_shared_b5(&input->data[0U]),
+    Eurydice_array_to_slice_shared_b5(&input->data[0U]),
     Eurydice_array_to_slice_mut_d9(&out0),
     Eurydice_array_to_slice_mut_d9(&out1),
     Eurydice_array_to_slice_mut_d9(&out2),
@@ -217,10 +217,10 @@ shake128_init_absorb_final_78(const Eurydice_arr_81 *input)
 {
   Eurydice_arr_c40 state = libcrux_sha3_avx2_x4_incremental_init();
   libcrux_sha3_avx2_x4_incremental_shake128_absorb_final(&state,
-    Eurydice_array_to_slice_shared_e9(input->data),
+    Eurydice_array_to_slice_shared_e9(&input->data[0U]),
     Eurydice_array_to_slice_shared_e9(&input->data[1U]),
     Eurydice_array_to_slice_shared_e9(&input->data[2U]),
-    Eurydice_array_to_slice_shared_e9(input->data));
+    Eurydice_array_to_slice_shared_e9(&input->data[0U]));
   return state;
 }
 
@@ -234,7 +234,7 @@ shake128_init_absorb_final_23(const Eurydice_arr_56 *input)
 {
   Eurydice_arr_c40 state = libcrux_sha3_avx2_x4_incremental_init();
   libcrux_sha3_avx2_x4_incremental_shake128_absorb_final(&state,
-    Eurydice_array_to_slice_shared_e9(input->data),
+    Eurydice_array_to_slice_shared_e9(&input->data[0U]),
     Eurydice_array_to_slice_shared_e9(&input->data[1U]),
     Eurydice_array_to_slice_shared_e9(&input->data[2U]),
     Eurydice_array_to_slice_shared_e9(&input->data[3U]));
@@ -251,10 +251,10 @@ shake128_init_absorb_final_af(const Eurydice_arr_bf *input)
 {
   Eurydice_arr_c40 state = libcrux_sha3_avx2_x4_incremental_init();
   libcrux_sha3_avx2_x4_incremental_shake128_absorb_final(&state,
-    Eurydice_array_to_slice_shared_e9(input->data),
+    Eurydice_array_to_slice_shared_e9(&input->data[0U]),
     Eurydice_array_to_slice_shared_e9(&input->data[1U]),
-    Eurydice_array_to_slice_shared_e9(input->data),
-    Eurydice_array_to_slice_shared_e9(input->data));
+    Eurydice_array_to_slice_shared_e9(&input->data[0U]),
+    Eurydice_array_to_slice_shared_e9(&input->data[0U]));
   return state;
 }
 
@@ -829,9 +829,12 @@ libcrux_ml_kem_vector_avx2_serialize_serialize_1(__m256i vector)
   __m128i high_msbs = mm256_extracti128_si256(1, lsb_to_msb, __m128i);
   __m128i msbs = mm_packs_epi16(low_msbs, high_msbs);
   int32_t bits_packed = mm_movemask_epi8(msbs);
-  Eurydice_array_u8x2
-  result = { .data = { (uint8_t)bits_packed, (uint8_t)(bits_packed >> 8U) } };
-  return result;
+  return
+    (
+      KRML_CLITERAL(Eurydice_array_u8x2){
+        .data = { (uint8_t)bits_packed, (uint8_t)(bits_packed >> 8U) }
+      }
+    );
 }
 
 KRML_MUSTINLINE size_t
@@ -1723,13 +1726,7 @@ libcrux_ml_kem_vector_avx2_ntt_multiply(
   int16_t zeta3
 )
 {
-  return
-    libcrux_ml_kem_vector_avx2_ntt_ntt_multiply(lhs[0U],
-      rhs[0U],
-      zeta0,
-      zeta1,
-      zeta2,
-      zeta3);
+  return libcrux_ml_kem_vector_avx2_ntt_ntt_multiply(*lhs, *rhs, zeta0, zeta1, zeta2, zeta3);
 }
 
 /**
@@ -2668,7 +2665,7 @@ This function found in impl {impl libcrux_ml_kem::vector::traits::Operations for
 */
 KRML_MUSTINLINE __m256i libcrux_ml_kem_vector_avx2_sub_14(__m256i lhs, const __m256i *rhs)
 {
-  return libcrux_ml_kem_vector_avx2_arithmetic_sub(lhs, rhs[0U]);
+  return libcrux_ml_kem_vector_avx2_arithmetic_sub(lhs, *rhs);
 }
 
 /**
@@ -2676,7 +2673,7 @@ This function found in impl {impl libcrux_ml_kem::vector::traits::Operations for
 */
 KRML_MUSTINLINE __m256i libcrux_ml_kem_vector_avx2_add_14(__m256i lhs, const __m256i *rhs)
 {
-  return libcrux_ml_kem_vector_avx2_arithmetic_add(lhs, rhs[0U]);
+  return libcrux_ml_kem_vector_avx2_arithmetic_add(lhs, *rhs);
 }
 
 KRML_MUSTINLINE void
@@ -2760,7 +2757,7 @@ This function found in impl {impl core::clone::Clone for libcrux_ml_kem::vector:
 */
 inline __m256i libcrux_ml_kem_vector_avx2_clone_a4(const __m256i *self)
 {
-  return self[0U];
+  return *self;
 }
 
 /**
@@ -2773,7 +2770,7 @@ with const generics
 - K= 3
 */
 static KRML_MUSTINLINE Eurydice_arr_c7
-cpa_keygen_seed_1e_b6(Eurydice_borrow_slice_u8 key_generation_seed)
+cpa_keygen_seed_1e_e8(Eurydice_borrow_slice_u8 key_generation_seed)
 {
   Eurydice_arr_fa seed = { .data = { 0U } };
   Eurydice_slice_copy(Eurydice_array_to_subslice_mut_d49(&seed,
@@ -2799,7 +2796,7 @@ with const generics
 - K= 4
 */
 static KRML_MUSTINLINE Eurydice_arr_c7
-cpa_keygen_seed_1e_39(Eurydice_borrow_slice_u8 key_generation_seed)
+cpa_keygen_seed_1e_b0(Eurydice_borrow_slice_u8 key_generation_seed)
 {
   Eurydice_arr_fa seed = { .data = { 0U } };
   Eurydice_slice_copy(Eurydice_array_to_subslice_mut_d49(&seed,
@@ -2825,7 +2822,7 @@ with const generics
 - K= 2
 */
 static KRML_MUSTINLINE Eurydice_arr_c7
-cpa_keygen_seed_1e_b1(Eurydice_borrow_slice_u8 key_generation_seed)
+cpa_keygen_seed_1e_94(Eurydice_borrow_slice_u8 key_generation_seed)
 {
   Eurydice_arr_fa seed = { .data = { 0U } };
   Eurydice_slice_copy(Eurydice_array_to_subslice_mut_d49(&seed,
@@ -2851,7 +2848,7 @@ with const generics
 - K= 3
 */
 static KRML_MUSTINLINE Eurydice_arr_ec
-entropy_preprocess_1e_b6(Eurydice_borrow_slice_u8 randomness)
+entropy_preprocess_1e_e8(Eurydice_borrow_slice_u8 randomness)
 {
   Eurydice_arr_ec out = { .data = { 0U } };
   Eurydice_slice_copy(Eurydice_array_to_slice_mut_01(&out), randomness, uint8_t);
@@ -2868,7 +2865,7 @@ with const generics
 - K= 4
 */
 static KRML_MUSTINLINE Eurydice_arr_ec
-entropy_preprocess_1e_39(Eurydice_borrow_slice_u8 randomness)
+entropy_preprocess_1e_b0(Eurydice_borrow_slice_u8 randomness)
 {
   Eurydice_arr_ec out = { .data = { 0U } };
   Eurydice_slice_copy(Eurydice_array_to_slice_mut_01(&out), randomness, uint8_t);
@@ -2885,7 +2882,7 @@ with const generics
 - K= 2
 */
 static KRML_MUSTINLINE Eurydice_arr_ec
-entropy_preprocess_1e_b1(Eurydice_borrow_slice_u8 randomness)
+entropy_preprocess_1e_94(Eurydice_borrow_slice_u8 randomness)
 {
   Eurydice_arr_ec out = { .data = { 0U } };
   Eurydice_slice_copy(Eurydice_array_to_slice_mut_01(&out), randomness, uint8_t);
@@ -3742,15 +3739,15 @@ static KRML_MUSTINLINE Eurydice_arr_13 from_i16_array_0b_52(Eurydice_borrow_slic
 }
 
 /**
-This function found in impl {impl core::ops::function::FnMut<([i16; 272 : usize],), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause2]> for libcrux_ml_kem::sampling::sample_from_xof::closure<Vector, Hasher, K>[@TraitClause0, @TraitClause1, @TraitClause2, @TraitClause3]}
+This function found in impl {impl core::ops::function::FnMut<([i16; 272 : usize],), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause2]> for libcrux_ml_kem::sampling::sample_from_xof::{closure}<Vector, Hasher, K>[@TraitClause0, @TraitClause1, @TraitClause2, @TraitClause3]}
 */
 /**
-A monomorphic instance of libcrux_ml_kem.sampling.sample_from_xof.call_mut_f3
+A monomorphic instance of libcrux_ml_kem.sampling.sample_from_xof.call_mut_23
 with types libcrux_ml_kem_vector_avx2_SIMD256Vector, libcrux_ml_kem_hash_functions_portable_PortableHash[[$3size_t]]
 with const generics
 - K= 3
 */
-static Eurydice_arr_13 call_mut_f3_7e1(Eurydice_arr_5b tupled_args)
+static Eurydice_arr_13 call_mut_23_7e1(Eurydice_arr_5b tupled_args)
 {
   Eurydice_arr_5b s = tupled_args;
   return
@@ -3759,15 +3756,15 @@ static Eurydice_arr_13 call_mut_f3_7e1(Eurydice_arr_5b tupled_args)
 }
 
 /**
-This function found in impl {impl core::ops::function::FnMut<([i16; 272 : usize],), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause2]> for libcrux_ml_kem::sampling::sample_from_xof::closure<Vector, Hasher, K>[@TraitClause0, @TraitClause1, @TraitClause2, @TraitClause3]}
+This function found in impl {impl core::ops::function::FnMut<([i16; 272 : usize],), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause2]> for libcrux_ml_kem::sampling::sample_from_xof::{closure}<Vector, Hasher, K>[@TraitClause0, @TraitClause1, @TraitClause2, @TraitClause3]}
 */
 /**
-A monomorphic instance of libcrux_ml_kem.sampling.sample_from_xof.call_mut_f3
+A monomorphic instance of libcrux_ml_kem.sampling.sample_from_xof.call_mut_23
 with types libcrux_ml_kem_vector_avx2_SIMD256Vector, libcrux_ml_kem_hash_functions_avx2_Simd256Hash
 with const generics
 - K= 3
 */
-static Eurydice_arr_13 call_mut_f3_281(Eurydice_arr_5b tupled_args)
+static Eurydice_arr_13 call_mut_23_281(Eurydice_arr_5b tupled_args)
 {
   Eurydice_arr_5b s = tupled_args;
   return
@@ -3776,15 +3773,15 @@ static Eurydice_arr_13 call_mut_f3_281(Eurydice_arr_5b tupled_args)
 }
 
 /**
-This function found in impl {impl core::ops::function::FnMut<([i16; 272 : usize],), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause2]> for libcrux_ml_kem::sampling::sample_from_xof::closure<Vector, Hasher, K>[@TraitClause0, @TraitClause1, @TraitClause2, @TraitClause3]}
+This function found in impl {impl core::ops::function::FnMut<([i16; 272 : usize],), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause2]> for libcrux_ml_kem::sampling::sample_from_xof::{closure}<Vector, Hasher, K>[@TraitClause0, @TraitClause1, @TraitClause2, @TraitClause3]}
 */
 /**
-A monomorphic instance of libcrux_ml_kem.sampling.sample_from_xof.call_mut_f3
+A monomorphic instance of libcrux_ml_kem.sampling.sample_from_xof.call_mut_23
 with types libcrux_ml_kem_vector_avx2_SIMD256Vector, libcrux_ml_kem_hash_functions_portable_PortableHash[[$4size_t]]
 with const generics
 - K= 4
 */
-static Eurydice_arr_13 call_mut_f3_7e0(Eurydice_arr_5b tupled_args)
+static Eurydice_arr_13 call_mut_23_7e0(Eurydice_arr_5b tupled_args)
 {
   Eurydice_arr_5b s = tupled_args;
   return
@@ -3793,15 +3790,15 @@ static Eurydice_arr_13 call_mut_f3_7e0(Eurydice_arr_5b tupled_args)
 }
 
 /**
-This function found in impl {impl core::ops::function::FnMut<([i16; 272 : usize],), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause2]> for libcrux_ml_kem::sampling::sample_from_xof::closure<Vector, Hasher, K>[@TraitClause0, @TraitClause1, @TraitClause2, @TraitClause3]}
+This function found in impl {impl core::ops::function::FnMut<([i16; 272 : usize],), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause2]> for libcrux_ml_kem::sampling::sample_from_xof::{closure}<Vector, Hasher, K>[@TraitClause0, @TraitClause1, @TraitClause2, @TraitClause3]}
 */
 /**
-A monomorphic instance of libcrux_ml_kem.sampling.sample_from_xof.call_mut_f3
+A monomorphic instance of libcrux_ml_kem.sampling.sample_from_xof.call_mut_23
 with types libcrux_ml_kem_vector_avx2_SIMD256Vector, libcrux_ml_kem_hash_functions_avx2_Simd256Hash
 with const generics
 - K= 4
 */
-static Eurydice_arr_13 call_mut_f3_280(Eurydice_arr_5b tupled_args)
+static Eurydice_arr_13 call_mut_23_280(Eurydice_arr_5b tupled_args)
 {
   Eurydice_arr_5b s = tupled_args;
   return
@@ -3810,15 +3807,15 @@ static Eurydice_arr_13 call_mut_f3_280(Eurydice_arr_5b tupled_args)
 }
 
 /**
-This function found in impl {impl core::ops::function::FnMut<([i16; 272 : usize],), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause2]> for libcrux_ml_kem::sampling::sample_from_xof::closure<Vector, Hasher, K>[@TraitClause0, @TraitClause1, @TraitClause2, @TraitClause3]}
+This function found in impl {impl core::ops::function::FnMut<([i16; 272 : usize],), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause2]> for libcrux_ml_kem::sampling::sample_from_xof::{closure}<Vector, Hasher, K>[@TraitClause0, @TraitClause1, @TraitClause2, @TraitClause3]}
 */
 /**
-A monomorphic instance of libcrux_ml_kem.sampling.sample_from_xof.call_mut_f3
+A monomorphic instance of libcrux_ml_kem.sampling.sample_from_xof.call_mut_23
 with types libcrux_ml_kem_vector_avx2_SIMD256Vector, libcrux_ml_kem_hash_functions_portable_PortableHash[[$2size_t]]
 with const generics
 - K= 2
 */
-static Eurydice_arr_13 call_mut_f3_7e(Eurydice_arr_5b tupled_args)
+static Eurydice_arr_13 call_mut_23_7e(Eurydice_arr_5b tupled_args)
 {
   Eurydice_arr_5b s = tupled_args;
   return
@@ -3827,15 +3824,15 @@ static Eurydice_arr_13 call_mut_f3_7e(Eurydice_arr_5b tupled_args)
 }
 
 /**
-This function found in impl {impl core::ops::function::FnMut<([i16; 272 : usize],), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause2]> for libcrux_ml_kem::sampling::sample_from_xof::closure<Vector, Hasher, K>[@TraitClause0, @TraitClause1, @TraitClause2, @TraitClause3]}
+This function found in impl {impl core::ops::function::FnMut<([i16; 272 : usize],), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause2]> for libcrux_ml_kem::sampling::sample_from_xof::{closure}<Vector, Hasher, K>[@TraitClause0, @TraitClause1, @TraitClause2, @TraitClause3]}
 */
 /**
-A monomorphic instance of libcrux_ml_kem.sampling.sample_from_xof.call_mut_f3
+A monomorphic instance of libcrux_ml_kem.sampling.sample_from_xof.call_mut_23
 with types libcrux_ml_kem_vector_avx2_SIMD256Vector, libcrux_ml_kem_hash_functions_avx2_Simd256Hash
 with const generics
 - K= 2
 */
-static Eurydice_arr_13 call_mut_f3_28(Eurydice_arr_5b tupled_args)
+static Eurydice_arr_13 call_mut_23_28(Eurydice_arr_5b tupled_args)
 {
   Eurydice_arr_5b s = tupled_args;
   return
@@ -4486,7 +4483,7 @@ static KRML_MUSTINLINE Eurydice_arr_600 sample_from_xof_7e1(const Eurydice_arr_8
     (size_t)0U,
     (size_t)3U,
     (size_t)1U,
-    arr_mapped_str.data[i] = call_mut_f3_7e1(out.data[i]););
+    arr_mapped_str.data[i] = call_mut_23_7e1(out.data[i]););
   return arr_mapped_str;
 }
 
@@ -4522,7 +4519,7 @@ static KRML_MUSTINLINE Eurydice_arr_600 sample_from_xof_281(const Eurydice_arr_8
     (size_t)0U,
     (size_t)3U,
     (size_t)1U,
-    arr_mapped_str.data[i] = call_mut_f3_281(out.data[i]););
+    arr_mapped_str.data[i] = call_mut_23_281(out.data[i]););
   return arr_mapped_str;
 }
 
@@ -4564,7 +4561,7 @@ static KRML_MUSTINLINE Eurydice_arr_3b sample_from_xof_7e0(const Eurydice_arr_56
     (size_t)0U,
     (size_t)4U,
     (size_t)1U,
-    arr_mapped_str.data[i] = call_mut_f3_7e0(out.data[i]););
+    arr_mapped_str.data[i] = call_mut_23_7e0(out.data[i]););
   return arr_mapped_str;
 }
 
@@ -4601,7 +4598,7 @@ static KRML_MUSTINLINE Eurydice_arr_3b sample_from_xof_280(const Eurydice_arr_56
     (size_t)0U,
     (size_t)4U,
     (size_t)1U,
-    arr_mapped_str.data[i] = call_mut_f3_280(out.data[i]););
+    arr_mapped_str.data[i] = call_mut_23_280(out.data[i]););
   return arr_mapped_str;
 }
 
@@ -4641,7 +4638,7 @@ static KRML_MUSTINLINE Eurydice_arr_ee sample_from_xof_7e(const Eurydice_arr_bf 
     (size_t)0U,
     (size_t)2U,
     (size_t)1U,
-    arr_mapped_str.data[i] = call_mut_f3_7e(out.data[i]););
+    arr_mapped_str.data[i] = call_mut_23_7e(out.data[i]););
   return arr_mapped_str;
 }
 
@@ -4676,7 +4673,7 @@ static KRML_MUSTINLINE Eurydice_arr_ee sample_from_xof_28(const Eurydice_arr_bf 
     (size_t)0U,
     (size_t)2U,
     (size_t)1U,
-    arr_mapped_str.data[i] = call_mut_f3_28(out.data[i]););
+    arr_mapped_str.data[i] = call_mut_23_28(out.data[i]););
   return arr_mapped_str;
 }
 
@@ -4981,49 +4978,49 @@ sample_matrix_A_28(Eurydice_arr_e2 *A_transpose, const Eurydice_arr_31 *seed, bo
 }
 
 /**
-This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause3]> for libcrux_ml_kem::ind_cpa::generate_keypair_unpacked::closure<Vector, Hasher, Scheme, K, ETA1, ETA1_RANDOMNESS_SIZE>[@TraitClause0, @TraitClause1, @TraitClause2, @TraitClause3, @TraitClause4, @TraitClause5]}
+This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause3]> for libcrux_ml_kem::ind_cpa::generate_keypair_unpacked::{closure}<Vector, Hasher, Scheme, K, ETA1, ETA1_RANDOMNESS_SIZE>[@TraitClause0, @TraitClause1, @TraitClause2, @TraitClause3, @TraitClause4, @TraitClause5]}
 */
 /**
-A monomorphic instance of libcrux_ml_kem.ind_cpa.generate_keypair_unpacked.call_mut_6d
+A monomorphic instance of libcrux_ml_kem.ind_cpa.generate_keypair_unpacked.call_mut_fa
 with types libcrux_ml_kem_vector_avx2_SIMD256Vector, libcrux_ml_kem_hash_functions_avx2_Simd256Hash, libcrux_ml_kem_variant_MlKem
 with const generics
 - K= 3
 - ETA1= 2
 - ETA1_RANDOMNESS_SIZE= 128
 */
-static Eurydice_arr_13 call_mut_6d_ab1(void **_)
+static Eurydice_arr_13 call_mut_fa_ab1(void **_)
 {
   return ZERO_0b_52();
 }
 
 /**
-This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause3]> for libcrux_ml_kem::ind_cpa::generate_keypair_unpacked::closure<Vector, Hasher, Scheme, K, ETA1, ETA1_RANDOMNESS_SIZE>[@TraitClause0, @TraitClause1, @TraitClause2, @TraitClause3, @TraitClause4, @TraitClause5]}
+This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause3]> for libcrux_ml_kem::ind_cpa::generate_keypair_unpacked::{closure}<Vector, Hasher, Scheme, K, ETA1, ETA1_RANDOMNESS_SIZE>[@TraitClause0, @TraitClause1, @TraitClause2, @TraitClause3, @TraitClause4, @TraitClause5]}
 */
 /**
-A monomorphic instance of libcrux_ml_kem.ind_cpa.generate_keypair_unpacked.call_mut_6d
+A monomorphic instance of libcrux_ml_kem.ind_cpa.generate_keypair_unpacked.call_mut_fa
 with types libcrux_ml_kem_vector_avx2_SIMD256Vector, libcrux_ml_kem_hash_functions_avx2_Simd256Hash, libcrux_ml_kem_variant_MlKem
 with const generics
 - K= 4
 - ETA1= 2
 - ETA1_RANDOMNESS_SIZE= 128
 */
-static Eurydice_arr_13 call_mut_6d_ab0(void **_)
+static Eurydice_arr_13 call_mut_fa_ab0(void **_)
 {
   return ZERO_0b_52();
 }
 
 /**
-This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause3]> for libcrux_ml_kem::ind_cpa::generate_keypair_unpacked::closure<Vector, Hasher, Scheme, K, ETA1, ETA1_RANDOMNESS_SIZE>[@TraitClause0, @TraitClause1, @TraitClause2, @TraitClause3, @TraitClause4, @TraitClause5]}
+This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause3]> for libcrux_ml_kem::ind_cpa::generate_keypair_unpacked::{closure}<Vector, Hasher, Scheme, K, ETA1, ETA1_RANDOMNESS_SIZE>[@TraitClause0, @TraitClause1, @TraitClause2, @TraitClause3, @TraitClause4, @TraitClause5]}
 */
 /**
-A monomorphic instance of libcrux_ml_kem.ind_cpa.generate_keypair_unpacked.call_mut_6d
+A monomorphic instance of libcrux_ml_kem.ind_cpa.generate_keypair_unpacked.call_mut_fa
 with types libcrux_ml_kem_vector_avx2_SIMD256Vector, libcrux_ml_kem_hash_functions_avx2_Simd256Hash, libcrux_ml_kem_variant_MlKem
 with const generics
 - K= 2
 - ETA1= 3
 - ETA1_RANDOMNESS_SIZE= 192
 */
-static Eurydice_arr_13 call_mut_6d_ab(void **_)
+static Eurydice_arr_13 call_mut_fa_ab(void **_)
 {
   return ZERO_0b_52();
 }
@@ -5263,7 +5260,7 @@ ntt_at_layer_4_plus_52(size_t *zeta_i, Eurydice_arr_13 *re, size_t layer)
   for (size_t i0 = (size_t)0U; i0 < (size_t)128U >> (uint32_t)layer; i0++)
   {
     size_t round = i0;
-    zeta_i[0U]++;
+    (*zeta_i)++;
     size_t offset = round * step * (size_t)2U;
     size_t offset_vec = offset / (size_t)16U;
     size_t step_vec = step / (size_t)16U;
@@ -5274,7 +5271,7 @@ ntt_at_layer_4_plus_52(size_t *zeta_i, Eurydice_arr_13 *re, size_t layer)
       uu____0 =
         ntt_layer_int_vec_step_52(re->data[j],
           re->data[j + step_vec],
-          libcrux_ml_kem_polynomial_zeta(zeta_i[0U]));
+          libcrux_ml_kem_polynomial_zeta(*zeta_i));
       __m256i x = uu____0.fst;
       __m256i y = uu____0.snd;
       re->data[j] = x;
@@ -5296,10 +5293,10 @@ static KRML_MUSTINLINE void ntt_at_layer_3_52(size_t *zeta_i, Eurydice_arr_13 *r
     (size_t)16U,
     (size_t)1U,
     size_t round = i;
-    zeta_i[0U]++;
+    (*zeta_i)++;
     re->data[round] =
       libcrux_ml_kem_vector_avx2_ntt_layer_3_step_14(re->data[round],
-        libcrux_ml_kem_polynomial_zeta(zeta_i[0U])););
+        libcrux_ml_kem_polynomial_zeta(*zeta_i)););
 }
 
 /**
@@ -5315,12 +5312,12 @@ static KRML_MUSTINLINE void ntt_at_layer_2_52(size_t *zeta_i, Eurydice_arr_13 *r
     (size_t)16U,
     (size_t)1U,
     size_t round = i;
-    zeta_i[0U]++;
+    (*zeta_i)++;
     re->data[round] =
       libcrux_ml_kem_vector_avx2_ntt_layer_2_step_14(re->data[round],
-        libcrux_ml_kem_polynomial_zeta(zeta_i[0U]),
-        libcrux_ml_kem_polynomial_zeta(zeta_i[0U] + (size_t)1U));
-    zeta_i[0U]++;);
+        libcrux_ml_kem_polynomial_zeta(*zeta_i),
+        libcrux_ml_kem_polynomial_zeta(*zeta_i + (size_t)1U));
+    (*zeta_i)++;);
 }
 
 /**
@@ -5336,14 +5333,14 @@ static KRML_MUSTINLINE void ntt_at_layer_1_52(size_t *zeta_i, Eurydice_arr_13 *r
     (size_t)16U,
     (size_t)1U,
     size_t round = i;
-    zeta_i[0U]++;
+    (*zeta_i)++;
     re->data[round] =
       libcrux_ml_kem_vector_avx2_ntt_layer_1_step_14(re->data[round],
-        libcrux_ml_kem_polynomial_zeta(zeta_i[0U]),
-        libcrux_ml_kem_polynomial_zeta(zeta_i[0U] + (size_t)1U),
-        libcrux_ml_kem_polynomial_zeta(zeta_i[0U] + (size_t)2U),
-        libcrux_ml_kem_polynomial_zeta(zeta_i[0U] + (size_t)3U));
-    zeta_i[0U] += (size_t)3U;);
+        libcrux_ml_kem_polynomial_zeta(*zeta_i),
+        libcrux_ml_kem_polynomial_zeta(*zeta_i + (size_t)1U),
+        libcrux_ml_kem_polynomial_zeta(*zeta_i + (size_t)2U),
+        libcrux_ml_kem_polynomial_zeta(*zeta_i + (size_t)3U));
+    *zeta_i += (size_t)3U;);
 }
 
 /**
@@ -5558,7 +5555,7 @@ generate_keypair_unpacked_ab1(
   libcrux_ml_kem_ind_cpa_unpacked_IndCpaPublicKeyUnpacked_ef *public_key
 )
 {
-  Eurydice_arr_c7 hashed = cpa_keygen_seed_1e_b6(key_generation_seed);
+  Eurydice_arr_c7 hashed = cpa_keygen_seed_1e_e8(key_generation_seed);
   Eurydice_borrow_slice_u8_x2
   uu____0 =
     Eurydice_slice_split_at(Eurydice_array_to_slice_shared_17(&hashed),
@@ -5581,10 +5578,10 @@ generate_keypair_unpacked_ab1(
     (size_t)1U,
     /* original Rust expression is not an lvalue in C */
     void *lvalue = (void *)0U;
-    arr_struct.data[i] = call_mut_6d_ab1(&lvalue););
+    arr_struct.data[i] = call_mut_fa_ab1(&lvalue););
   Eurydice_arr_600 error_as_ntt = arr_struct;
   sample_vector_cbd_then_ntt_d61(&error_as_ntt, &prf_input, domain_separator);
-  compute_As_plus_e_e3(&public_key->t_as_ntt, &public_key->A, &private_key[0U], &error_as_ntt);
+  compute_As_plus_e_e3(&public_key->t_as_ntt, &public_key->A, private_key, &error_as_ntt);
   Eurydice_arr_ec arr;
   memcpy(arr.data, seed_for_A.ptr, (size_t)32U * sizeof (uint8_t));
   Eurydice_arr_ec
@@ -5650,7 +5647,7 @@ generate_keypair_unpacked_ab0(
   libcrux_ml_kem_ind_cpa_unpacked_IndCpaPublicKeyUnpacked_d4 *public_key
 )
 {
-  Eurydice_arr_c7 hashed = cpa_keygen_seed_1e_39(key_generation_seed);
+  Eurydice_arr_c7 hashed = cpa_keygen_seed_1e_b0(key_generation_seed);
   Eurydice_borrow_slice_u8_x2
   uu____0 =
     Eurydice_slice_split_at(Eurydice_array_to_slice_shared_17(&hashed),
@@ -5673,10 +5670,10 @@ generate_keypair_unpacked_ab0(
     (size_t)1U,
     /* original Rust expression is not an lvalue in C */
     void *lvalue = (void *)0U;
-    arr_struct.data[i] = call_mut_6d_ab0(&lvalue););
+    arr_struct.data[i] = call_mut_fa_ab0(&lvalue););
   Eurydice_arr_3b error_as_ntt = arr_struct;
   sample_vector_cbd_then_ntt_d60(&error_as_ntt, &prf_input, domain_separator);
-  compute_As_plus_e_5b(&public_key->t_as_ntt, &public_key->A, &private_key[0U], &error_as_ntt);
+  compute_As_plus_e_5b(&public_key->t_as_ntt, &public_key->A, private_key, &error_as_ntt);
   Eurydice_arr_ec arr;
   memcpy(arr.data, seed_for_A.ptr, (size_t)32U * sizeof (uint8_t));
   Eurydice_arr_ec
@@ -5742,7 +5739,7 @@ generate_keypair_unpacked_ab(
   libcrux_ml_kem_ind_cpa_unpacked_IndCpaPublicKeyUnpacked_c7 *public_key
 )
 {
-  Eurydice_arr_c7 hashed = cpa_keygen_seed_1e_b1(key_generation_seed);
+  Eurydice_arr_c7 hashed = cpa_keygen_seed_1e_94(key_generation_seed);
   Eurydice_borrow_slice_u8_x2
   uu____0 =
     Eurydice_slice_split_at(Eurydice_array_to_slice_shared_17(&hashed),
@@ -5765,10 +5762,10 @@ generate_keypair_unpacked_ab(
     (size_t)1U,
     /* original Rust expression is not an lvalue in C */
     void *lvalue = (void *)0U;
-    arr_struct.data[i] = call_mut_6d_ab(&lvalue););
+    arr_struct.data[i] = call_mut_fa_ab(&lvalue););
   Eurydice_arr_ee error_as_ntt = arr_struct;
   sample_vector_cbd_then_ntt_d6(&error_as_ntt, &prf_input, domain_separator);
-  compute_As_plus_e_16(&public_key->t_as_ntt, &public_key->A, &private_key[0U], &error_as_ntt);
+  compute_As_plus_e_16(&public_key->t_as_ntt, &public_key->A, private_key, &error_as_ntt);
   Eurydice_arr_ec arr;
   memcpy(arr.data, seed_for_A.ptr, (size_t)32U * sizeof (uint8_t));
   Eurydice_arr_ec
@@ -5777,6 +5774,24 @@ generate_keypair_unpacked_ab(
         KRML_CLITERAL(core_result_Result_07){ .tag = core_result_Ok, .val = { .case_Ok = arr } }
       ));
   public_key->seed_for_A = uu____2;
+}
+
+/**
+This function found in impl {impl core::clone::Clone for libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause2]}
+*/
+/**
+A monomorphic instance of libcrux_ml_kem.polynomial.clone_d1
+with types libcrux_ml_kem_vector_avx2_SIMD256Vector
+with const generics
+
+*/
+static inline Eurydice_arr_13 clone_d1_52(const Eurydice_arr_13 *self)
+{
+  return
+    core_array__impl_core__clone__Clone_for__T__N___clone((size_t)16U,
+      self,
+      __m256i,
+      Eurydice_arr_13);
 }
 
 /**
@@ -6515,43 +6530,43 @@ deserialize_ring_elements_reduced_16(
 }
 
 /**
-This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]> for libcrux_ml_kem::serialize::deserialize_ring_elements_reduced_out::closure<Vector, K>[@TraitClause0, @TraitClause1]}
+This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]> for libcrux_ml_kem::serialize::deserialize_ring_elements_reduced_out::{closure}<Vector, K>[@TraitClause0, @TraitClause1]}
 */
 /**
-A monomorphic instance of libcrux_ml_kem.serialize.deserialize_ring_elements_reduced_out.call_mut_d8
+A monomorphic instance of libcrux_ml_kem.serialize.deserialize_ring_elements_reduced_out.call_mut_bc
 with types libcrux_ml_kem_vector_avx2_SIMD256Vector
 with const generics
 - K= 3
 */
-static Eurydice_arr_13 call_mut_d8_e3(void **_)
+static Eurydice_arr_13 call_mut_bc_e3(void **_)
 {
   return ZERO_0b_52();
 }
 
 /**
-This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]> for libcrux_ml_kem::serialize::deserialize_ring_elements_reduced_out::closure<Vector, K>[@TraitClause0, @TraitClause1]}
+This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]> for libcrux_ml_kem::serialize::deserialize_ring_elements_reduced_out::{closure}<Vector, K>[@TraitClause0, @TraitClause1]}
 */
 /**
-A monomorphic instance of libcrux_ml_kem.serialize.deserialize_ring_elements_reduced_out.call_mut_d8
+A monomorphic instance of libcrux_ml_kem.serialize.deserialize_ring_elements_reduced_out.call_mut_bc
 with types libcrux_ml_kem_vector_avx2_SIMD256Vector
 with const generics
 - K= 4
 */
-static Eurydice_arr_13 call_mut_d8_5b(void **_)
+static Eurydice_arr_13 call_mut_bc_5b(void **_)
 {
   return ZERO_0b_52();
 }
 
 /**
-This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]> for libcrux_ml_kem::serialize::deserialize_ring_elements_reduced_out::closure<Vector, K>[@TraitClause0, @TraitClause1]}
+This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]> for libcrux_ml_kem::serialize::deserialize_ring_elements_reduced_out::{closure}<Vector, K>[@TraitClause0, @TraitClause1]}
 */
 /**
-A monomorphic instance of libcrux_ml_kem.serialize.deserialize_ring_elements_reduced_out.call_mut_d8
+A monomorphic instance of libcrux_ml_kem.serialize.deserialize_ring_elements_reduced_out.call_mut_bc
 with types libcrux_ml_kem_vector_avx2_SIMD256Vector
 with const generics
 - K= 2
 */
-static Eurydice_arr_13 call_mut_d8_16(void **_)
+static Eurydice_arr_13 call_mut_bc_16(void **_)
 {
   return ZERO_0b_52();
 }
@@ -6578,7 +6593,7 @@ deserialize_ring_elements_reduced_out_e3(Eurydice_borrow_slice_u8 public_key)
     (size_t)1U,
     /* original Rust expression is not an lvalue in C */
     void *lvalue = (void *)0U;
-    arr_struct.data[i] = call_mut_d8_e3(&lvalue););
+    arr_struct.data[i] = call_mut_bc_e3(&lvalue););
   Eurydice_arr_600 deserialized_pk = arr_struct;
   deserialize_ring_elements_reduced_e3(public_key, &deserialized_pk);
   return deserialized_pk;
@@ -6606,7 +6621,7 @@ deserialize_ring_elements_reduced_out_5b(Eurydice_borrow_slice_u8 public_key)
     (size_t)1U,
     /* original Rust expression is not an lvalue in C */
     void *lvalue = (void *)0U;
-    arr_struct.data[i] = call_mut_d8_5b(&lvalue););
+    arr_struct.data[i] = call_mut_bc_5b(&lvalue););
   Eurydice_arr_3b deserialized_pk = arr_struct;
   deserialize_ring_elements_reduced_5b(public_key, &deserialized_pk);
   return deserialized_pk;
@@ -6634,7 +6649,7 @@ deserialize_ring_elements_reduced_out_16(Eurydice_borrow_slice_u8 public_key)
     (size_t)1U,
     /* original Rust expression is not an lvalue in C */
     void *lvalue = (void *)0U;
-    arr_struct.data[i] = call_mut_d8_16(&lvalue););
+    arr_struct.data[i] = call_mut_bc_16(&lvalue););
   Eurydice_arr_ee deserialized_pk = arr_struct;
   deserialize_ring_elements_reduced_16(public_key, &deserialized_pk);
   return deserialized_pk;
@@ -7293,7 +7308,7 @@ invert_ntt_at_layer_4_plus_52(size_t *zeta_i, Eurydice_arr_13 *re, size_t layer)
   for (size_t i0 = (size_t)0U; i0 < (size_t)128U >> (uint32_t)layer; i0++)
   {
     size_t round = i0;
-    zeta_i[0U]--;
+    (*zeta_i)--;
     size_t offset = round * step * (size_t)2U;
     size_t offset_vec = offset / LIBCRUX_ML_KEM_VECTOR_TRAITS_FIELD_ELEMENTS_IN_VECTOR;
     size_t step_vec = step / LIBCRUX_ML_KEM_VECTOR_TRAITS_FIELD_ELEMENTS_IN_VECTOR;
@@ -7304,7 +7319,7 @@ invert_ntt_at_layer_4_plus_52(size_t *zeta_i, Eurydice_arr_13 *re, size_t layer)
       uu____0 =
         inv_ntt_layer_int_vec_step_reduce_52(re->data[j],
           re->data[j + step_vec],
-          libcrux_ml_kem_polynomial_zeta(zeta_i[0U]));
+          libcrux_ml_kem_polynomial_zeta(*zeta_i));
       __m256i x = uu____0.fst;
       __m256i y = uu____0.snd;
       re->data[j] = x;
@@ -7326,10 +7341,10 @@ static KRML_MUSTINLINE void invert_ntt_at_layer_3_52(size_t *zeta_i, Eurydice_ar
     (size_t)16U,
     (size_t)1U,
     size_t round = i;
-    zeta_i[0U]--;
+    (*zeta_i)--;
     re->data[round] =
       libcrux_ml_kem_vector_avx2_inv_ntt_layer_3_step_14(re->data[round],
-        libcrux_ml_kem_polynomial_zeta(zeta_i[0U])););
+        libcrux_ml_kem_polynomial_zeta(*zeta_i)););
 }
 
 /**
@@ -7345,12 +7360,12 @@ static KRML_MUSTINLINE void invert_ntt_at_layer_2_52(size_t *zeta_i, Eurydice_ar
     (size_t)16U,
     (size_t)1U,
     size_t round = i;
-    zeta_i[0U]--;
+    (*zeta_i)--;
     re->data[round] =
       libcrux_ml_kem_vector_avx2_inv_ntt_layer_2_step_14(re->data[round],
-        libcrux_ml_kem_polynomial_zeta(zeta_i[0U]),
-        libcrux_ml_kem_polynomial_zeta(zeta_i[0U] - (size_t)1U));
-    zeta_i[0U]--;);
+        libcrux_ml_kem_polynomial_zeta(*zeta_i),
+        libcrux_ml_kem_polynomial_zeta(*zeta_i - (size_t)1U));
+    (*zeta_i)--;);
 }
 
 /**
@@ -7366,14 +7381,14 @@ static KRML_MUSTINLINE void invert_ntt_at_layer_1_52(size_t *zeta_i, Eurydice_ar
     (size_t)16U,
     (size_t)1U,
     size_t round = i;
-    zeta_i[0U]--;
+    (*zeta_i)--;
     re->data[round] =
       libcrux_ml_kem_vector_avx2_inv_ntt_layer_1_step_14(re->data[round],
-        libcrux_ml_kem_polynomial_zeta(zeta_i[0U]),
-        libcrux_ml_kem_polynomial_zeta(zeta_i[0U] - (size_t)1U),
-        libcrux_ml_kem_polynomial_zeta(zeta_i[0U] - (size_t)2U),
-        libcrux_ml_kem_polynomial_zeta(zeta_i[0U] - (size_t)3U));
-    zeta_i[0U] -= (size_t)3U;);
+        libcrux_ml_kem_polynomial_zeta(*zeta_i),
+        libcrux_ml_kem_polynomial_zeta(*zeta_i - (size_t)1U),
+        libcrux_ml_kem_polynomial_zeta(*zeta_i - (size_t)2U),
+        libcrux_ml_kem_polynomial_zeta(*zeta_i - (size_t)3U));
+    *zeta_i -= (size_t)3U;);
 }
 
 /**
@@ -7627,43 +7642,43 @@ add_error_reduce_0b_52(Eurydice_arr_13 *self, const Eurydice_arr_13 *error)
 }
 
 /**
-This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]> for libcrux_ml_kem::matrix::compute_vector_u::closure<Vector, K>[@TraitClause0, @TraitClause1]}
+This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]> for libcrux_ml_kem::matrix::compute_vector_u::{closure}<Vector, K>[@TraitClause0, @TraitClause1]}
 */
 /**
-A monomorphic instance of libcrux_ml_kem.matrix.compute_vector_u.call_mut_01
+A monomorphic instance of libcrux_ml_kem.matrix.compute_vector_u.call_mut_f6
 with types libcrux_ml_kem_vector_avx2_SIMD256Vector
 with const generics
 - K= 3
 */
-static Eurydice_arr_13 call_mut_01_e3(void **_)
+static Eurydice_arr_13 call_mut_f6_e3(void **_)
 {
   return ZERO_0b_52();
 }
 
 /**
-This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]> for libcrux_ml_kem::matrix::compute_vector_u::closure<Vector, K>[@TraitClause0, @TraitClause1]}
+This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]> for libcrux_ml_kem::matrix::compute_vector_u::{closure}<Vector, K>[@TraitClause0, @TraitClause1]}
 */
 /**
-A monomorphic instance of libcrux_ml_kem.matrix.compute_vector_u.call_mut_01
+A monomorphic instance of libcrux_ml_kem.matrix.compute_vector_u.call_mut_f6
 with types libcrux_ml_kem_vector_avx2_SIMD256Vector
 with const generics
 - K= 4
 */
-static Eurydice_arr_13 call_mut_01_5b(void **_)
+static Eurydice_arr_13 call_mut_f6_5b(void **_)
 {
   return ZERO_0b_52();
 }
 
 /**
-This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]> for libcrux_ml_kem::matrix::compute_vector_u::closure<Vector, K>[@TraitClause0, @TraitClause1]}
+This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]> for libcrux_ml_kem::matrix::compute_vector_u::{closure}<Vector, K>[@TraitClause0, @TraitClause1]}
 */
 /**
-A monomorphic instance of libcrux_ml_kem.matrix.compute_vector_u.call_mut_01
+A monomorphic instance of libcrux_ml_kem.matrix.compute_vector_u.call_mut_f6
 with types libcrux_ml_kem_vector_avx2_SIMD256Vector
 with const generics
 - K= 2
 */
-static Eurydice_arr_13 call_mut_01_16(void **_)
+static Eurydice_arr_13 call_mut_f6_16(void **_)
 {
   return ZERO_0b_52();
 }
@@ -7691,7 +7706,7 @@ compute_vector_u_e3(
     (size_t)1U,
     /* original Rust expression is not an lvalue in C */
     void *lvalue = (void *)0U;
-    arr_struct.data[i] = call_mut_01_e3(&lvalue););
+    arr_struct.data[i] = call_mut_f6_e3(&lvalue););
   Eurydice_arr_600 result = arr_struct;
   KRML_MAYBE_FOR3(i0,
     (size_t)0U,
@@ -7735,7 +7750,7 @@ compute_vector_u_5b(
     (size_t)1U,
     /* original Rust expression is not an lvalue in C */
     void *lvalue = (void *)0U;
-    arr_struct.data[i] = call_mut_01_5b(&lvalue););
+    arr_struct.data[i] = call_mut_f6_5b(&lvalue););
   Eurydice_arr_3b result = arr_struct;
   KRML_MAYBE_FOR4(i0,
     (size_t)0U,
@@ -7779,7 +7794,7 @@ compute_vector_u_16(
     (size_t)1U,
     /* original Rust expression is not an lvalue in C */
     void *lvalue = (void *)0U;
-    arr_struct.data[i] = call_mut_01_16(&lvalue););
+    arr_struct.data[i] = call_mut_f6_16(&lvalue););
   Eurydice_arr_ee result = arr_struct;
   KRML_MAYBE_FOR2(i0,
     (size_t)0U,
@@ -7801,10 +7816,10 @@ compute_vector_u_16(
 }
 
 /**
-This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause2]> for libcrux_ml_kem::ind_cpa::encrypt_c1::closure#1<Vector, Hasher, K, C1_LEN, U_COMPRESSION_FACTOR, BLOCK_LEN, ETA1, ETA1_RANDOMNESS_SIZE, ETA2, ETA2_RANDOMNESS_SIZE>[@TraitClause0, @TraitClause1, @TraitClause2, @TraitClause3]}
+This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause2]> for libcrux_ml_kem::ind_cpa::encrypt_c1::{closure#1}<Vector, Hasher, K, C1_LEN, U_COMPRESSION_FACTOR, BLOCK_LEN, ETA1, ETA1_RANDOMNESS_SIZE, ETA2, ETA2_RANDOMNESS_SIZE>[@TraitClause0, @TraitClause1, @TraitClause2, @TraitClause3]}
 */
 /**
-A monomorphic instance of libcrux_ml_kem.ind_cpa.encrypt_c1.call_mut_44
+A monomorphic instance of libcrux_ml_kem.ind_cpa.encrypt_c1.call_mut_af
 with types libcrux_ml_kem_vector_avx2_SIMD256Vector, libcrux_ml_kem_hash_functions_avx2_Simd256Hash
 with const generics
 - K= 3
@@ -7816,16 +7831,16 @@ with const generics
 - ETA2= 2
 - ETA2_RANDOMNESS_SIZE= 128
 */
-static Eurydice_arr_13 call_mut_44_781(void **_)
+static Eurydice_arr_13 call_mut_af_781(void **_)
 {
   return ZERO_0b_52();
 }
 
 /**
-This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause2]> for libcrux_ml_kem::ind_cpa::encrypt_c1::closure#1<Vector, Hasher, K, C1_LEN, U_COMPRESSION_FACTOR, BLOCK_LEN, ETA1, ETA1_RANDOMNESS_SIZE, ETA2, ETA2_RANDOMNESS_SIZE>[@TraitClause0, @TraitClause1, @TraitClause2, @TraitClause3]}
+This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause2]> for libcrux_ml_kem::ind_cpa::encrypt_c1::{closure#1}<Vector, Hasher, K, C1_LEN, U_COMPRESSION_FACTOR, BLOCK_LEN, ETA1, ETA1_RANDOMNESS_SIZE, ETA2, ETA2_RANDOMNESS_SIZE>[@TraitClause0, @TraitClause1, @TraitClause2, @TraitClause3]}
 */
 /**
-A monomorphic instance of libcrux_ml_kem.ind_cpa.encrypt_c1.call_mut_44
+A monomorphic instance of libcrux_ml_kem.ind_cpa.encrypt_c1.call_mut_af
 with types libcrux_ml_kem_vector_avx2_SIMD256Vector, libcrux_ml_kem_hash_functions_avx2_Simd256Hash
 with const generics
 - K= 4
@@ -7837,16 +7852,16 @@ with const generics
 - ETA2= 2
 - ETA2_RANDOMNESS_SIZE= 128
 */
-static Eurydice_arr_13 call_mut_44_780(void **_)
+static Eurydice_arr_13 call_mut_af_780(void **_)
 {
   return ZERO_0b_52();
 }
 
 /**
-This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause2]> for libcrux_ml_kem::ind_cpa::encrypt_c1::closure#1<Vector, Hasher, K, C1_LEN, U_COMPRESSION_FACTOR, BLOCK_LEN, ETA1, ETA1_RANDOMNESS_SIZE, ETA2, ETA2_RANDOMNESS_SIZE>[@TraitClause0, @TraitClause1, @TraitClause2, @TraitClause3]}
+This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause2]> for libcrux_ml_kem::ind_cpa::encrypt_c1::{closure#1}<Vector, Hasher, K, C1_LEN, U_COMPRESSION_FACTOR, BLOCK_LEN, ETA1, ETA1_RANDOMNESS_SIZE, ETA2, ETA2_RANDOMNESS_SIZE>[@TraitClause0, @TraitClause1, @TraitClause2, @TraitClause3]}
 */
 /**
-A monomorphic instance of libcrux_ml_kem.ind_cpa.encrypt_c1.call_mut_44
+A monomorphic instance of libcrux_ml_kem.ind_cpa.encrypt_c1.call_mut_af
 with types libcrux_ml_kem_vector_avx2_SIMD256Vector, libcrux_ml_kem_hash_functions_avx2_Simd256Hash
 with const generics
 - K= 2
@@ -7858,16 +7873,16 @@ with const generics
 - ETA2= 2
 - ETA2_RANDOMNESS_SIZE= 128
 */
-static Eurydice_arr_13 call_mut_44_78(void **_)
+static Eurydice_arr_13 call_mut_af_78(void **_)
 {
   return ZERO_0b_52();
 }
 
 /**
-This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause2]> for libcrux_ml_kem::ind_cpa::encrypt_c1::closure<Vector, Hasher, K, C1_LEN, U_COMPRESSION_FACTOR, BLOCK_LEN, ETA1, ETA1_RANDOMNESS_SIZE, ETA2, ETA2_RANDOMNESS_SIZE>[@TraitClause0, @TraitClause1, @TraitClause2, @TraitClause3]}
+This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause2]> for libcrux_ml_kem::ind_cpa::encrypt_c1::{closure}<Vector, Hasher, K, C1_LEN, U_COMPRESSION_FACTOR, BLOCK_LEN, ETA1, ETA1_RANDOMNESS_SIZE, ETA2, ETA2_RANDOMNESS_SIZE>[@TraitClause0, @TraitClause1, @TraitClause2, @TraitClause3]}
 */
 /**
-A monomorphic instance of libcrux_ml_kem.ind_cpa.encrypt_c1.call_mut_d0
+A monomorphic instance of libcrux_ml_kem.ind_cpa.encrypt_c1.call_mut_4c
 with types libcrux_ml_kem_vector_avx2_SIMD256Vector, libcrux_ml_kem_hash_functions_avx2_Simd256Hash
 with const generics
 - K= 3
@@ -7879,16 +7894,16 @@ with const generics
 - ETA2= 2
 - ETA2_RANDOMNESS_SIZE= 128
 */
-static Eurydice_arr_13 call_mut_d0_781(void **_)
+static Eurydice_arr_13 call_mut_4c_781(void **_)
 {
   return ZERO_0b_52();
 }
 
 /**
-This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause2]> for libcrux_ml_kem::ind_cpa::encrypt_c1::closure<Vector, Hasher, K, C1_LEN, U_COMPRESSION_FACTOR, BLOCK_LEN, ETA1, ETA1_RANDOMNESS_SIZE, ETA2, ETA2_RANDOMNESS_SIZE>[@TraitClause0, @TraitClause1, @TraitClause2, @TraitClause3]}
+This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause2]> for libcrux_ml_kem::ind_cpa::encrypt_c1::{closure}<Vector, Hasher, K, C1_LEN, U_COMPRESSION_FACTOR, BLOCK_LEN, ETA1, ETA1_RANDOMNESS_SIZE, ETA2, ETA2_RANDOMNESS_SIZE>[@TraitClause0, @TraitClause1, @TraitClause2, @TraitClause3]}
 */
 /**
-A monomorphic instance of libcrux_ml_kem.ind_cpa.encrypt_c1.call_mut_d0
+A monomorphic instance of libcrux_ml_kem.ind_cpa.encrypt_c1.call_mut_4c
 with types libcrux_ml_kem_vector_avx2_SIMD256Vector, libcrux_ml_kem_hash_functions_avx2_Simd256Hash
 with const generics
 - K= 4
@@ -7900,16 +7915,16 @@ with const generics
 - ETA2= 2
 - ETA2_RANDOMNESS_SIZE= 128
 */
-static Eurydice_arr_13 call_mut_d0_780(void **_)
+static Eurydice_arr_13 call_mut_4c_780(void **_)
 {
   return ZERO_0b_52();
 }
 
 /**
-This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause2]> for libcrux_ml_kem::ind_cpa::encrypt_c1::closure<Vector, Hasher, K, C1_LEN, U_COMPRESSION_FACTOR, BLOCK_LEN, ETA1, ETA1_RANDOMNESS_SIZE, ETA2, ETA2_RANDOMNESS_SIZE>[@TraitClause0, @TraitClause1, @TraitClause2, @TraitClause3]}
+This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause2]> for libcrux_ml_kem::ind_cpa::encrypt_c1::{closure}<Vector, Hasher, K, C1_LEN, U_COMPRESSION_FACTOR, BLOCK_LEN, ETA1, ETA1_RANDOMNESS_SIZE, ETA2, ETA2_RANDOMNESS_SIZE>[@TraitClause0, @TraitClause1, @TraitClause2, @TraitClause3]}
 */
 /**
-A monomorphic instance of libcrux_ml_kem.ind_cpa.encrypt_c1.call_mut_d0
+A monomorphic instance of libcrux_ml_kem.ind_cpa.encrypt_c1.call_mut_4c
 with types libcrux_ml_kem_vector_avx2_SIMD256Vector, libcrux_ml_kem_hash_functions_avx2_Simd256Hash
 with const generics
 - K= 2
@@ -7921,7 +7936,7 @@ with const generics
 - ETA2= 2
 - ETA2_RANDOMNESS_SIZE= 128
 */
-static Eurydice_arr_13 call_mut_d0_78(void **_)
+static Eurydice_arr_13 call_mut_4c_78(void **_)
 {
   return ZERO_0b_52();
 }
@@ -8273,7 +8288,7 @@ encrypt_c1_780(
     (size_t)1U,
     /* original Rust expression is not an lvalue in C */
     void *lvalue = (void *)0U;
-    arr_struct0.data[i] = call_mut_d0_780(&lvalue););
+    arr_struct0.data[i] = call_mut_4c_780(&lvalue););
   Eurydice_arr_3b r_as_ntt = arr_struct0;
   uint8_t domain_separator0 = sample_vector_cbd_then_ntt_d60(&r_as_ntt, &prf_input, 0U);
   Eurydice_arr_3b arr_struct;
@@ -8283,7 +8298,7 @@ encrypt_c1_780(
     (size_t)1U,
     /* original Rust expression is not an lvalue in C */
     void *lvalue = (void *)0U;
-    arr_struct.data[i] = call_mut_44_780(&lvalue););
+    arr_struct.data[i] = call_mut_af_780(&lvalue););
   Eurydice_arr_3b error_1 = arr_struct;
   uint8_t
   domain_separator = sample_ring_element_cbd_d60(&prf_input, domain_separator0, &error_1);
@@ -8324,7 +8339,7 @@ encrypt_c1_781(
     (size_t)1U,
     /* original Rust expression is not an lvalue in C */
     void *lvalue = (void *)0U;
-    arr_struct0.data[i] = call_mut_d0_781(&lvalue););
+    arr_struct0.data[i] = call_mut_4c_781(&lvalue););
   Eurydice_arr_600 r_as_ntt = arr_struct0;
   uint8_t domain_separator0 = sample_vector_cbd_then_ntt_d61(&r_as_ntt, &prf_input, 0U);
   Eurydice_arr_600 arr_struct;
@@ -8334,7 +8349,7 @@ encrypt_c1_781(
     (size_t)1U,
     /* original Rust expression is not an lvalue in C */
     void *lvalue = (void *)0U;
-    arr_struct.data[i] = call_mut_44_781(&lvalue););
+    arr_struct.data[i] = call_mut_af_781(&lvalue););
   Eurydice_arr_600 error_1 = arr_struct;
   uint8_t
   domain_separator = sample_ring_element_cbd_d61(&prf_input, domain_separator0, &error_1);
@@ -8375,7 +8390,7 @@ encrypt_c1_78(
     (size_t)1U,
     /* original Rust expression is not an lvalue in C */
     void *lvalue = (void *)0U;
-    arr_struct0.data[i] = call_mut_d0_78(&lvalue););
+    arr_struct0.data[i] = call_mut_4c_78(&lvalue););
   Eurydice_arr_ee r_as_ntt = arr_struct0;
   uint8_t domain_separator0 = sample_vector_cbd_then_ntt_d6(&r_as_ntt, &prf_input, 0U);
   Eurydice_arr_ee arr_struct;
@@ -8385,7 +8400,7 @@ encrypt_c1_78(
     (size_t)1U,
     /* original Rust expression is not an lvalue in C */
     void *lvalue = (void *)0U;
-    arr_struct.data[i] = call_mut_44_78(&lvalue););
+    arr_struct.data[i] = call_mut_af_78(&lvalue););
   Eurydice_arr_ee error_1 = arr_struct;
   uint8_t domain_separator = sample_ring_element_cbd_d6(&prf_input, domain_separator0, &error_1);
   prf_input.data[32U] = domain_separator;
@@ -8755,7 +8770,7 @@ libcrux_ml_kem_ind_cca_encapsulate_a10(
 )
 {
   Eurydice_arr_ec
-  randomness0 = entropy_preprocess_1e_39(Eurydice_array_to_slice_shared_01(randomness));
+  randomness0 = entropy_preprocess_1e_b0(Eurydice_array_to_slice_shared_01(randomness));
   Eurydice_arr_c7
   to_hash =
     libcrux_ml_kem_utils_into_padded_array_c9(Eurydice_array_to_slice_shared_01(&randomness0));
@@ -8811,7 +8826,7 @@ libcrux_ml_kem_ind_cca_encapsulate_a11(
 )
 {
   Eurydice_arr_ec
-  randomness0 = entropy_preprocess_1e_b6(Eurydice_array_to_slice_shared_01(randomness));
+  randomness0 = entropy_preprocess_1e_e8(Eurydice_array_to_slice_shared_01(randomness));
   Eurydice_arr_c7
   to_hash =
     libcrux_ml_kem_utils_into_padded_array_c9(Eurydice_array_to_slice_shared_01(&randomness0));
@@ -8867,7 +8882,7 @@ libcrux_ml_kem_ind_cca_encapsulate_a1(
 )
 {
   Eurydice_arr_ec
-  randomness0 = entropy_preprocess_1e_b1(Eurydice_array_to_slice_shared_01(randomness));
+  randomness0 = entropy_preprocess_1e_94(Eurydice_array_to_slice_shared_01(randomness));
   Eurydice_arr_c7
   to_hash =
     libcrux_ml_kem_utils_into_padded_array_c9(Eurydice_array_to_slice_shared_01(&randomness0));
@@ -8899,10 +8914,10 @@ libcrux_ml_kem_ind_cca_encapsulate_a1(
 }
 
 /**
-This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]> for libcrux_ml_kem::ind_cpa::decrypt::closure<Vector, K, CIPHERTEXT_SIZE, VECTOR_U_ENCODED_SIZE, U_COMPRESSION_FACTOR, V_COMPRESSION_FACTOR>[@TraitClause0, @TraitClause1]}
+This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]> for libcrux_ml_kem::ind_cpa::decrypt::{closure}<Vector, K, CIPHERTEXT_SIZE, VECTOR_U_ENCODED_SIZE, U_COMPRESSION_FACTOR, V_COMPRESSION_FACTOR>[@TraitClause0, @TraitClause1]}
 */
 /**
-A monomorphic instance of libcrux_ml_kem.ind_cpa.decrypt.call_mut_75
+A monomorphic instance of libcrux_ml_kem.ind_cpa.decrypt.call_mut_ac
 with types libcrux_ml_kem_vector_avx2_SIMD256Vector
 with const generics
 - K= 3
@@ -8911,16 +8926,16 @@ with const generics
 - U_COMPRESSION_FACTOR= 10
 - V_COMPRESSION_FACTOR= 4
 */
-static Eurydice_arr_13 call_mut_75_3e(void **_)
+static Eurydice_arr_13 call_mut_ac_3e(void **_)
 {
   return ZERO_0b_52();
 }
 
 /**
-This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]> for libcrux_ml_kem::ind_cpa::decrypt::closure<Vector, K, CIPHERTEXT_SIZE, VECTOR_U_ENCODED_SIZE, U_COMPRESSION_FACTOR, V_COMPRESSION_FACTOR>[@TraitClause0, @TraitClause1]}
+This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]> for libcrux_ml_kem::ind_cpa::decrypt::{closure}<Vector, K, CIPHERTEXT_SIZE, VECTOR_U_ENCODED_SIZE, U_COMPRESSION_FACTOR, V_COMPRESSION_FACTOR>[@TraitClause0, @TraitClause1]}
 */
 /**
-A monomorphic instance of libcrux_ml_kem.ind_cpa.decrypt.call_mut_75
+A monomorphic instance of libcrux_ml_kem.ind_cpa.decrypt.call_mut_ac
 with types libcrux_ml_kem_vector_avx2_SIMD256Vector
 with const generics
 - K= 4
@@ -8929,16 +8944,16 @@ with const generics
 - U_COMPRESSION_FACTOR= 11
 - V_COMPRESSION_FACTOR= 5
 */
-static Eurydice_arr_13 call_mut_75_b2(void **_)
+static Eurydice_arr_13 call_mut_ac_b2(void **_)
 {
   return ZERO_0b_52();
 }
 
 /**
-This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]> for libcrux_ml_kem::ind_cpa::decrypt::closure<Vector, K, CIPHERTEXT_SIZE, VECTOR_U_ENCODED_SIZE, U_COMPRESSION_FACTOR, V_COMPRESSION_FACTOR>[@TraitClause0, @TraitClause1]}
+This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]> for libcrux_ml_kem::ind_cpa::decrypt::{closure}<Vector, K, CIPHERTEXT_SIZE, VECTOR_U_ENCODED_SIZE, U_COMPRESSION_FACTOR, V_COMPRESSION_FACTOR>[@TraitClause0, @TraitClause1]}
 */
 /**
-A monomorphic instance of libcrux_ml_kem.ind_cpa.decrypt.call_mut_75
+A monomorphic instance of libcrux_ml_kem.ind_cpa.decrypt.call_mut_ac
 with types libcrux_ml_kem_vector_avx2_SIMD256Vector
 with const generics
 - K= 2
@@ -8947,7 +8962,7 @@ with const generics
 - U_COMPRESSION_FACTOR= 10
 - V_COMPRESSION_FACTOR= 4
 */
-static Eurydice_arr_13 call_mut_75_a4(void **_)
+static Eurydice_arr_13 call_mut_ac_a4(void **_)
 {
   return ZERO_0b_52();
 }
@@ -9326,49 +9341,49 @@ static KRML_MUSTINLINE void ntt_vector_u_d0(Eurydice_arr_13 *re)
 }
 
 /**
-This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]> for libcrux_ml_kem::ind_cpa::deserialize_then_decompress_u::closure<Vector, K, CIPHERTEXT_SIZE, U_COMPRESSION_FACTOR>[@TraitClause0, @TraitClause1]}
+This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]> for libcrux_ml_kem::ind_cpa::deserialize_then_decompress_u::{closure}<Vector, K, CIPHERTEXT_SIZE, U_COMPRESSION_FACTOR>[@TraitClause0, @TraitClause1]}
 */
 /**
-A monomorphic instance of libcrux_ml_kem.ind_cpa.deserialize_then_decompress_u.call_mut_db
+A monomorphic instance of libcrux_ml_kem.ind_cpa.deserialize_then_decompress_u.call_mut_ac
 with types libcrux_ml_kem_vector_avx2_SIMD256Vector
 with const generics
 - K= 3
 - CIPHERTEXT_SIZE= 1088
 - U_COMPRESSION_FACTOR= 10
 */
-static Eurydice_arr_13 call_mut_db_15(void **_)
+static Eurydice_arr_13 call_mut_ac_15(void **_)
 {
   return ZERO_0b_52();
 }
 
 /**
-This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]> for libcrux_ml_kem::ind_cpa::deserialize_then_decompress_u::closure<Vector, K, CIPHERTEXT_SIZE, U_COMPRESSION_FACTOR>[@TraitClause0, @TraitClause1]}
+This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]> for libcrux_ml_kem::ind_cpa::deserialize_then_decompress_u::{closure}<Vector, K, CIPHERTEXT_SIZE, U_COMPRESSION_FACTOR>[@TraitClause0, @TraitClause1]}
 */
 /**
-A monomorphic instance of libcrux_ml_kem.ind_cpa.deserialize_then_decompress_u.call_mut_db
+A monomorphic instance of libcrux_ml_kem.ind_cpa.deserialize_then_decompress_u.call_mut_ac
 with types libcrux_ml_kem_vector_avx2_SIMD256Vector
 with const generics
 - K= 4
 - CIPHERTEXT_SIZE= 1568
 - U_COMPRESSION_FACTOR= 11
 */
-static Eurydice_arr_13 call_mut_db_72(void **_)
+static Eurydice_arr_13 call_mut_ac_72(void **_)
 {
   return ZERO_0b_52();
 }
 
 /**
-This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]> for libcrux_ml_kem::ind_cpa::deserialize_then_decompress_u::closure<Vector, K, CIPHERTEXT_SIZE, U_COMPRESSION_FACTOR>[@TraitClause0, @TraitClause1]}
+This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]> for libcrux_ml_kem::ind_cpa::deserialize_then_decompress_u::{closure}<Vector, K, CIPHERTEXT_SIZE, U_COMPRESSION_FACTOR>[@TraitClause0, @TraitClause1]}
 */
 /**
-A monomorphic instance of libcrux_ml_kem.ind_cpa.deserialize_then_decompress_u.call_mut_db
+A monomorphic instance of libcrux_ml_kem.ind_cpa.deserialize_then_decompress_u.call_mut_ac
 with types libcrux_ml_kem_vector_avx2_SIMD256Vector
 with const generics
 - K= 2
 - CIPHERTEXT_SIZE= 768
 - U_COMPRESSION_FACTOR= 10
 */
-static Eurydice_arr_13 call_mut_db_e5(void **_)
+static Eurydice_arr_13 call_mut_ac_e5(void **_)
 {
   return ZERO_0b_52();
 }
@@ -9395,7 +9410,7 @@ deserialize_then_decompress_u_72(const Eurydice_arr_d1 *ciphertext)
     (size_t)1U,
     /* original Rust expression is not an lvalue in C */
     void *lvalue = (void *)0U;
-    arr_struct.data[i] = call_mut_db_72(&lvalue););
+    arr_struct.data[i] = call_mut_ac_72(&lvalue););
   Eurydice_arr_3b u_as_ntt = arr_struct;
   for
   (size_t
@@ -9446,7 +9461,7 @@ deserialize_then_decompress_u_15(const Eurydice_arr_2b *ciphertext)
     (size_t)1U,
     /* original Rust expression is not an lvalue in C */
     void *lvalue = (void *)0U;
-    arr_struct.data[i] = call_mut_db_15(&lvalue););
+    arr_struct.data[i] = call_mut_ac_15(&lvalue););
   Eurydice_arr_600 u_as_ntt = arr_struct;
   for
   (size_t
@@ -9497,7 +9512,7 @@ deserialize_then_decompress_u_e5(const Eurydice_arr_d2 *ciphertext)
     (size_t)1U,
     /* original Rust expression is not an lvalue in C */
     void *lvalue = (void *)0U;
-    arr_struct.data[i] = call_mut_db_e5(&lvalue););
+    arr_struct.data[i] = call_mut_ac_e5(&lvalue););
   Eurydice_arr_ee u_as_ntt = arr_struct;
   for
   (size_t
@@ -9798,7 +9813,7 @@ decrypt_3e(Eurydice_borrow_slice_u8 secret_key, const Eurydice_arr_2b *ciphertex
     (size_t)1U,
     /* original Rust expression is not an lvalue in C */
     void *lvalue = (void *)0U;
-    arr_struct.data[i] = call_mut_75_3e(&lvalue););
+    arr_struct.data[i] = call_mut_ac_3e(&lvalue););
   Eurydice_arr_600 secret_key_unpacked = arr_struct;
   deserialize_vector_e3(secret_key, &secret_key_unpacked);
   return decrypt_unpacked_3e(&secret_key_unpacked, ciphertext);
@@ -9824,7 +9839,7 @@ decrypt_b2(Eurydice_borrow_slice_u8 secret_key, const Eurydice_arr_d1 *ciphertex
     (size_t)1U,
     /* original Rust expression is not an lvalue in C */
     void *lvalue = (void *)0U;
-    arr_struct.data[i] = call_mut_75_b2(&lvalue););
+    arr_struct.data[i] = call_mut_ac_b2(&lvalue););
   Eurydice_arr_3b secret_key_unpacked = arr_struct;
   deserialize_vector_5b(secret_key, &secret_key_unpacked);
   return decrypt_unpacked_b2(&secret_key_unpacked, ciphertext);
@@ -9850,7 +9865,7 @@ decrypt_a4(Eurydice_borrow_slice_u8 secret_key, const Eurydice_arr_d2 *ciphertex
     (size_t)1U,
     /* original Rust expression is not an lvalue in C */
     void *lvalue = (void *)0U;
-    arr_struct.data[i] = call_mut_75_a4(&lvalue););
+    arr_struct.data[i] = call_mut_ac_a4(&lvalue););
   Eurydice_arr_ee secret_key_unpacked = arr_struct;
   deserialize_vector_16(secret_key, &secret_key_unpacked);
   return decrypt_unpacked_a4(&secret_key_unpacked, ciphertext);
@@ -10196,75 +10211,57 @@ libcrux_ml_kem_ind_cca_unpacked_unpack_public_key_2a(
 }
 
 /**
-This function found in impl {impl core::clone::Clone for libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause2]}
+This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]> for libcrux_ml_kem::ind_cca::unpacked::transpose_a::{closure}::{closure}<Vector, K>[@TraitClause0, @TraitClause1]}
 */
 /**
-A monomorphic instance of libcrux_ml_kem.polynomial.clone_d1
-with types libcrux_ml_kem_vector_avx2_SIMD256Vector
-with const generics
-
-*/
-static inline Eurydice_arr_13 clone_d1_52(const Eurydice_arr_13 *self)
-{
-  return
-    core_array__impl_core__clone__Clone_for__T__N___clone((size_t)16U,
-      self,
-      __m256i,
-      Eurydice_arr_13);
-}
-
-/**
-This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]> for libcrux_ml_kem::ind_cca::unpacked::transpose_a::closure::closure<Vector, K>[@TraitClause0, @TraitClause1]}
-*/
-/**
-A monomorphic instance of libcrux_ml_kem.ind_cca.unpacked.transpose_a.closure.call_mut_00
+A monomorphic instance of libcrux_ml_kem.ind_cca.unpacked.transpose_a.closure.call_mut_eb
 with types libcrux_ml_kem_vector_avx2_SIMD256Vector
 with const generics
 - K= 3
 */
-static Eurydice_arr_13 call_mut_00_e3(void **_)
+static Eurydice_arr_13 call_mut_eb_e3(void **_)
 {
   return ZERO_0b_52();
 }
 
 /**
-This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]> for libcrux_ml_kem::ind_cca::unpacked::transpose_a::closure::closure<Vector, K>[@TraitClause0, @TraitClause1]}
+This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]> for libcrux_ml_kem::ind_cca::unpacked::transpose_a::{closure}::{closure}<Vector, K>[@TraitClause0, @TraitClause1]}
 */
 /**
-A monomorphic instance of libcrux_ml_kem.ind_cca.unpacked.transpose_a.closure.call_mut_00
+A monomorphic instance of libcrux_ml_kem.ind_cca.unpacked.transpose_a.closure.call_mut_eb
 with types libcrux_ml_kem_vector_avx2_SIMD256Vector
 with const generics
 - K= 4
 */
-static Eurydice_arr_13 call_mut_00_5b(void **_)
+static Eurydice_arr_13 call_mut_eb_5b(void **_)
 {
   return ZERO_0b_52();
 }
 
 /**
-This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]> for libcrux_ml_kem::ind_cca::unpacked::transpose_a::closure::closure<Vector, K>[@TraitClause0, @TraitClause1]}
+This function found in impl {impl core::ops::function::FnMut<(usize,), libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]> for libcrux_ml_kem::ind_cca::unpacked::transpose_a::{closure}::{closure}<Vector, K>[@TraitClause0, @TraitClause1]}
 */
 /**
-A monomorphic instance of libcrux_ml_kem.ind_cca.unpacked.transpose_a.closure.call_mut_00
+A monomorphic instance of libcrux_ml_kem.ind_cca.unpacked.transpose_a.closure.call_mut_eb
 with types libcrux_ml_kem_vector_avx2_SIMD256Vector
 with const generics
 - K= 2
 */
-static Eurydice_arr_13 call_mut_00_16(void **_)
+static Eurydice_arr_13 call_mut_eb_16(void **_)
 {
   return ZERO_0b_52();
 }
 
 /**
-This function found in impl {impl core::ops::function::FnMut<(usize,), [libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]; K]> for libcrux_ml_kem::ind_cca::unpacked::transpose_a::closure<Vector, K>[@TraitClause0, @TraitClause1]}
+This function found in impl {impl core::ops::function::FnMut<(usize,), [libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]; K]> for libcrux_ml_kem::ind_cca::unpacked::transpose_a::{closure}<Vector, K>[@TraitClause0, @TraitClause1]}
 */
 /**
-A monomorphic instance of libcrux_ml_kem.ind_cca.unpacked.transpose_a.call_mut_ae
+A monomorphic instance of libcrux_ml_kem.ind_cca.unpacked.transpose_a.call_mut_9c
 with types libcrux_ml_kem_vector_avx2_SIMD256Vector
 with const generics
 - K= 3
 */
-static Eurydice_arr_600 call_mut_ae_e3(void **_)
+static Eurydice_arr_600 call_mut_9c_e3(void **_)
 {
   Eurydice_arr_600 arr_struct;
   KRML_MAYBE_FOR3(i,
@@ -10273,20 +10270,20 @@ static Eurydice_arr_600 call_mut_ae_e3(void **_)
     (size_t)1U,
     /* original Rust expression is not an lvalue in C */
     void *lvalue = (void *)0U;
-    arr_struct.data[i] = call_mut_00_e3(&lvalue););
+    arr_struct.data[i] = call_mut_eb_e3(&lvalue););
   return arr_struct;
 }
 
 /**
-This function found in impl {impl core::ops::function::FnMut<(usize,), [libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]; K]> for libcrux_ml_kem::ind_cca::unpacked::transpose_a::closure<Vector, K>[@TraitClause0, @TraitClause1]}
+This function found in impl {impl core::ops::function::FnMut<(usize,), [libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]; K]> for libcrux_ml_kem::ind_cca::unpacked::transpose_a::{closure}<Vector, K>[@TraitClause0, @TraitClause1]}
 */
 /**
-A monomorphic instance of libcrux_ml_kem.ind_cca.unpacked.transpose_a.call_mut_ae
+A monomorphic instance of libcrux_ml_kem.ind_cca.unpacked.transpose_a.call_mut_9c
 with types libcrux_ml_kem_vector_avx2_SIMD256Vector
 with const generics
 - K= 4
 */
-static Eurydice_arr_3b call_mut_ae_5b(void **_)
+static Eurydice_arr_3b call_mut_9c_5b(void **_)
 {
   Eurydice_arr_3b arr_struct;
   KRML_MAYBE_FOR4(i,
@@ -10295,20 +10292,20 @@ static Eurydice_arr_3b call_mut_ae_5b(void **_)
     (size_t)1U,
     /* original Rust expression is not an lvalue in C */
     void *lvalue = (void *)0U;
-    arr_struct.data[i] = call_mut_00_5b(&lvalue););
+    arr_struct.data[i] = call_mut_eb_5b(&lvalue););
   return arr_struct;
 }
 
 /**
-This function found in impl {impl core::ops::function::FnMut<(usize,), [libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]; K]> for libcrux_ml_kem::ind_cca::unpacked::transpose_a::closure<Vector, K>[@TraitClause0, @TraitClause1]}
+This function found in impl {impl core::ops::function::FnMut<(usize,), [libcrux_ml_kem::polynomial::PolynomialRingElement<Vector>[@TraitClause0, @TraitClause1]; K]> for libcrux_ml_kem::ind_cca::unpacked::transpose_a::{closure}<Vector, K>[@TraitClause0, @TraitClause1]}
 */
 /**
-A monomorphic instance of libcrux_ml_kem.ind_cca.unpacked.transpose_a.call_mut_ae
+A monomorphic instance of libcrux_ml_kem.ind_cca.unpacked.transpose_a.call_mut_9c
 with types libcrux_ml_kem_vector_avx2_SIMD256Vector
 with const generics
 - K= 2
 */
-static Eurydice_arr_ee call_mut_ae_16(void **_)
+static Eurydice_arr_ee call_mut_9c_16(void **_)
 {
   Eurydice_arr_ee arr_struct;
   KRML_MAYBE_FOR2(i,
@@ -10317,7 +10314,7 @@ static Eurydice_arr_ee call_mut_ae_16(void **_)
     (size_t)1U,
     /* original Rust expression is not an lvalue in C */
     void *lvalue = (void *)0U;
-    arr_struct.data[i] = call_mut_00_16(&lvalue););
+    arr_struct.data[i] = call_mut_eb_16(&lvalue););
   return arr_struct;
 }
 
@@ -10336,7 +10333,7 @@ static Eurydice_arr_601 transpose_a_e3(Eurydice_arr_601 ind_cpa_a)
     (size_t)1U,
     /* original Rust expression is not an lvalue in C */
     void *lvalue = (void *)0U;
-    arr_struct.data[i] = call_mut_ae_e3(&lvalue););
+    arr_struct.data[i] = call_mut_9c_e3(&lvalue););
   Eurydice_arr_601 A = arr_struct;
   KRML_MAYBE_FOR3(i0,
     (size_t)0U,
@@ -10368,7 +10365,7 @@ static Eurydice_arr_cd transpose_a_5b(Eurydice_arr_cd ind_cpa_a)
     (size_t)1U,
     /* original Rust expression is not an lvalue in C */
     void *lvalue = (void *)0U;
-    arr_struct.data[i] = call_mut_ae_5b(&lvalue););
+    arr_struct.data[i] = call_mut_9c_5b(&lvalue););
   Eurydice_arr_cd A = arr_struct;
   KRML_MAYBE_FOR4(i0,
     (size_t)0U,
@@ -10400,7 +10397,7 @@ static Eurydice_arr_e2 transpose_a_16(Eurydice_arr_e2 ind_cpa_a)
     (size_t)1U,
     /* original Rust expression is not an lvalue in C */
     void *lvalue = (void *)0U;
-    arr_struct.data[i] = call_mut_ae_16(&lvalue););
+    arr_struct.data[i] = call_mut_9c_16(&lvalue););
   Eurydice_arr_e2 A = arr_struct;
   KRML_MAYBE_FOR2(i0,
     (size_t)0U,
@@ -10424,7 +10421,7 @@ with const generics
 - K= 3
 */
 static Eurydice_arr_c7
-encaps_prepare_b6(Eurydice_borrow_slice_u8 randomness, Eurydice_borrow_slice_u8 pk_hash)
+encaps_prepare_e8(Eurydice_borrow_slice_u8 randomness, Eurydice_borrow_slice_u8 pk_hash)
 {
   Eurydice_arr_c7 to_hash = libcrux_ml_kem_utils_into_padded_array_c9(randomness);
   Eurydice_slice_copy(Eurydice_array_to_subslice_from_mut_5f0(&to_hash,
@@ -10441,7 +10438,7 @@ with const generics
 - K= 4
 */
 static Eurydice_arr_c7
-encaps_prepare_39(Eurydice_borrow_slice_u8 randomness, Eurydice_borrow_slice_u8 pk_hash)
+encaps_prepare_b0(Eurydice_borrow_slice_u8 randomness, Eurydice_borrow_slice_u8 pk_hash)
 {
   Eurydice_arr_c7 to_hash = libcrux_ml_kem_utils_into_padded_array_c9(randomness);
   Eurydice_slice_copy(Eurydice_array_to_subslice_from_mut_5f0(&to_hash,
@@ -10458,7 +10455,7 @@ with const generics
 - K= 2
 */
 static Eurydice_arr_c7
-encaps_prepare_b1(Eurydice_borrow_slice_u8 randomness, Eurydice_borrow_slice_u8 pk_hash)
+encaps_prepare_94(Eurydice_borrow_slice_u8 randomness, Eurydice_borrow_slice_u8 pk_hash)
 {
   Eurydice_arr_c7 to_hash = libcrux_ml_kem_utils_into_padded_array_c9(randomness);
   Eurydice_slice_copy(Eurydice_array_to_subslice_from_mut_5f0(&to_hash,
@@ -10494,7 +10491,7 @@ libcrux_ml_kem_ind_cca_unpacked_encapsulate_a80(
 {
   Eurydice_arr_c7
   hashed =
-    encaps_prepare_39(Eurydice_array_to_slice_shared_01(randomness),
+    encaps_prepare_b0(Eurydice_array_to_slice_shared_01(randomness),
       Eurydice_array_to_slice_shared_01(&public_key->public_key_hash));
   Eurydice_borrow_slice_u8_x2
   uu____0 =
@@ -10548,7 +10545,7 @@ libcrux_ml_kem_ind_cca_unpacked_encapsulate_a81(
 {
   Eurydice_arr_c7
   hashed =
-    encaps_prepare_b6(Eurydice_array_to_slice_shared_01(randomness),
+    encaps_prepare_e8(Eurydice_array_to_slice_shared_01(randomness),
       Eurydice_array_to_slice_shared_01(&public_key->public_key_hash));
   Eurydice_borrow_slice_u8_x2
   uu____0 =
@@ -10602,7 +10599,7 @@ libcrux_ml_kem_ind_cca_unpacked_encapsulate_a8(
 {
   Eurydice_arr_c7
   hashed =
-    encaps_prepare_b1(Eurydice_array_to_slice_shared_01(randomness),
+    encaps_prepare_94(Eurydice_array_to_slice_shared_01(randomness),
       Eurydice_array_to_slice_shared_01(&public_key->public_key_hash));
   Eurydice_borrow_slice_u8_x2
   uu____0 =

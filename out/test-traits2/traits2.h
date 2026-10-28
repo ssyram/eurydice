@@ -41,6 +41,8 @@ core_ops_range_Range_87;
 
 extern size_t core_clone_impls__impl_core__clone__Clone_for_usize__clone(const size_t *x0);
 
+extern int16_t core_clone_impls__impl_core__clone__Clone_for_i16__clone(const int16_t *x0);
+
 #define core_cmp_Ordering_Less -1
 #define core_cmp_Ordering_Equal 0
 #define core_cmp_Ordering_Greater 1
@@ -106,14 +108,14 @@ core_iter_range__impl_core__iter__range__Step_for_usize__backward_overflowing(
   size_t x1
 );
 
+extern core_option_Option_87
+core_iter_range__impl_core__iter__range__Step_for_usize__backward_checked(size_t x0, size_t x1);
+
 extern tuple_c9
 core_iter_range__impl_core__iter__range__Step_for_usize__forward_overflowing(
   size_t x0,
   size_t x1
 );
-
-extern core_option_Option_87
-core_iter_range__impl_core__iter__range__Step_for_usize__backward_checked(size_t x0, size_t x1);
 
 extern core_option_Option_87
 core_iter_range__impl_core__iter__range__Step_for_usize__forward_checked(size_t x0, size_t x1);

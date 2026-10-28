@@ -16,18 +16,6 @@ extern "C" {
 #endif
 
 /**
-A monomorphic instance of Eurydice.dst_ref_shared
-with types Eurydice_array_u8x4, size_t
-
-*/
-typedef struct Eurydice_dst_ref_shared_b5_s
-{
-  const Eurydice_array_u8x4 *ptr;
-  size_t meta;
-}
-Eurydice_dst_ref_shared_b5;
-
-/**
 A monomorphic instance of Eurydice.dst_ref_mut
 with types Eurydice_array_u8x4, size_t
 

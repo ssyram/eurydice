@@ -16,18 +16,6 @@ extern "C" {
 #endif
 
 /**
-A monomorphic instance of Eurydice.dst_ref_shared
-with types uint32_t, size_t
-
-*/
-typedef struct Eurydice_dst_ref_shared_0c_s
-{
-  const uint32_t *ptr;
-  size_t meta;
-}
-Eurydice_dst_ref_shared_0c;
-
-/**
 A monomorphic instance of Eurydice.dst_ref_mut
 with types uint32_t, size_t
 
@@ -54,6 +42,8 @@ with const generics
 - $5size_t
 */
 typedef struct Eurydice_arr_fb_s { uint32_t data[5U]; } Eurydice_arr_fb;
+
+extern uint32_t core_clone_impls__impl_core__clone__Clone_for_u32__clone(const uint32_t *x0);
 
 #define core_panicking_AssertKind_Eq 0
 #define core_panicking_AssertKind_Ne 1

@@ -43,6 +43,10 @@ with const generics
 */
 typedef struct Eurydice_arr_a1_s { Eurydice_arr_5c data[4U]; } Eurydice_arr_a1;
 
+extern uint8_t core_clone_impls__impl_core__clone__Clone_for_u8__clone(const uint8_t *x0);
+
+extern uint32_t core_clone_impls__impl_core__clone__Clone_for_u32__clone(const uint32_t *x0);
+
 extern size_t core_clone_impls__impl_core__clone__Clone_for_usize__clone(const size_t *x0);
 
 #define core_cmp_Ordering_Less -1
@@ -110,14 +114,14 @@ core_iter_range__impl_core__iter__range__Step_for_usize__backward_overflowing(
   size_t x1
 );
 
+extern core_option_Option_87
+core_iter_range__impl_core__iter__range__Step_for_usize__backward_checked(size_t x0, size_t x1);
+
 extern tuple_c9
 core_iter_range__impl_core__iter__range__Step_for_usize__forward_overflowing(
   size_t x0,
   size_t x1
 );
-
-extern core_option_Option_87
-core_iter_range__impl_core__iter__range__Step_for_usize__backward_checked(size_t x0, size_t x1);
 
 extern core_option_Option_87
 core_iter_range__impl_core__iter__range__Step_for_usize__forward_checked(size_t x0, size_t x1);

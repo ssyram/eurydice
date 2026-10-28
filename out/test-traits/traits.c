@@ -27,7 +27,7 @@ This function found in impl {impl traits::ToInt for traits::Foo}
 */
 uint32_t traits_to_int_62(const traits_Foo *self)
 {
-  switch (self[0U])
+  switch (*self)
   {
     case traits_Foo_Foo1:
       {

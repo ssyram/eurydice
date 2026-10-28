@@ -46,16 +46,15 @@ void dst_check_regular_field(Eurydice_dst_ref_mut_2f x)
   /* original Rust expression is not an lvalue in C */
   uint32_t lvalue = 0U;
   const_uint32_t__x2 uu____0 = { .fst = &x.ptr->foo, .snd = &lvalue };
-  EURYDICE_ASSERT(uu____0.fst[0U] == uu____0.snd[0U], "panic!");
+  EURYDICE_ASSERT(*uu____0.fst == *uu____0.snd, "panic!");
 }
 
 void dst_check_var_field(Eurydice_dst_ref_mut_2f x)
 {
   /* original Rust expression is not an lvalue in C */
   uint32_t lvalue = 0U;
-  const_uint32_t__x2
-  uu____0 = { .fst = &((const uint32_t *)x.ptr->my_data)[0U], .snd = &lvalue };
-  EURYDICE_ASSERT(uu____0.fst[0U] == uu____0.snd[0U], "panic!");
+  const_uint32_t__x2 uu____0 = { .fst = &((uint32_t *)x.ptr->my_data)[0U], .snd = &lvalue };
+  EURYDICE_ASSERT(*uu____0.fst == *uu____0.snd, "panic!");
 }
 
 void dst_check_regular_field_ref(Eurydice_dst_ref_shared_2f x)
@@ -63,7 +62,7 @@ void dst_check_regular_field_ref(Eurydice_dst_ref_shared_2f x)
   /* original Rust expression is not an lvalue in C */
   uint32_t lvalue = 0U;
   const_uint32_t__x2 uu____0 = { .fst = &x.ptr->foo, .snd = &lvalue };
-  EURYDICE_ASSERT(uu____0.fst[0U] == uu____0.snd[0U], "panic!");
+  EURYDICE_ASSERT(*uu____0.fst == *uu____0.snd, "panic!");
 }
 
 void dst_check_var_field_ref(Eurydice_dst_ref_shared_2f x)
@@ -72,7 +71,7 @@ void dst_check_var_field_ref(Eurydice_dst_ref_shared_2f x)
   uint32_t lvalue = 0U;
   const_uint32_t__x2
   uu____0 = { .fst = &((const uint32_t *)x.ptr->my_data)[0U], .snd = &lvalue };
-  EURYDICE_ASSERT(uu____0.fst[0U] == uu____0.snd[0U], "panic!");
+  EURYDICE_ASSERT(*uu____0.fst == *uu____0.snd, "panic!");
 }
 
 Eurydice_dst_ref_mut_2f dst_alloc(void)
@@ -120,8 +119,8 @@ void dst_check_var_field_ref3(Eurydice_dst_ref_shared_bb x)
   /* original Rust expression is not an lvalue in C */
   uint32_t lvalue = 0U;
   const_uint32_t__x2
-  uu____0 = { .fst = ((const Eurydice_arr_a5 *)x.ptr->my_data)->data, .snd = &lvalue };
-  EURYDICE_ASSERT(uu____0.fst[0U] == uu____0.snd[0U], "panic!");
+  uu____0 = { .fst = &((const Eurydice_arr_a5 *)x.ptr->my_data)[0U].data[0U], .snd = &lvalue };
+  EURYDICE_ASSERT(*uu____0.fst == *uu____0.snd, "panic!");
 }
 
 void dst_main3(void)
@@ -143,7 +142,7 @@ void dst_main4(void)
   /* original Rust expression is not an lvalue in C */
   uint32_t lvalue = 0U;
   const_uint32_t__x2 uu____0 = { .fst = &x.ptr[3U], .snd = &lvalue };
-  EURYDICE_ASSERT(uu____0.fst[0U] == uu____0.snd[0U], "panic!");
+  EURYDICE_ASSERT(*uu____0.fst == *uu____0.snd, "panic!");
 }
 
 void dst_main(void)
@@ -155,18 +154,16 @@ void dst_main(void)
   dst_check_regular_field_ref(x0);
   dst_check_var_field_ref(x0);
   dst_main3();
-  Eurydice_dst_ref_mut_b7 uu____0 = dst_mk();
   /* original Rust expression is not an lvalue in C */
-  uint32_t lvalue0 = 0U;
+  uint32_t lvalue = 0U;
   const_uint32_t__x2
-  uu____1 = { .fst = &((const uint32_t *)uu____0.ptr->my_data)[0U], .snd = &lvalue0 };
-  EURYDICE_ASSERT(uu____1.fst[0U] == uu____1.snd[0U], "panic!");
-  Eurydice_dst_ref_mut_b7 uu____2 = dst_mk();
+  uu____0 = { .fst = &((uint32_t *)dst_mk().ptr->my_data)[0U], .snd = &lvalue };
+  EURYDICE_ASSERT(*uu____0.fst == *uu____0.snd, "panic!");
   /* original Rust expression is not an lvalue in C */
-  uint32_t lvalue = 2U;
+  uint32_t lvalue0 = 2U;
   const_uint32_t__x2
-  uu____3 = { .fst = &((const uint32_t *)uu____2.ptr->my_data)[1U], .snd = &lvalue };
-  EURYDICE_ASSERT(uu____3.fst[0U] == uu____3.snd[0U], "panic!");
+  uu____1 = { .fst = &((uint32_t *)dst_mk().ptr->my_data)[1U], .snd = &lvalue0 };
+  EURYDICE_ASSERT(*uu____1.fst == *uu____1.snd, "panic!");
   dst_main4();
 }
 
