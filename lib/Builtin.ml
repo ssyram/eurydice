@@ -564,6 +564,16 @@ let min_usize =
     arg_names = [ "x"; "y" ];
   }
 
+(** Rust's assume intrinsic has undefined behavior for false; the C helper traps in that case. *)
+let assume =
+  {
+    name = [ "Eurydice" ], "assume";
+    typ = Krml.Helpers.fold_arrow [ TBool ] TUnit;
+    n_type_args = 0;
+    cg_args = [];
+    arg_names = [ "condition" ];
+  }
+
 (* A non error-checking function that returns a vector whose ptr component is potentially NULL *)
 let vec_alloc =
   {
@@ -1179,6 +1189,7 @@ let builtin_funcs =
     shr_pv_u8;
     min_u32;
     min_usize;
+    assume;
     vec_alloc;
     vec_overflows;
     vec_failed;

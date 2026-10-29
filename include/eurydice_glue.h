@@ -419,6 +419,12 @@ static inline size_t Eurydice_min_usize(size_t x, size_t y) {
   return x < y ? x : y;
 }
 
+// Invalid assumptions are undefined in Rust. Trap instead of continuing with
+// invalid input.
+static inline void Eurydice_assume(bool condition) {
+  EURYDICE_ASSERT(condition, "invalid Rust assumption");
+}
+
 static inline uint8_t
 core_ops_bit__core__ops__bit__BitAnd_u8__u8__for__0__u8___bitand(
     const uint8_t *x0, uint8_t x1) {

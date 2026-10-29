@@ -302,6 +302,7 @@ module RustNames = struct
     parse_pattern "core::hint::black_box<@T>", Builtin.black_box;
     parse_pattern "core::intrinsics::raw_eq<@T>", Builtin.raw_eq;
     parse_pattern "core::intrinsics::raw_eq<'_, '_, @T>", Builtin.raw_eq;
+    parse_pattern "core::intrinsics::assume", Builtin.assume;
 
     (* boxes *)
     parse_pattern "alloc::boxed::{alloc::boxed::Box<@T>}::new<@>", Builtin.box_new;
