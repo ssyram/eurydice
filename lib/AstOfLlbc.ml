@@ -221,6 +221,7 @@ module RustNames = struct
   let vec = parse_pattern "alloc::vec::Vec<@>"
   let range = parse_pattern "core::ops::range::Range<@>"
   let option = parse_pattern "core::option::Option<@>"
+  let assert_failed = parse_pattern "core::panicking::assert_failed"
 
   (* Just to have a uniform view of the table of distinguished declarations *)
   let builtin_of_function decl : Builtin.builtin =
@@ -579,6 +580,12 @@ let pure_c_name (name : C.name) =
   match last with
   | PeInstantiated _args -> pre
   | _ -> name
+
+(** Recognize the standard assertion failure function independently of monomorphized arguments. This
+    mirrors Charon's panic reconstruction when an instantiated name remains a regular call. *)
+let is_assert_failed (env : env) (name : C.name) =
+  Charon.NameMatcher.match_name env.name_ctx RustNames.config RustNames.assert_failed
+    (pure_c_name name)
 
 (* get the trait_refs from mono. charon name, used in lookup_fun *)
 let trait_refs_c_name (name : C.name) : C.poly_trait_ref list =
@@ -2683,6 +2690,13 @@ and expression_of_statement_kind (env : env) (ret_var : C.local_id) (s : C.state
       | _ -> Krml.Helpers.eunit
       end
   | Assert (a, _on_failure, _) -> expression_of_assertion env a
+  | Call ({ func = FnOpRegular fn_ptr; _ }, _)
+    when match fn_ptr.kind with
+         | Fun id -> is_assert_failed env (env.get_nth_function id).item_meta.name
+         | _ -> false ->
+      (* Monomorphized names can escape Charon's panic reconstruction. Arguments have already
+         been evaluated by preceding LLBC statements; retain the same abort as a Panic node. *)
+      with_any (K.EAbort (None, Some "assertion failed"))
   | Call ({ func = FnOpRegular fn_ptr; args; dest; _ }, _)
     when Charon.NameMatcher.match_fn_ptr env.name_ctx RustNames.config RustNames.from_u16 fn_ptr
          || Charon.NameMatcher.match_fn_ptr env.name_ctx RustNames.config RustNames.from_u32 fn_ptr
@@ -3016,6 +3030,7 @@ let partial_eq_forwarder env (decl : C.fun_decl) =
 
 let decl_of_id (env : env) (id : C.item_id) : K.decl option =
   match id with
+  | IdFun id when is_assert_failed env (env.get_nth_function id).item_meta.name -> None
   | IdType id
     when match (env.get_nth_type id).src with
          | BuiltinType _ -> true
