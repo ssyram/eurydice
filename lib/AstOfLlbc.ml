@@ -3422,7 +3422,52 @@ let impl_obligations (obpairs : (decl_obligation * unit) list) : K.decl list =
   List.map impl_obligation (List.map fst obpairs)
   *)
 
+(** Distinct nested closures can arrive with the same name but different declaration IDs and capture
+    layouts. Give only colliding closure names fresh disambiguators before using names as C
+    identities. Update both printer name tables so embedded type names stay consistent. *)
+let disambiguate_closure_names (crate : C.crate) =
+  let counts = Hashtbl.create 17 in
+  let max_disambiguator = ref 0 in
+  C.TypeDeclId.Map.iter
+    (fun _ (decl : C.type_decl) ->
+      let name = decl.item_meta.name in
+      let count = Option.value ~default:0 (Hashtbl.find_opt counts name) in
+      Hashtbl.replace counts name (count + 1);
+      List.iter
+        (function
+          | C.PeBuiltin (C.PeClosure, d) ->
+              max_disambiguator := max !max_disambiguator (C.Disambiguator.to_int d)
+          | _ -> ())
+        name)
+    crate.type_decls;
+  let renamed = Hashtbl.create 17 in
+  let type_decls =
+    C.TypeDeclId.Map.mapi
+      (fun id (decl : C.type_decl) ->
+        match decl.src with
+        | C.ClosureType _ when Hashtbl.find counts decl.item_meta.name > 1 ->
+            let d = C.Disambiguator.of_int (!max_disambiguator + C.TypeDeclId.to_int id + 1) in
+            let rec rename = function
+              | C.PeBuiltin (C.PeClosure, _) :: rest -> C.PeBuiltin (C.PeClosure, d) :: rest
+              | elem :: rest -> elem :: rename rest
+              | [] -> failwith "Closure declaration has no closure path element"
+            in
+            let name = List.rev (rename (List.rev decl.item_meta.name)) in
+            Hashtbl.add renamed (C.IdType id) name;
+            { decl with item_meta = { decl.item_meta with name } }
+        | _ -> decl)
+      crate.type_decls
+  in
+  let update (id, name) = id, Option.value ~default:name (Hashtbl.find_opt renamed id) in
+  {
+    crate with
+    type_decls;
+    item_names = List.map update crate.item_names;
+    short_names = List.map update crate.short_names;
+  }
+
 let file_of_crate (crate : Charon.LlbcAst.crate) : Krml.Ast.file =
+  let crate = disambiguate_closure_names crate in
   let {
     C.name;
     declarations;
