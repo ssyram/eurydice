@@ -124,6 +124,9 @@ typedef struct Eurydice_mut_borrow_slice_i16_s {
 #define core_array_TryFromSliceError uint8_t
 
 // Distinguished support for some PartialEq trait implementations
+// The translator restricts raw_eq to scalars and arrays with compatible
+// representations.
+#define Eurydice_raw_eq(a, b, t, _ret_t) (memcmp((a), (b), sizeof(t)) == 0)
 //
 // core::cmp::PartialEq<@Array<U, N>> for @Array<T, N>
 #define Eurydice_array_eq(sz, a1, a2, t)                                       \

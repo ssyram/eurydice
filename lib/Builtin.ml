@@ -479,6 +479,16 @@ let slice_to_ref_array2 =
     arg_names = [ "s" ];
   }
 
+(** Bytewise equality for scalar/array representations validated by AstOfLlbc. *)
+let raw_eq =
+  {
+    name = [ "Eurydice" ], "raw_eq";
+    typ = Krml.Helpers.fold_arrow [ TBuf (TBound 0, true); TBuf (TBound 0, true) ] TBool;
+    n_type_args = 1;
+    cg_args = [];
+    arg_names = [ "left"; "right" ];
+  }
+
 let box_new =
   {
     name = [ "Eurydice" ], "box_new";
@@ -1161,6 +1171,7 @@ let builtin_funcs =
     range_iterator_step_by;
     range_step_by_iterator_next;
     black_box;
+    raw_eq;
     box_new;
     empty_array;
     replace;

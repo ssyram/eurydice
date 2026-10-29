@@ -300,6 +300,8 @@ module RustNames = struct
     parse_pattern "core::cmp::Ord<usize>::min", Builtin.min_usize;
     parse_pattern "core::cmp::Ord::min<usize>", Builtin.min_usize;
     parse_pattern "core::hint::black_box<@T>", Builtin.black_box;
+    parse_pattern "core::intrinsics::raw_eq<@T>", Builtin.raw_eq;
+    parse_pattern "core::intrinsics::raw_eq<'_, '_, @T>", Builtin.raw_eq;
 
     (* boxes *)
     parse_pattern "alloc::boxed::{alloc::boxed::Box<@T>}::new<@>", Builtin.box_new;
@@ -617,6 +619,13 @@ let erase_cast_regions =
     method! visit_region _ _ = C.RErased
   end
     #visit_ty ()
+
+(** Only lower byte equality when padding-free Rust scalar/array values keep their C representation.
+    Unknown generic and nominal types are rejected rather than guessed. *)
+let rec supports_raw_eq = function
+  | C.TScalar (C.TInteger _ | C.TBool | C.TChar) -> true
+  | C.TArray (ty, _, _) -> supports_raw_eq ty
+  | _ -> false
 
 (** A vtable type is actually just a struct type, this function takes out the hinted ID of the
     vtable struct from the dynamic predicate and then translate it, returns a reference to the
@@ -1903,6 +1912,11 @@ let rec expression_of_fn_ptr env depth (fn_ptr : C.fn_ptr) =
   L.log "Calls" "%s--> [MONO] end of trait refs" depth;
 
   (* Translate effective type and cg arguments. *)
+  (match f, type_args with
+  | K.EQualified lid, [ ty ] when lid = Builtin.raw_eq.name ->
+      if not (supports_raw_eq ty) then
+        failwith "raw_eq requires a supported scalar or array representation"
+  | _ -> ());
   let const_generic_args =
     match f, type_args with
     | EQualified lid, [ _; TRef (_, TArray (_, cg, _), _); _ ]
