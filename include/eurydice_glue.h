@@ -414,6 +414,11 @@ static inline uint32_t Eurydice_min_u32(uint32_t x, uint32_t y) {
   return x < y ? x : y;
 }
 
+// Return the smaller operand; equal operands retain the same value.
+static inline size_t Eurydice_min_usize(size_t x, size_t y) {
+  return x < y ? x : y;
+}
+
 static inline uint8_t
 core_ops_bit__core__ops__bit__BitAnd_u8__u8__for__0__u8___bitand(
     const uint8_t *x0, uint8_t x1) {

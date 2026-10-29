@@ -557,7 +557,7 @@ let min_u32 =
 
 let min_usize =
   {
-    name = [ "core"; "cmp"; "impls"; "{impl core::cmp::Ord for usize}" ], "min";
+    name = [ "Eurydice" ], "min_usize";
     typ = Krml.Helpers.fold_arrow [ TInt SizeT; TInt SizeT ] (TInt SizeT);
     n_type_args = 0;
     cg_args = [];
