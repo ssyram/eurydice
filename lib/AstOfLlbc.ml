@@ -2405,19 +2405,13 @@ let expression_of_rvalue (env : env) (p : C.rvalue) expected_ty : K.expr =
       let t_from = typ_of_ty env ty_from and t_to = typ_of_ty env ty_to in
       let e = expression_of_operand env e in
       begin match meta, t_from, destruct_arr_dst_ref t_to with
-      | MetaLength cg, TBuf (t_from_base, const), Some (lid2, t_u) ->
-          begin match destruct_named_typ t_from_base with
-          | Some lid1 when lid1 = lid2 ->
-              (* Cast from a struct whose last field is `t data[n]` to a struct whose last field is
-                 `Eurydice_derefed_slice data` (a.k.a. `char data[]`) *)
-              let len = expression_of_const_generic env cg in
-              let ptr = K.with_type (TBuf (t_u, const)) (K.ECast (e, TBuf (t_u, const))) in
-              Builtin.dst_new ~const ~len ~ptr t_u
-          | _ ->
-              Krml.Warn.fatal_error "unknown unsize cast: `%s`\nt_to=%a\nt_from=%a"
-                (Charon.Print.cast_kind_to_string env.format_env ck)
-                ptyp t_to ptyp t_from
-          end
+      | MetaLength cg, TBuf (t_from_base, const), Some (lid2, t_u)
+        when destruct_named_typ t_from_base = Some lid2 ->
+          (* Cast from a struct whose last field is `t data[n]` to a struct whose last field is
+             `Eurydice_derefed_slice data` (a.k.a. `char data[]`) *)
+          let len = expression_of_const_generic env cg in
+          let ptr = K.with_type (TBuf (t_u, const)) (K.ECast (e, TBuf (t_u, const))) in
+          Builtin.dst_new ~const ~len ~ptr t_u
       | MetaLength cg, TBuf (K.TCgApp (K.TApp (lid_arr, [ t ]), _), _), _ when lid_arr = Builtin.arr
         ->
           (* Cast from Box<[T;N]> (represented as a mut reference to an array) to Box<[T]> (which we
