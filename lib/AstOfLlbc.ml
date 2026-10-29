@@ -798,8 +798,7 @@ and typ_of_ty (env : env) (ty : Charon.Types.ty) : K.typ =
       (* Recover Vec's element argument from the instantiated declaration name. *)
       let generics =
         match List.rev (env.get_nth_type id).item_meta.name with
-        | PeInstantiated binder :: _ ->
-            Charon.Substitute.instantiate_name_generics binder generics
+        | PeInstantiated binder :: _ -> Charon.Substitute.instantiate_name_generics binder generics
         | _ -> generics
       in
       begin match generics.types with
@@ -1729,7 +1728,8 @@ let try_get_mono_generics is_known_builtin (env : env) (f : C.fn_ptr) =
    type information required to build a proper instantiation. The function reference is an expression
    that is either a reference to a variable in scope (trait methods), or to a top-level qualified
    name, which encompasses both externally-defined function (builtins), or regular functions. *)
-let lookup_fun (env : env) depth (fn_ptr : C.fn_ptr) : K.expr' * lookup_result * C.poly_trait_ref list =
+let lookup_fun (env : env) depth (fn_ptr : C.fn_ptr) :
+    K.expr' * lookup_result * C.poly_trait_ref list =
   let open RustNames in
   let pat = pattern_of_fn_ptr env fn_ptr in
   L.log "Calls" "%sLooking up function: %s" depth
@@ -1878,7 +1878,8 @@ let rec expression_of_fn_ptr env depth (fn_ptr : C.fn_ptr) =
   L.log "Calls" "%s--> %d inputs: %a" depth (List.length inputs) ptyps inputs;
   L.log "Calls" "%s--> is_known_builtin?: %b" depth is_known_builtin;
   L.log "Calls" "%s--> [MONO] trait from mono name: %s\n" depth
-    (String.concat " ++ " (List.map (Charon.PrintFmt.poly_trait_ref_to_string env.format_env) trait_refs));
+    (String.concat " ++ "
+       (List.map (Charon.PrintFmt.poly_trait_ref_to_string env.format_env) trait_refs));
   L.log "Calls" "%s--> [MONO] end of trait refs" depth;
 
   (* Translate effective type and cg arguments. *)
@@ -1903,7 +1904,8 @@ let rec expression_of_fn_ptr env depth (fn_ptr : C.fn_ptr) =
       (fun (poly_trait_ref : C.poly_trait_ref) ->
         let trait_ref = Charon.Substitute.poly_trait_ref_erase_binder poly_trait_ref in
         let name =
-          string_of_name env (pure_c_name (env.get_nth_trait_decl trait_ref.trait_decl_ref.id).item_meta.name)
+          string_of_name env
+            (pure_c_name (env.get_nth_trait_decl trait_ref.trait_decl_ref.id).item_meta.name)
         in
         L.log "Calls" "%s--> trait_ref %s: %s\n" depth name (C.show_trait_ref trait_ref);
 
@@ -1920,8 +1922,7 @@ let rec expression_of_fn_ptr env depth (fn_ptr : C.fn_ptr) =
               (fun ({ C.id; generics } : C.global_decl_ref) ->
                 if
                   not
-                    (generics.types = [] && generics.const_generics = []
-                   && generics.trait_refs = [])
+                    (generics.types = [] && generics.const_generics = [] && generics.trait_refs = [])
                 then
                   failwith "TODO: polymorphic globals";
                 let global = env.get_nth_global id in
@@ -1971,9 +1972,7 @@ let rec expression_of_fn_ptr env depth (fn_ptr : C.fn_ptr) =
             let name = string_of_name env trait_decl.item_meta.name in
             let clause_id = C.TraitClauseId.to_int clause_id in
             let parent_clause = List.nth trait_decl.implied_clauses clause_id in
-            let parent_clause_decl =
-              env.get_nth_trait_decl parent_clause.trait.binder_value.id
-            in
+            let parent_clause_decl = env.get_nth_trait_decl parent_clause.trait.binder_value.id in
             let parent_name = string_of_name env parent_clause_decl.item_meta.name in
             Krml.KPrint.bprintf "looking up parent clause #%d of decl=%s = %s\n" clause_id name
               parent_name;
@@ -2035,7 +2034,11 @@ let rec expression_of_fn_ptr env depth (fn_ptr : C.fn_ptr) =
             begin match
               try_get_mono_from_name fun_decl.item_meta.name
             with
-            | Some { binder_value = { types = _ :: TAdt { id = type_id; builtin = None; _ } :: _; _ }; _ } ->
+            | Some
+                {
+                  binder_value = { types = _ :: TAdt { id = type_id; builtin = None; _ } :: _; _ };
+                  _;
+                } ->
                 begin match (env.get_nth_type type_id).src with
                 | ClosureType { fn_mut_impl = Some fn_mut_impl; fn_once_impl; _ } ->
                     let closure_method_expr method_name
