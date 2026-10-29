@@ -805,7 +805,10 @@ and typ_of_ty (env : env) (ty : Charon.Types.ty) : K.typ =
       | [ t ] -> Builtin.mk_vec (typ_of_ty env t)
       | _ -> failwith "Expected one element type for Vec"
       end
-  | TAdt { generics = { types = args; const_generics; _ }; builtin = Some TTuple; _ } ->
+  | TAdt ({ builtin = Some TTuple; _ } as tref) ->
+      let ({ C.types = args; const_generics; _ } : C.generic_args) =
+        Charon.Substitute.type_decl_ref_generics env.crate.type_decls tref
+      in
       assert (const_generics = []);
       begin match args with
       | [] -> TUnit
@@ -1127,10 +1130,10 @@ let rec expression_of_place (env : env) (p : C.place) : K.expr =
                           with_type place_typ (EBound 0) );
                       ] ))
         end
-      | ( Field (None, i),
-          _,
-          C.TAdt { generics = { types = tys; const_generics = cgs; _ }; builtin = Some TTuple; _ } )
-        ->
+      | Field (None, i), _, C.TAdt ({ builtin = Some TTuple; _ } as tref) ->
+          let ({ C.types = tys; const_generics = cgs; _ } : C.generic_args) =
+            Charon.Substitute.type_decl_ref_generics env.crate.type_decls tref
+          in
           let place_typ = typ_of_ty env p.ty in
           assert (cgs = []);
           (* match e with (_, ..., _, x, _, ..., _) -> x *)
