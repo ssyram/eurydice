@@ -609,6 +609,15 @@ let update_lid_full_generic_fnptrs (full_name : K.lident) (fn_ptrs : K.expr list
 
 let mk_expr_arr_struct (expr_array : K.expr) = K.EFlat [ Some "data", expr_array ]
 
+(** Erase all lifetimes, including body regions, when testing whether a cast changes only lifetime
+    annotations. Other type structure and reference mutability remain significant. *)
+let erase_cast_regions =
+  object
+    inherit [_] C.map_ty
+    method! visit_region _ _ = C.RErased
+  end
+    #visit_ty ()
+
 (** A vtable type is actually just a struct type, this function takes out the hinted ID of the
     vtable struct from the dynamic predicate and then translate it, returns a reference to the
     struct type itself.
@@ -2443,7 +2452,7 @@ let expression_of_rvalue (env : env) (p : C.rvalue) expected_ty : K.expr =
   | UnaryOp (Cast ck, e) ->
       (* Add a simpler case: identity cast is allowed *)
       let source_ty = ty_of_operand e in
-      if source_ty = expected_ty then
+      if erase_cast_regions source_ty = erase_cast_regions expected_ty then
         expression_of_operand env e
       else
         failwith ("unknown cast: `" ^ Charon.Print.cast_kind_to_string env.format_env ck ^ "`")
