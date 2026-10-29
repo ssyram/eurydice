@@ -302,6 +302,7 @@ module RustNames = struct
 
     (* boxes *)
     parse_pattern "alloc::boxed::{alloc::boxed::Box<@T>}::new<@>", Builtin.box_new;
+    parse_pattern "alloc::boxed::{Box}::new<@T>", Builtin.box_new;
   ]
   [@ocamlformat "disable"]
 
@@ -784,7 +785,10 @@ and typ_of_ty (env : env) (ty : Charon.Types.ty) : K.typ =
   (* C doesn't have an empty type. It's fine to pretend it's unit. *)
   | TNever -> TUnit
   | TDynTrait _ -> failwith "TODO: dyn Trait"
-  | TAdt { builtin = Some TBox; generics = { types; _ }; _ } ->
+  | TAdt ({ builtin = Some TBox; _ } as tref) ->
+      let ({ C.types; _ } : C.generic_args) =
+        Charon.Substitute.type_decl_ref_generics env.crate.type_decls tref
+      in
       let t =
         match types with
         | [ t ] -> t
@@ -1059,10 +1063,7 @@ let rec expression_of_place (env : env) (p : C.place) : K.expr =
       (* slices simply cannot be dereferenced into places which have unknown size.
          They are supposed to be reborrowed again directly after the deref which is handled in expression_of_rvalue *)
       | C.Deref, _, TRef (_, TSlice _, _) | C.Deref, _, TRawPtr (TSlice _, _) -> assert false
-      | ( C.Deref,
-          _,
-          (TRawPtr _ | TRef _ | TAdt { builtin = Some TBox; generics = { types = [ _ ]; _ }; _ }) )
-        ->
+      | C.Deref, _, (TRawPtr _ | TRef _ | TAdt { builtin = Some TBox; _ }) ->
           (* All types represented as a pointer at run-time, compiled to a C pointer *)
           begin match !*sub_e.K.typ with
           | TBuf (t_pointee, _) ->
