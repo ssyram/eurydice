@@ -2099,6 +2099,7 @@ let rec expression_of_fn_ptr env depth (fn_ptr : C.fn_ptr) =
                         closure_method_expr "call_once" fn_once_impl )
                     with
                     | Some call_mut, Some call_once -> [ call_mut; call_once ]
+                    | Some call_mut, None -> [ call_mut ]
                     | _ -> []
                     end
                 | _ -> []

@@ -351,7 +351,7 @@ let remove_array_from_fn files =
         | ETApp
             ( { node = EQualified ([ "core"; "array" ], "from_fn"); _ },
               [ len ],
-              [ call_mut; _call_once ],
+              ([ call_mut ] | [ call_mut; _ ]),
               [ t_elements; _t_captured_state ] ) ->
             L.log "Cleanup2" "%a %a" ptyp t_elements ptyp t_elements;
             (* By translating array into struct, we return a struct of array for [from_fn] here *)
@@ -393,7 +393,7 @@ let remove_array_from_fn files =
         | ETApp
             ( { node = EQualified ("core" :: "array" :: _, "map"); _ },
               [ len ],
-              [ call_mut; _call_once ],
+              ([ call_mut ] | [ call_mut; _ ]),
               ts ) ->
             let t_src, t_dst =
               match ts with
